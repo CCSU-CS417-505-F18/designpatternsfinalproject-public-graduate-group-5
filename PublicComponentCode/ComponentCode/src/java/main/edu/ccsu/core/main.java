@@ -11,16 +11,16 @@ public class main {
 		DeviceAndSensorFactory productFactory = new DeviceAndSensorFactory();
 		
 		//sample devices
-		Device display = productFactory.makeDevice("LCD", "MYLCD");
-		Device ledOne = productFactory.makeDevice("LED", "MYLCD");
+		Device display = productFactory.makeDevice("LCD", "MYLCD", "A1");
+		Device ledOne = productFactory.makeDevice("LED", "MYLCD", "D3");
 		
 		System.out.println(display);
 		System.out.println(ledOne);
 		
 		//sample sensors
-		Sensor lightSensor = productFactory.makeSensor("LightSensor", "First Light Sensor");
-		Sensor tempSensor = productFactory.makeSensor("TempAndHumiditySensor", "Humidity");
-	
+		Sensor lightSensor = productFactory.makeSensor("LightSensor", "First Light Sensor", "A0");
+		Sensor tempSensor = productFactory.makeSensor("TempAndHumiditySensor", "Humidity", "D5");
+		
 		System.out.println(lightSensor);
 		System.out.println(tempSensor);
 	}

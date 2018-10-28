@@ -8,9 +8,10 @@ import edu.ccsu.interfaces.Device;
  */
 public class LcdScreen extends Device {
 	
-	public LcdScreen(String name) {
+	public LcdScreen(String name, String portNumber) {
 		this.color = "Blue";
 		this.name = name;
+		this.portNumber = portNumber;
 	}
 	
 	/**

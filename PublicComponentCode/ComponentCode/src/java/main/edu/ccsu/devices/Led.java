@@ -9,8 +9,9 @@ public class Led extends Device {
 	/**
 	 * 
 	 * @param name
+	 * @param portNumber
 	 */
-	public Led(String name) {
+	public Led(String name, String portNumber) {
 		this.name = name;
 	}
 
