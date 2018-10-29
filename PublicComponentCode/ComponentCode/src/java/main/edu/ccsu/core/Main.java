@@ -17,27 +17,52 @@ public class Main {
 		
 		//sample devices
 		Device display = productFactory.makeDevice("LCD", "MYLCD", "A1");
-		Device ledOne = productFactory.makeDevice("LED", "MYLCD", "D3");
-		Device ledTwo = productFactory.makeDevice("LED", "MYLCD2", "D4");
+		
+		Device ledOne = productFactory.makeDevice("LED", "LED", "D3");
+		Device ledTwo = productFactory.makeDevice("LED", "LED2", "D4");
+		Device ledThree = productFactory.makeDevice("LED", "LED3", "D5");
+		
+		Device ledFour = productFactory.makeDevice("LED", "LED", "D3");
+		Device ledSix = productFactory.makeDevice("LED", "LED2", "D4");
+		Device ledNine = productFactory.makeDevice("LED", "LED3", "D5");
+		
+		Device ledTen = productFactory.makeDevice("LED", "LED10", "D7");
+		//sample CoR with LEDs
 		try {
+			//set ledOne chain
 			ledOne.setNextDevice(ledTwo);
+			ledTwo.setNextDevice(ledThree);
+			
+			//set ledFour chain
+			ledFour.setNextDevice(ledSix);
+//			ledSix.setNextDevice(ledNine);
+//			ledNine.setNextDevice(productFactory.makeDevice("LED", "BOB", "A0"));
+			
+			//doing this will throw an error 
+//			ledThree.setNextDevice(display);
 		} catch (IncompatibleDeviceError e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println(display);
-		System.out.println(ledOne);
 		
-		//sample sensors
+		//check that CoR was set properly 
+		System.out.println(ledOne.getNextDevice().getNextDevice().getName());
+		
+		//use equals method on device
+		System.out.println(ledOne.equals(ledFour));
+		//methods to turn on and off LEDs...NOTE will print message that it failed if not using on Raspbian
+		ledOne.turnOn();
+		ledTwo.turnOff();
+		
+		
+		//sample sensors NOTE-will be implemented in future sprint
 		Sensor lightSensor = productFactory.makeSensor("LightSensor", "First Light Sensor", "A0");
 		Sensor tempSensor = productFactory.makeSensor("TempAndHumiditySensor", "Humidity", "D5");
 		
 		System.out.println(lightSensor);
 		System.out.println(tempSensor);
 		
-		//sample code to check operating system
-		System.out.println(System.getProperty("os.name"));
 		
+		//TODO - refactor into utility class
 		try{
 			String path2 = "C:\\Users\\Adrian\\Documents\\CCSU\\Fall 2018\\CS505\\designpatternsfinalproject-public-graduate-group-5\\PublicComponentCode\\ComponentCode\\pythonScripts\\test.py";
 			System.out.println(path2);

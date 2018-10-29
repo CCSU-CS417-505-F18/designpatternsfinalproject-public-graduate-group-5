@@ -14,14 +14,25 @@ public class Led extends Device {
 	 */
 	public Led(String name, String portNumber) {
 		this.name = name;
+		this.portNumber = portNumber;
 	}
 
 	public void turnOn() {
-		//TODO implementation
+		if(isAvailable(this, this.portNumber)) {
+			//call python script to turn on light
+		}
+		else {
+			System.out.println("Cannot turn on LED: " + this.name);
+		}
 	}
 	
 	public void turnOff() {
-		//TODO implementation
+		if(isAvailable(this, this.portNumber)) {
+			//call python script to turn on light
+		}
+		else {
+			System.out.println("Cannot turn off LED: " + this.name);
+		}
 	}
 	
 	/**
@@ -29,7 +40,12 @@ public class Led extends Device {
 	 * @param numberOfSeconds
 	 */
 	public void blink(int numberOfSeconds) {
-		//TODO implementation
+		if(isAvailable(this, this.portNumber)) {
+			//call python script to turn on light
+		}
+		else {
+			System.out.println("Cannot blink LED: " + this.name);
+		}
 	}
 	
 	@Override
@@ -44,8 +60,14 @@ public class Led extends Device {
 
 	@Override
 	public boolean isAvailable(Device device, String portNumber) {
-		// TODO Auto-generated method stub
-		return false;
+		String os = System.getProperty("os.name").trim().toLowerCase();
+		if(!os.contains("raspbian")){
+			return false;
+		}
+		else {
+			//open connection on pi and check for error
+		}
+		return true;
 	}
 	
 	@Override
@@ -55,8 +77,30 @@ public class Led extends Device {
 	}
 	
 	@Override
-	public String toString() {
-		return "Name: " + this.name;
+	protected boolean chainComparison(Device device) {
+		//check chain
+		Device nextDevice1 = this.getNextDevice();
+		Device nextDevice2 = device.getNextDevice();
+		
+		if(nextDevice1 != null && nextDevice2 != null) {
+			if(nextDevice1.equals(nextDevice2)) {
+				return true;
+			}
+		}
+		/*
+		 * after getting to end of chain and the devices are all equal,
+		 * if next in chain is null for both devices then they are equal chains
+		 * */
+		if(nextDevice1 == null  && nextDevice2 == null) {
+			return true;
+		}
+		return false;
 	}
-	//TODO implement object equality and hashCode
+	
+	@Override
+	public String toString() {
+		return "Name: " + this.name + "\n" +
+				"Port Number: " + this.portNumber;
+	}
+	//TODO implement hashCode
 }

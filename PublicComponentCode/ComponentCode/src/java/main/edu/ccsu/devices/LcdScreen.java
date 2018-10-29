@@ -62,5 +62,23 @@ public class LcdScreen extends Device {
 		return "Name: " + this.name;
 	}
 
+	@Override
+	public void turnOn() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void turnOff() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected boolean chainComparison(Device device) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	//TODO implement object equality and hashCode
 }

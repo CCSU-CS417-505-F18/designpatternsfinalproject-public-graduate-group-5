@@ -1,5 +1,5 @@
 /**
- * Package contains erros to be thrown under various conditions
+ * Package contains errors to be thrown under various conditions
  */
 /**
  * @author Adrian
