@@ -31,16 +31,19 @@ public class Led extends Device {
 		}
 		else if(UtilityMethods.checkOperatingSystem()) {
 				//NOTE - parsing port number because we want an integer respresentation of the last character
+			System.out.println("Turning on light to be implemented later");
+				/*
 				PyObject[] pyArray = {new PyString(CommonConstants.ON), new PyInteger(Integer.parseInt(this.getPortNumber().substring(1))) };
 				PyObject response = UtilityMethods.callPython(CommonConstants.SWITCH_PY, CommonConstants.SWITCH_PY_SWITCH, pyArray);
-//				String result = response.asString();
-//				if(result.equals(CommonConstants.ERROR)) {
-//					System.out.println("Error occured trying to used LED " + this.name);
-//					Device nxtDevice = this.getNextDevice();
-//					if(nxtDevice!= null) {
-//						nxtDevice.turnOn();
-//					}
-//				}
+				String result = response.asString();
+				if(result.equals(CommonConstants.ERROR)) {
+					System.out.println("Error occured trying to used LED " + this.name);
+					Device nxtDevice = this.getNextDevice();
+					if(nxtDevice!= null) {
+						nxtDevice.turnOn();
+					}
+				}
+				*/
 		}
 		else {
 			System.out.println("Cannot turn on LED: " + this.name);
@@ -53,16 +56,19 @@ public class Led extends Device {
 		}
 		else if(UtilityMethods.checkOperatingSystem()) {
 			//NOTE - parsing port number because we want an integer respresentation of the last character
+			System.out.println("Turning off light to be implemented in next release");
+			/*
 			PyObject[] pyArray = {new PyString(CommonConstants.OFF), new PyInteger(Integer.parseInt(this.getPortNumber().substring(1))) };
 			PyObject response = UtilityMethods.callPython(CommonConstants.SWITCH_PY, CommonConstants.SWITCH_PY_SWITCH, pyArray);
-//			String result = response.asString();
-//			if(result.equals(CommonConstants.ERROR)) {
-//				System.out.println("Error occured trying to used LED " + this.name);
-//				Device nxtDevice = this.getNextDevice();
-//				if(nxtDevice!= null) {
-//					nxtDevice.turnOn();
-//				}
-//			}
+			String result = response.asString();
+			if(result.equals(CommonConstants.ERROR)) {
+				System.out.println("Error occured trying to used LED " + this.name);
+				Device nxtDevice = this.getNextDevice();
+				if(nxtDevice!= null) {
+					nxtDevice.turnOn();
+				}
+			}
+			*/
 		}
 		else {
 			System.out.println("Cannot turn off LED: " + this.name);
@@ -94,7 +100,7 @@ public class Led extends Device {
 
 	@Override
 	public boolean isAvailable(Device device, String portNumber) {
-		//open connection on pi and check for error
+		System.out.println("Will always return true until raspberry pi connection code is developed");
 		return true;
 	}
 	

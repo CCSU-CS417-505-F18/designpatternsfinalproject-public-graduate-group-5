@@ -63,8 +63,11 @@ public class Main {
 		System.out.println(tempSensor);
 		*/
 		//sample call to python script with args 
+		
+		/*
 		PyObject[] pyArray = {new PyString("Testing"), new PyString("Array")};
 		UtilityMethods.callPython(CommonConstants.TEST_PY, CommonConstants.TEST_PY_MESSAGE, pyArray);
+		*/
 		
 	}
 }
