@@ -1,4 +1,7 @@
 package edu.ccsu.interfaces;
+
+import edu.ccsu.error.IncompatibleDeviceError;
+
 /**
  * Abstract class that specifies operations on Devices
  */
@@ -15,10 +18,10 @@ public abstract class Device {
 	 * If accessing current device fails and there is another device in the chain,
 	 * device will try to use that next device to perform operations.
 	 * @param device
-	 * @param portNumber
+	 * @throws IncompatibleDeviceError
 	 * @return 
 	 */
-	public abstract void setNextDevice(Device nextDevice, String portNumber);
+	public abstract void setNextDevice(Device nextDevice) throws IncompatibleDeviceError;
 	
 	/**
 	 * Given a device and port number, checks to see if devices

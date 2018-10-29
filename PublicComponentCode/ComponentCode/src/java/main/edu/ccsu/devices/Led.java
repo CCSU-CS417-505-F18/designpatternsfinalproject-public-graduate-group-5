@@ -1,5 +1,6 @@
 package edu.ccsu.devices;
 
+import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.interfaces.Device;
 /**
  * Class allows for operations on GrovePi LEDs.
@@ -32,9 +33,13 @@ public class Led extends Device {
 	}
 	
 	@Override
-	public void setNextDevice(Device nextDevice, String portNumber) {
-		// TODO Auto-generated method stub
-		
+	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError {
+		if(nextDevice instanceof Led) {
+			this.nextDevice = nextDevice;
+		}
+		else {
+			throw new IncompatibleDeviceError("LED not compatible with device.  LED chain can only be use other LEDs");
+		}
 	}
 
 	@Override
@@ -54,6 +59,4 @@ public class Led extends Device {
 		return "Name: " + this.name;
 	}
 	//TODO implement object equality and hashCode
-
-	
 }
