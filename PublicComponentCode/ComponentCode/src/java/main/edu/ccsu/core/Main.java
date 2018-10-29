@@ -2,12 +2,13 @@ package edu.ccsu.core;
 
 import org.python.core.PyObject;
 import org.python.core.PyString;
-import org.python.util.PythonInterpreter;
 
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.factory.DeviceAndSensorFactory;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.Sensor;
+import edu.ccsu.utility.CommonConstants;
+import edu.ccsu.utility.UtilityMethods;
 
 public class Main {
 
@@ -35,7 +36,7 @@ public class Main {
 			
 			//set ledFour chain
 			ledFour.setNextDevice(ledSix);
-//			ledSix.setNextDevice(ledNine);
+			ledSix.setNextDevice(ledNine);
 //			ledNine.setNextDevice(productFactory.makeDevice("LED", "BOB", "A0"));
 			
 			//doing this will throw an error 
@@ -61,19 +62,8 @@ public class Main {
 		System.out.println(lightSensor);
 		System.out.println(tempSensor);
 		
-		
-		//TODO - refactor into utility class
-		try{
-			String path2 = "C:\\Users\\Adrian\\Documents\\CCSU\\Fall 2018\\CS505\\designpatternsfinalproject-public-graduate-group-5\\PublicComponentCode\\ComponentCode\\pythonScripts\\test.py";
-			System.out.println(path2);
-			 // Create an instance of the PythonInterpreter
-	        PythonInterpreter interpreter = new PythonInterpreter();
-	        interpreter.execfile(path2);
-	        PyObject helloFunction = interpreter.get("message");
-	        PyObject result = helloFunction.__call__(new PyString("TESTING"), new PyString("hello"));			
-			
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		}
+		//sample call to python script with args 
+		PyObject[] pyArray = {new PyString("Testing"), new PyString("Array")};
+		UtilityMethods.callPython(CommonConstants.TEST_PY, CommonConstants.TEST_PY_MESSAGE, pyArray);
 	}
 }
