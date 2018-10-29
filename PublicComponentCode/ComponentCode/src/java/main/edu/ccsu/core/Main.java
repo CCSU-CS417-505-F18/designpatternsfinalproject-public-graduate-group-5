@@ -54,7 +54,7 @@ public class Main {
 		ledOne.turnOn();
 		ledTwo.turnOff();
 		
-		
+		/*
 		//sample sensors NOTE-will be implemented in future sprint
 		Sensor lightSensor = productFactory.makeSensor("LightSensor", "First Light Sensor", "A0");
 		Sensor tempSensor = productFactory.makeSensor("TempAndHumiditySensor", "Humidity", "D5");
@@ -65,5 +65,6 @@ public class Main {
 		//sample call to python script with args 
 		PyObject[] pyArray = {new PyString("Testing"), new PyString("Array")};
 		UtilityMethods.callPython(CommonConstants.TEST_PY, CommonConstants.TEST_PY_MESSAGE, pyArray);
+		*/
 	}
 }

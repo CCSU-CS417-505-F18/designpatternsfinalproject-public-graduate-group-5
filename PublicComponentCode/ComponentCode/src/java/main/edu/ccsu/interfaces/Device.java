@@ -118,7 +118,17 @@ public abstract class Device {
 	public Device getNextDevice() {
 		return nextDevice;
 	}
-	
+	/**
+	 * Returns true if you run code on raspberry pi
+	 * @return
+	 */
+	protected boolean checkOperatingSystem() {
+		String os = System.getProperty("os.name").trim().toLowerCase();
+		if(!os.contains("raspbian")){
+			return false;
+		}
+		return true;
+	}
 	/**
 	 * Check to see if two devices are equal 
 	 */

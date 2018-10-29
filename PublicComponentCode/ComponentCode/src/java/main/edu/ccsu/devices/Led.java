@@ -1,12 +1,18 @@
 package edu.ccsu.devices;
 
+import org.python.core.PyInteger;
+import org.python.core.PyObject;
+import org.python.core.PyString;
+
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.interfaces.Device;
+import edu.ccsu.utility.CommonConstants;
+import edu.ccsu.utility.UtilityMethods;
 /**
  * Class allows for operations on GrovePi LEDs.
  */
 public class Led extends Device {
-
+	
 	/**
 	 * 
 	 * @param name
@@ -17,9 +23,24 @@ public class Led extends Device {
 		this.portNumber = portNumber;
 	}
 
+	//TODO - at a later date refactor turnOn()/turnOff() into one switch() method
 	public void turnOn() {
-		if(isAvailable(this, this.portNumber)) {
-			//call python script to turn on light
+		//port must be a digital port starting with D
+		if(!this.getPortNumber().contains("D")) {
+			System.out.println("Must use a digital port starting with D");
+		}
+		else if(checkOperatingSystem()) {
+				//NOTE - parsing port number because we want an integer respresentation of the last character
+				PyObject[] pyArray = {new PyString(CommonConstants.ON), new PyInteger(Integer.parseInt(this.getPortNumber().substring(1))) };
+				PyObject response = UtilityMethods.callPython(CommonConstants.SWITCH_PY, CommonConstants.SWITCH_PY_SWITCH, pyArray);
+				String result = response.asString();
+				if(result.equals(CommonConstants.ERROR)) {
+					System.out.println("Error occured trying to used LED " + this.name);
+					Device nxtDevice = this.getNextDevice();
+					if(nxtDevice!= null) {
+						nxtDevice.turnOn();
+					}
+				}
 		}
 		else {
 			System.out.println("Cannot turn on LED: " + this.name);
@@ -27,8 +48,21 @@ public class Led extends Device {
 	}
 	
 	public void turnOff() {
-		if(isAvailable(this, this.portNumber)) {
-			//call python script to turn on light
+		if(!this.getPortNumber().contains("D")) {
+			System.out.println("Must use a digital port starting with D");
+		}
+		else if(checkOperatingSystem()) {
+			//NOTE - parsing port number because we want an integer respresentation of the last character
+			PyObject[] pyArray = {new PyString(CommonConstants.OFF), new PyInteger(Integer.parseInt(this.getPortNumber().substring(1))) };
+			PyObject response = UtilityMethods.callPython(CommonConstants.SWITCH_PY, CommonConstants.SWITCH_PY_SWITCH, pyArray);
+			String result = response.asString();
+			if(result.equals(CommonConstants.ERROR)) {
+				System.out.println("Error occured trying to used LED " + this.name);
+				Device nxtDevice = this.getNextDevice();
+				if(nxtDevice!= null) {
+					nxtDevice.turnOn();
+				}
+			}
 		}
 		else {
 			System.out.println("Cannot turn off LED: " + this.name);
@@ -40,7 +74,7 @@ public class Led extends Device {
 	 * @param numberOfSeconds
 	 */
 	public void blink(int numberOfSeconds) {
-		if(isAvailable(this, this.portNumber)) {
+		if(checkOperatingSystem()) {
 			//call python script to turn on light
 		}
 		else {
@@ -60,19 +94,18 @@ public class Led extends Device {
 
 	@Override
 	public boolean isAvailable(Device device, String portNumber) {
-		String os = System.getProperty("os.name").trim().toLowerCase();
-		if(!os.contains("raspbian")){
-			return false;
-		}
-		else {
-			//open connection on pi and check for error
-		}
+		//open connection on pi and check for error
 		return true;
 	}
 	
 	@Override
 	public void adjustBrightness(int brightness) {
-		// TODO Auto-generated method stub
+		if(checkOperatingSystem()) {
+			System.out.println("Call python script to adjust brightness");
+		}
+		else {
+			System.out.println("Cannot adjust brightness for LED: " + this.getName() + ". Must run on raspberry pi");
+		}
 		
 	}
 	

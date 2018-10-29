@@ -35,9 +35,9 @@ THE SOFTWARE.
 
 import time
 from grovepi import *
-def switch(onOrOff, portNumber):
-    # Connect the Grove LED to digital port 
-    led = portNumber
+def blink():
+    # Connect the Grove LED to digital port D4
+    led = 4
 
     pinMode(led,"OUTPUT")
     time.sleep(1)
@@ -46,18 +46,20 @@ def switch(onOrOff, portNumber):
     print (" ")
     print ("Connect the LED to the port labele D4!" )
 
-
-    try:
-        if(onOrOff == "ON"):
+    while True:
+        try:
+            #Blink the LED
             digitalWrite(led,1)		# Send HIGH to switch on LED
-            return "LED ON!"
-            
-        if(onOrOff == "OFF"):
-            digitalWrite(led,0)		# Send LOW to switch off LED
-            return "LED OFF!"
+            print ("LED ON!")
+            time.sleep(1)
 
-    except KeyboardInterrupt:	# Turn LED off before stopping
-        digitalWrite(led,0)
-        return
-    except IOError:		        # Print "Error" if communication error encountered
-        return "Error"
+            digitalWrite(led,0)		# Send LOW to switch off LED
+            print ("LED OFF!")
+            time.sleep(1)
+
+        except KeyboardInterrupt:	# Turn LED off before stopping
+            digitalWrite(led,0)
+            break
+        except IOError:		        # Print "Error" if communication error encountered
+            print ("Error")
+blink()
