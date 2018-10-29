@@ -1,5 +1,6 @@
 package edu.ccsu.devices;
 
+import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.interfaces.Device;
 /**
  * Class connects to LCD RGB Backlight and allows
@@ -33,7 +34,7 @@ public class LcdScreen extends Device {
 	}
 
 	@Override
-	public void setNextDevice(Device nextDevice, String portNumber) {
+	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError {
 		// TODO Auto-generated method stub
 		
 	}
@@ -59,6 +60,24 @@ public class LcdScreen extends Device {
 	@Override
 	public String toString() {
 		return "Name: " + this.name;
+	}
+
+	@Override
+	public void turnOn() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void turnOff() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected boolean chainComparison(Device device) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	//TODO implement object equality and hashCode

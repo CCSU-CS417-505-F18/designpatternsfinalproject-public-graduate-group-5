@@ -1,4 +1,8 @@
 package edu.ccsu.interfaces;
+
+import edu.ccsu.error.IncompatibleDeviceError;
+import edu.ccsu.utility.CommonConstants;
+
 /**
  * Abstract class that specifies operations on Devices
  */
@@ -15,10 +19,10 @@ public abstract class Device {
 	 * If accessing current device fails and there is another device in the chain,
 	 * device will try to use that next device to perform operations.
 	 * @param device
-	 * @param portNumber
+	 * @throws IncompatibleDeviceError
 	 * @return 
 	 */
-	public abstract void setNextDevice(Device nextDevice, String portNumber);
+	public abstract void setNextDevice(Device nextDevice) throws IncompatibleDeviceError;
 	
 	/**
 	 * Given a device and port number, checks to see if devices
@@ -41,6 +45,16 @@ public abstract class Device {
 	 * @param numberOfSeconds
 	 */
 	public abstract void blink(int numberOfSeconds);
+	
+	/**
+	 * Can be used to turn on light capable devices
+	 */
+	public abstract void turnOn();
+	
+	/**
+	 * Can be used to turn off light capable devices
+	 */
+	public abstract void turnOff();
 	
 	/**
 	 * 
@@ -105,4 +119,44 @@ public abstract class Device {
 	public Device getNextDevice() {
 		return nextDevice;
 	}
+	
+	/**
+	 * Check to see if two devices are equal 
+	 */
+	@Override
+	public boolean equals(Object o) {
+		//check if references are equal
+		if(this == o) {
+			return true;
+		}
+		
+		//check if null
+		if(null == o) {
+			return false;
+		}
+	
+		//check if they are the same class
+		if(getClass() != o.getClass()) {
+			return false;
+		}
+		
+		Device device = (Device) o;
+		
+		//significant field field comparison
+		if(this.name.equals(device.getName())
+				&& this.portNumber.equals(device.getPortNumber())) {
+			//check if chain is equal after field comparison
+			 if(chainComparison(device)) {
+				 return true;
+			 }
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks to see if two objects have the same chain
+	 * @param device
+	 * @return
+	 */
+	protected abstract boolean chainComparison(Device device);
 }
