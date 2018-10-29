@@ -30,8 +30,20 @@ public class UtilityMethods {
 	        PythonInterpreter interpreter = new PythonInterpreter();
 	        //append pythonFileName to end of relative path
 	        interpreter.execfile(CommonConstants.RELATIVE_PATH + pythonFileName);
-	        PyObject helloFunction = interpreter.get(function);
-	        PyObject result = helloFunction.__call__(args);			
+	        PyObject fnct = interpreter.get(function);
+	        PyObject result = null;
+	        if(args == null) {
+	        	 result = fnct.__call__();
+	        }
+	        else {
+	        	 result = fnct.__call__(args);
+	        }
+	        String realResult = "";
+	        if(result != null) {
+	        	realResult = (String) result.__tojava__(String.class);
+	        }
+	        System.out.println(realResult);
+	        interpreter.cleanup();
 	        return result;
 		}catch(Exception e){
 			System.out.println(e.getMessage());
