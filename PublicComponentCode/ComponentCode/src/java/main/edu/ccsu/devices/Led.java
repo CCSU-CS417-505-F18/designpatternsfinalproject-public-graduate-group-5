@@ -29,18 +29,18 @@ public class Led extends Device {
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
 		}
-		else if(checkOperatingSystem()) {
+		else if(UtilityMethods.checkOperatingSystem()) {
 				//NOTE - parsing port number because we want an integer respresentation of the last character
 				PyObject[] pyArray = {new PyString(CommonConstants.ON), new PyInteger(Integer.parseInt(this.getPortNumber().substring(1))) };
 				PyObject response = UtilityMethods.callPython(CommonConstants.SWITCH_PY, CommonConstants.SWITCH_PY_SWITCH, pyArray);
-				String result = response.asString();
-				if(result.equals(CommonConstants.ERROR)) {
-					System.out.println("Error occured trying to used LED " + this.name);
-					Device nxtDevice = this.getNextDevice();
-					if(nxtDevice!= null) {
-						nxtDevice.turnOn();
-					}
-				}
+//				String result = response.asString();
+//				if(result.equals(CommonConstants.ERROR)) {
+//					System.out.println("Error occured trying to used LED " + this.name);
+//					Device nxtDevice = this.getNextDevice();
+//					if(nxtDevice!= null) {
+//						nxtDevice.turnOn();
+//					}
+//				}
 		}
 		else {
 			System.out.println("Cannot turn on LED: " + this.name);
@@ -51,18 +51,18 @@ public class Led extends Device {
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
 		}
-		else if(checkOperatingSystem()) {
+		else if(UtilityMethods.checkOperatingSystem()) {
 			//NOTE - parsing port number because we want an integer respresentation of the last character
 			PyObject[] pyArray = {new PyString(CommonConstants.OFF), new PyInteger(Integer.parseInt(this.getPortNumber().substring(1))) };
 			PyObject response = UtilityMethods.callPython(CommonConstants.SWITCH_PY, CommonConstants.SWITCH_PY_SWITCH, pyArray);
-			String result = response.asString();
-			if(result.equals(CommonConstants.ERROR)) {
-				System.out.println("Error occured trying to used LED " + this.name);
-				Device nxtDevice = this.getNextDevice();
-				if(nxtDevice!= null) {
-					nxtDevice.turnOn();
-				}
-			}
+//			String result = response.asString();
+//			if(result.equals(CommonConstants.ERROR)) {
+//				System.out.println("Error occured trying to used LED " + this.name);
+//				Device nxtDevice = this.getNextDevice();
+//				if(nxtDevice!= null) {
+//					nxtDevice.turnOn();
+//				}
+//			}
 		}
 		else {
 			System.out.println("Cannot turn off LED: " + this.name);
@@ -74,7 +74,7 @@ public class Led extends Device {
 	 * @param numberOfSeconds
 	 */
 	public void blink(int numberOfSeconds) {
-		if(checkOperatingSystem()) {
+		if(UtilityMethods.checkOperatingSystem()) {
 			//call python script to turn on light
 		}
 		else {
@@ -100,7 +100,7 @@ public class Led extends Device {
 	
 	@Override
 	public void adjustBrightness(int brightness) {
-		if(checkOperatingSystem()) {
+		if(UtilityMethods.checkOperatingSystem()) {
 			System.out.println("Call python script to adjust brightness");
 		}
 		else {

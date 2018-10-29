@@ -58,6 +58,6 @@ def switch(onOrOff, portNumber):
 
     except KeyboardInterrupt:	# Turn LED off before stopping
         digitalWrite(led,0)
-        return
+        return "Keyboard interrupt"
     except IOError:		        # Print "Error" if communication error encountered
         return "Error"

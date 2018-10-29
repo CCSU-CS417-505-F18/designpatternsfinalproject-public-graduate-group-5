@@ -38,4 +38,17 @@ public class UtilityMethods {
 		}
 		return null;
 	}
+	
+	
+	/**
+	 * Returns true if you run code on raspberry pi
+	 * @return
+	 */
+	public static boolean checkOperatingSystem() {
+		String os = System.getProperty("os.name").trim().toLowerCase();
+		if(!os.contains(CommonConstants.LINUX)){
+			return false;
+		}
+		return true;
+	}
 }
