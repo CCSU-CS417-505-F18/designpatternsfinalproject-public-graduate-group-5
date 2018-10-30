@@ -159,4 +159,5 @@ public abstract class Device {
 	 * @return
 	 */
 	protected abstract boolean chainComparison(Device device);
+
 }

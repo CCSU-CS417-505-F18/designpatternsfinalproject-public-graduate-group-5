@@ -8,6 +8,7 @@ import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.utility.CommonConstants;
 import edu.ccsu.utility.UtilityMethods;
+
 /**
  * Class allows for operations on GrovePi LEDs.
  */
