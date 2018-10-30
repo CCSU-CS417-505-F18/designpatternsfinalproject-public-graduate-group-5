@@ -1,4 +1,4 @@
-package edu.ccsu.core;
+package edu.ccsu.sample;
 
 import org.python.core.PyObject;
 import org.python.core.PyString;
