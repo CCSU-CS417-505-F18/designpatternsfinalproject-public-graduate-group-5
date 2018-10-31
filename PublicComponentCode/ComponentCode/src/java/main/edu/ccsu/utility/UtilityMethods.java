@@ -1,8 +1,5 @@
 package edu.ccsu.utility;
 
-import org.python.core.PyObject;
-import org.python.util.PythonInterpreter;
-
 /**
  * Class contains common methods used throughout project
  * @author Adrian
@@ -24,31 +21,8 @@ public class UtilityMethods {
 	 * @param args
 	 * @returns PyObject
 	 */
-	public static PyObject callPython(String pythonFileName, String function, PyObject[] args) {
-		try{
-			 // Create an instance of the PythonInterpreter
-	        PythonInterpreter interpreter = new PythonInterpreter();
-	        //append pythonFileName to end of relative path
-	        interpreter.execfile(CommonConstants.RELATIVE_PATH + pythonFileName);
-	        PyObject fnct = interpreter.get(function);
-	        PyObject result = null;
-	        if(args == null) {
-	        	 result = fnct.__call__();
-	        }
-	        else {
-	        	 result = fnct.__call__(args);
-	        }
-	        String realResult = "";
-	        if(result != null) {
-	        	realResult = (String) result.__tojava__(String.class);
-	        }
-	        System.out.println(realResult);
-	        interpreter.cleanup();
-	        return result;
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		}
-		return null;
+	public static void callPython(String pythonFileName, String function) {
+		
 	}
 	
 	

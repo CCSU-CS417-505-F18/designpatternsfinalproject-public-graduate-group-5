@@ -1,7 +1,4 @@
-package edu.ccsu.core;
-
-import org.python.core.PyObject;
-import org.python.core.PyString;
+package edu.ccsu.sample;
 
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.factory.DeviceAndSensorFactory;
@@ -61,13 +58,6 @@ public class Main {
 		
 		System.out.println(lightSensor);
 		System.out.println(tempSensor);
-		*/
-		//sample call to python script with args 
-		
-		/*
-		PyObject[] pyArray = {new PyString("Testing"), new PyString("Array")};
-		UtilityMethods.callPython(CommonConstants.TEST_PY, CommonConstants.TEST_PY_MESSAGE, pyArray);
-		*/
 		
 	}
 }

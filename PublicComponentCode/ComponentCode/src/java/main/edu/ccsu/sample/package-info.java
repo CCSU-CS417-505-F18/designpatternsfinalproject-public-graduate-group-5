@@ -5,4 +5,4 @@
  * @author Kim
  * @author GaYoung
  */
-package edu.ccsu.core;
+package edu.ccsu.sample;

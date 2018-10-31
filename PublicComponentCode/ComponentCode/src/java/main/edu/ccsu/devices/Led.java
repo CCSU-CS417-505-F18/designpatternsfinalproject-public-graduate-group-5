@@ -1,13 +1,10 @@
 package edu.ccsu.devices;
 
-import org.python.core.PyInteger;
-import org.python.core.PyObject;
-import org.python.core.PyString;
-
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.utility.CommonConstants;
 import edu.ccsu.utility.UtilityMethods;
+
 /**
  * Class allows for operations on GrovePi LEDs.
  */
