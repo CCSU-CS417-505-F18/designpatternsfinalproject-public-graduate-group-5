@@ -20,6 +20,7 @@ public class CommonConstants {
 	
 	//python method constants
 	//NOTE - please follow convention starting with pythonFileName_Function
+	public static final String PYTHON = "python";
 	public static final String TEST_PY_MESSAGE = "message";
 	public static final String GROVE_LED_BLINK_BLINK = "blink";
 	public static final String SWITCH_PY_SWITCH = "switch";
@@ -29,4 +30,6 @@ public class CommonConstants {
 	public static final String OFF = "OFF";
 	public static final String ERROR = "Error";
 	public static final String LINUX = "linux";
+	public static final String BLANK = " ";
+	
 }

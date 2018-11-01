@@ -50,14 +50,7 @@ public class Main {
 		//methods to turn on and off LEDs...NOTE will print message that it failed if not using on Raspbian
 		ledOne.turnOn();
 		ledTwo.turnOff();
-		
-		/*
-		//sample sensors NOTE-will be implemented in future sprint
-		Sensor lightSensor = productFactory.makeSensor("LightSensor", "First Light Sensor", "A0");
-		Sensor tempSensor = productFactory.makeSensor("TempAndHumiditySensor", "Humidity", "D5");
-		
-		System.out.println(lightSensor);
-		System.out.println(tempSensor);
-		
+	
+		System.out.println(UtilityMethods.callPython(CommonConstants.TEST_PY, null));
 	}
 }

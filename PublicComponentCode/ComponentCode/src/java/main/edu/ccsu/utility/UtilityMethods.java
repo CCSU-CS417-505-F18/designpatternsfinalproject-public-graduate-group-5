@@ -1,5 +1,9 @@
 package edu.ccsu.utility;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  * Class contains common methods used throughout project
  * @author Adrian
@@ -18,11 +22,23 @@ public class UtilityMethods {
 	 * you can check what went wrong in PyObject
 	 * @param pythonFileName
 	 * @param function
-	 * @param args
-	 * @returns PyObject
+	 * @returns String
 	 */
-	public static void callPython(String pythonFileName, String function) {
-		
+	public static String callPython(String pythonFileName, String function) {
+		 String response  = "";
+		 
+		try {
+			System.out.println(CommonConstants.PYTHON + CommonConstants.BLANK +  pythonFileName);
+			Process p = Runtime.getRuntime().exec(CommonConstants.PYTHON + CommonConstants.BLANK + CommonConstants.RELATIVE_PATH +  pythonFileName);
+			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+           
+			response = input.readLine();
+			input.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+           return response;
 	}
 	
 	
