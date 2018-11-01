@@ -18,8 +18,7 @@ public class UtilityMethods {
 	
 	/**
 	 * Give method a pythonFileName stored in pythonScripts.  Will run the script.  
-	 * Returns a PyObject. If it's null the script failed or if the script throws an error
-	 * you can check what went wrong in PyObject
+	 * If an error occurred with return a String equaling "Error"
 	 * @param pythonFileName
 	 * @param function
 	 * @returns String
@@ -28,8 +27,15 @@ public class UtilityMethods {
 		 String response  = "";
 		 
 		try {
-			System.out.println(CommonConstants.PYTHON + CommonConstants.BLANK +  pythonFileName);
-			Process p = Runtime.getRuntime().exec(CommonConstants.PYTHON + CommonConstants.BLANK + CommonConstants.RELATIVE_PATH +  pythonFileName);
+			Process p = null;
+			if(function == null || function.isEmpty()) {
+				p = Runtime.getRuntime().exec(CommonConstants.PYTHON + CommonConstants.BLANK + CommonConstants.RELATIVE_PATH +  pythonFileName);
+			}
+			else {
+				p = Runtime.getRuntime().exec(CommonConstants.PYTHON + CommonConstants.BLANK + 
+												CommonConstants.RELATIVE_PATH +  pythonFileName + CommonConstants.BLANK +
+												function);
+			}
 			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
            
 			response = input.readLine();

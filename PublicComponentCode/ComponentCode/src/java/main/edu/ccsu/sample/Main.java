@@ -3,7 +3,6 @@ package edu.ccsu.sample;
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.factory.DeviceAndSensorFactory;
 import edu.ccsu.interfaces.Device;
-import edu.ccsu.interfaces.Sensor;
 import edu.ccsu.utility.CommonConstants;
 import edu.ccsu.utility.UtilityMethods;
 
@@ -50,7 +49,16 @@ public class Main {
 		//methods to turn on and off LEDs...NOTE will print message that it failed if not using on Raspbian
 		ledOne.turnOn();
 		ledTwo.turnOff();
-	
+		
 		System.out.println(UtilityMethods.callPython(CommonConstants.TEST_PY, null));
+		System.out.println("LED");
+		System.out.println(UtilityMethods.callPython(CommonConstants.TOGGLE_LED, "3 ON"));
+		try {
+			Thread.sleep(2);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(UtilityMethods.callPython(CommonConstants.TOGGLE_LED, "3 OFF"));
 	}
 }

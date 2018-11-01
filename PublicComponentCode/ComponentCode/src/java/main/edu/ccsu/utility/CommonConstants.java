@@ -13,6 +13,7 @@ public class CommonConstants {
 	public static final String GROVE_LED_BLINK = "grove_led_blink.py";
 	public static final String GROVE_LIGHT_SENSOR = "grove_light_sensor.py";
 	public static final String SWITCH_PY = "switch.py";
+	public static final String TOGGLE_LED = "ToggleLED.py";
 	
 	//device and sensor constants
 	public static final String LCD = "LCD";
