@@ -2,6 +2,7 @@ package edu.ccsu.devices;
 
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.interfaces.Device;
+import edu.ccsu.utility.CommonConstants;
 import edu.ccsu.utility.UtilityMethods;
 
 /**
@@ -26,9 +27,7 @@ public class Led extends Device {
 			System.out.println("Must use a digital port starting with D");
 		}
 		else if(UtilityMethods.checkOperatingSystem()) {
-				//NOTE - parsing port number because we want an integer respresentation of the last character
-			System.out.println("Turning on light to be implemented later");
-				
+			UtilityMethods.callPython(CommonConstants.TOGGLE_LED, buildArgsString(CommonConstants.ON));			
 		}
 		else {
 			System.out.println("Cannot turn on LED: " + this.name);
@@ -40,8 +39,7 @@ public class Led extends Device {
 			System.out.println("Must use a digital port starting with D");
 		}
 		else if(UtilityMethods.checkOperatingSystem()) {
-			//NOTE - parsing port number because we want an integer respresentation of the last character
-			System.out.println("Turning off light to be implemented in next release");
+			UtilityMethods.callPython(CommonConstants.TOGGLE_LED, buildArgsString(CommonConstants.OFF));
 		}
 		else {
 			System.out.println("Cannot turn off LED: " + this.name);
@@ -107,6 +105,21 @@ public class Led extends Device {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Builds the string needed in calling python process
+	 * @param onOrOff
+	 * @return
+	 */
+	private String buildArgsString(String onOrOff) {
+		String portNumber = this.getPortNumber().substring(1);
+		StringBuilder args = new StringBuilder();
+		args.append(portNumber);
+		args.append(CommonConstants.BLANK);
+		args.append(onOrOff);
+		System.out.println(portNumber);
+		return args.toString();
 	}
 	
 	@Override

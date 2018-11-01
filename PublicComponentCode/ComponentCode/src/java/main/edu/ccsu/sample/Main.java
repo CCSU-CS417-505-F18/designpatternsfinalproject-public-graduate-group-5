@@ -8,7 +8,7 @@ import edu.ccsu.utility.UtilityMethods;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		//instantiate factory to create objects 
 		DeviceAndSensorFactory productFactory = new DeviceAndSensorFactory();
 		
@@ -47,18 +47,11 @@ public class Main {
 		//use equals method on device
 		System.out.println(ledOne.equals(ledFour));
 		//methods to turn on and off LEDs...NOTE will print message that it failed if not using on Raspbian
-		ledOne.turnOn();
-		ledTwo.turnOff();
-		
-		System.out.println(UtilityMethods.callPython(CommonConstants.TEST_PY, null));
 		System.out.println("LED");
-		System.out.println(UtilityMethods.callPython(CommonConstants.TOGGLE_LED, "3 ON"));
-		try {
-			Thread.sleep(2);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(UtilityMethods.callPython(CommonConstants.TOGGLE_LED, "3 OFF"));
+		ledOne.turnOn();
+		Thread.sleep(1800L);
+		ledOne.turnOff();
+		
+		//System.out.println(UtilityMethods.callPython(CommonConstants.TEST_PY, null));
 	}
 }

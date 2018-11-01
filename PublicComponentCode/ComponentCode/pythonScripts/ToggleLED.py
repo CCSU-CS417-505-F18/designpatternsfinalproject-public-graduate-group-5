@@ -36,7 +36,7 @@ THE SOFTWARE.
 import time
 import sys
 from grovepi import *
-def change(portNumber, onOrOff):
+def toggleLED(portNumber, onOrOff):
     # Connect the Grove LED to digital port 
     led = portNumber
     pinMode(led,"OUTPUT")
