@@ -47,11 +47,11 @@ public class TemperatureAndHumiditySensor implements Sensor {
 	}
 
 	@Override
-	public void setNextSensor(Sensor nextSensor, String portNumber) {
+	public void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError {
 		if(nextSensor instanceof TemperatureAndHumiditySensor) {
 			this.nextSensor = nextSensor;
 		} else {
-			throw new IncompatibleSensorError("Sensor not compatible with sensor. Sensor chain can only be use other Sensors")
+			throw new IncompatibleSensorError("Sensor not compatible with sensor. Sensor chain can only be use other Sensors");
 		}
 
 	}
@@ -90,10 +90,4 @@ public class TemperatureAndHumiditySensor implements Sensor {
 	public void setPortNumber(String portNumber) {
 		this.portNumber = portNumber;
 	}
-
-	@Override
-	public String toString() {
-		return "Name: " + this.name;
-	}
-	//TODO implement object equality and hashCode
 }
