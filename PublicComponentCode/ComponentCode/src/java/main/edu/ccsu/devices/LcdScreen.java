@@ -22,7 +22,7 @@ public class LcdScreen extends Device {
 	 * @param message
 	 */
 	public void printMessage(String message) {
-		//TODO implementation 
+		//TODO implementation - 
 	}
 	
 	/**
@@ -37,9 +37,11 @@ public class LcdScreen extends Device {
 
 	@Override
 	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError {
-
-		// TODO Auto-generated method stub
-		
+		if(nextDevice instanceof LcdScreen) {
+			this.nextDevice = nextDevice;
+		} else {
+			throw new IncompatibleDeviceError("Sensor not compatible with sensor. Sensor chain can only be use other Sensors");
+		}		
 	}
 	
 	@Override
@@ -62,8 +64,8 @@ public class LcdScreen extends Device {
 	
 	@Override
 	public String toString() {
-		return "Name: " + this.name;
-	}
+		return "Name: " + this.name + "\n" +
+				"Port Number: " + this.portNumber;	}
 
 	@Override
 	public void turnOn() {

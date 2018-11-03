@@ -19,25 +19,36 @@ public class LightSensor implements Sensor {
 	
 	@Override
 	public String getData(String desiredData) {
-		// TODO Auto-generated method stub
-		return null;
+		//if user just wants name only get that
+		//if user just wants lightIntensity just get that
+		//if user wants both grab both
+		String returnValue = "";
+		if(desiredData.equals("name")) returnValue = name;
+		else if(desiredData.equals("intensity")) returnValue = Double.toString(lightIntensity);
+		else if(desiredData.equals("b")) returnValue = name+":"+Double.toString(lightIntensity);
+		return returnValue;	
 	}
 
 	@Override
-	public String getData(int seconds) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setNextSensor(Sensor nextSensor, String portNumber) {
+	public String[] getData(int seconds) {
 		// TODO Auto-generated method stub
 		
+		return null;
 	}
 
 	@Override
+
+	public void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError  {
+		if(nextSensor instanceof LightSensor) {
+			this.nextSensor = nextSensor;
+		} else {
+			throw new IncompatibleSensorError("Sensor not compatible with sensor. Sensor chain can only be use other Sensors");
+		}
+	}
+	
+	@Override
 	public boolean isAvailable(Sensor sensor, String portNumber) {
-		// TODO Auto-generated method stub
+		// TODO  connect with python file 
 		return false;
 	}
 
@@ -70,7 +81,9 @@ public class LightSensor implements Sensor {
 	 * @param nextSensor
 	 */
 	public void setNextSensor(Sensor nextSensor) {
-		this.nextSensor = nextSensor;
+		if(nextSensor instanceof LightSensor) {
+			this.nextSensor = nextSensor;
+		} 
 	}
 
 	/**
@@ -89,9 +102,4 @@ public class LightSensor implements Sensor {
 		this.name = name;
 	}
 	
-	@Override
-	public String toString() {
-		return "Name: " + this.name;
-	}
-	//TODO implement object equality and hashCode
 }
