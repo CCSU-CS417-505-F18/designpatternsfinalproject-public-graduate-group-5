@@ -53,12 +53,6 @@ public class LcdScreen extends Device {
 	}
 	
 	@Override
-	public boolean isAvailable(Device device, String portNumber) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	@Override
 	public String toString() {
 		return "Name: " + this.name;
 	}

@@ -69,12 +69,6 @@ public class Led extends Device {
 	}
 
 	@Override
-	public boolean isAvailable(Device device, String portNumber) {
-		System.out.println("Will always return true until raspberry pi connection code is developed");
-		return true;
-	}
-	
-	@Override
 	public void adjustBrightness(int brightness) {
 		if(UtilityMethods.checkOperatingSystem()) {
 			UtilityMethods.callPython(CommonConstants.ADJUST_BRIGHTNESS, UtilityMethods.buildArgsString(this.getPortNumber(), Integer.toString(brightness)));
@@ -105,11 +99,4 @@ public class Led extends Device {
 		}
 		return false;
 	}
-	
-	@Override
-	public String toString() {
-		return "Name: " + this.name + "\n" +
-				"Port Number: " + this.portNumber;
-	}
-	//TODO implement hashCode
 }

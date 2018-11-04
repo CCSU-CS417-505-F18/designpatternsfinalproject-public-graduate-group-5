@@ -36,12 +36,12 @@ public class UtilityMethods {
 												CommonConstants.RELATIVE_PATH +  pythonFileName + CommonConstants.BLANK +
 												function);
 			}
+			//get output from process and return it to the caller
 			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
            
 			response = input.readLine();
 			input.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			return response;			

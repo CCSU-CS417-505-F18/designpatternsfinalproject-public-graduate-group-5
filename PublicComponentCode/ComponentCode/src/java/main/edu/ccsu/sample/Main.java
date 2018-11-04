@@ -40,12 +40,14 @@ public class Main {
 		} catch (IncompatibleDeviceError e1) {
 			e1.printStackTrace();
 		}
-		
 		//check that CoR was set properly 
 		System.out.println(ledOne.getNextDevice().getNextDevice().getName());
-		
 		//use equals method on device
 		System.out.println(ledOne.equals(ledFour));
+		System.out.println(ledNine);
+		//check hashcodes
+		System.out.println(ledOne.hashCode());
+		System.out.println(ledFour.hashCode());
 		//methods to interact with LEDs...NOTE will print message that it failed if not using on Raspbian
 		ledOne.turnOn();
 		Thread.sleep(1800);
@@ -53,7 +55,6 @@ public class Main {
 		Thread.sleep(1800);
 		ledOne.blink(2);
 		Thread.sleep(1800);
-		System.out.println("Adjusting Brightness");
 		ledOne.adjustBrightness(500);
 		Thread.sleep(1800);
 		ledOne.adjustBrightness(1023);
