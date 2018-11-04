@@ -24,7 +24,7 @@ public class UtilityMethods {
 	 * @returns String
 	 */
 	public static String callPython(String pythonFileName, String function) {
-		 String response  = "";
+		String response  = "";
 		 
 		try {
 			Process p = null;
@@ -47,6 +47,23 @@ public class UtilityMethods {
            return response;
 	}
 	
+	/**
+	 * Builds the string needed in calling python process
+	 * @param portNumber
+	 * @param params
+	 * @return
+	 */
+	public static String buildArgsString(String portNumber, String params) {
+		StringBuilder args = new StringBuilder();
+		//NOTE - our custom Python code always will have portNumber as first entry in params string
+		args.append(portNumber.substring(1));
+		String[] strToAppend = params.split("\\s+");
+		for(String str: strToAppend) {
+			args.append(CommonConstants.BLANK);
+			args.append(str);			
+		}
+		return args.toString();
+	}
 	
 	/**
 	 * Returns true if you run code on raspberry pi

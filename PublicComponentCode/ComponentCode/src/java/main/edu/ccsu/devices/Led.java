@@ -27,7 +27,7 @@ public class Led extends Device {
 			System.out.println("Must use a digital port starting with D");
 		}
 		else if(UtilityMethods.checkOperatingSystem()) {
-			UtilityMethods.callPython(CommonConstants.TOGGLE_LED, buildArgsString(CommonConstants.ON));			
+			UtilityMethods.callPython(CommonConstants.TOGGLE_LED, UtilityMethods.buildArgsString(this.getPortNumber(), CommonConstants.ON));			
 		}
 		else {
 			System.out.println("Cannot turn on LED: " + this.name);
@@ -39,7 +39,7 @@ public class Led extends Device {
 			System.out.println("Must use a digital port starting with D");
 		}
 		else if(UtilityMethods.checkOperatingSystem()) {
-			UtilityMethods.callPython(CommonConstants.TOGGLE_LED, buildArgsString(CommonConstants.OFF));
+			UtilityMethods.callPython(CommonConstants.TOGGLE_LED, UtilityMethods.buildArgsString(this.getPortNumber(),CommonConstants.OFF));
 		}
 		else {
 			System.out.println("Cannot turn off LED: " + this.name);
@@ -52,7 +52,7 @@ public class Led extends Device {
 	 */
 	public void blink(int numberOfSeconds) {
 		if(UtilityMethods.checkOperatingSystem()) {
-			//call python script to turn on light
+			UtilityMethods.callPython(CommonConstants.GROVE_LED_BLINK, UtilityMethods.buildArgsString(this.getPortNumber(), Integer.toString(numberOfSeconds)));
 		}
 		else {
 			System.out.println("Cannot blink LED: " + this.name);
@@ -65,7 +65,7 @@ public class Led extends Device {
 			this.nextDevice = nextDevice;
 		}
 		else {
-			throw new IncompatibleDeviceError("LED not compatible with device.  LED chain can only be use other LEDs");
+			throw new IncompatibleDeviceError("LED not compatible with device.  LED chain can only be used by other LEDs");
 		}
 	}
 
@@ -105,21 +105,6 @@ public class Led extends Device {
 			return true;
 		}
 		return false;
-	}
-	
-	/**
-	 * Builds the string needed in calling python process
-	 * @param onOrOff
-	 * @return
-	 */
-	private String buildArgsString(String onOrOff) {
-		String portNumber = this.getPortNumber().substring(1);
-		StringBuilder args = new StringBuilder();
-		args.append(portNumber);
-		args.append(CommonConstants.BLANK);
-		args.append(onOrOff);
-		System.out.println(portNumber);
-		return args.toString();
 	}
 	
 	@Override

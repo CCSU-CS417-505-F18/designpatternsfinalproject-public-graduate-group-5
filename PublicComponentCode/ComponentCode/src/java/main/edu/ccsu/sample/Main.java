@@ -51,7 +51,8 @@ public class Main {
 		ledOne.turnOn();
 		Thread.sleep(1800L);
 		ledOne.turnOff();
-		
+		Thread.sleep(1800);
+		ledOne.blink(3);
 		//System.out.println(UtilityMethods.callPython(CommonConstants.TEST_PY, null));
 	}
 }
