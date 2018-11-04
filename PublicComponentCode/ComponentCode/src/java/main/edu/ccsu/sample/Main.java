@@ -46,13 +46,19 @@ public class Main {
 		
 		//use equals method on device
 		System.out.println(ledOne.equals(ledFour));
-		//methods to turn on and off LEDs...NOTE will print message that it failed if not using on Raspbian
-		System.out.println("LED");
+		//methods to interact with LEDs...NOTE will print message that it failed if not using on Raspbian
 		ledOne.turnOn();
-		Thread.sleep(1800L);
+		Thread.sleep(1800);
 		ledOne.turnOff();
 		Thread.sleep(1800);
-		ledOne.blink(3);
+		ledOne.blink(2);
+		Thread.sleep(1800);
+		System.out.println("Adjusting Brightness");
+		ledOne.adjustBrightness(500);
+		Thread.sleep(1800);
+		ledOne.adjustBrightness(1023);
+		Thread.sleep(1800);
+		ledOne.adjustBrightness(0);
 		//System.out.println(UtilityMethods.callPython(CommonConstants.TEST_PY, null));
 	}
 }

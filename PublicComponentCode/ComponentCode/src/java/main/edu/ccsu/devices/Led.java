@@ -20,7 +20,6 @@ public class Led extends Device {
 		this.portNumber = portNumber;
 	}
 
-	//TODO - at a later date refactor turnOn()/turnOff() into one switch() method
 	public void turnOn() {
 		//port must be a digital port starting with D
 		if(!this.getPortNumber().contains("D")) {
@@ -78,7 +77,7 @@ public class Led extends Device {
 	@Override
 	public void adjustBrightness(int brightness) {
 		if(UtilityMethods.checkOperatingSystem()) {
-			System.out.println("Call python script to adjust brightness");
+			UtilityMethods.callPython(CommonConstants.ADJUST_BRIGHTNESS, UtilityMethods.buildArgsString(this.getPortNumber(), Integer.toString(brightness)));
 		}
 		else {
 			System.out.println("Cannot adjust brightness for LED: " + this.getName() + ". Must run on raspberry pi");
