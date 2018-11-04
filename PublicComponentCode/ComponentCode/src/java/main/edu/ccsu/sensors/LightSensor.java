@@ -1,5 +1,6 @@
 package edu.ccsu.sensors;
 
+import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.interfaces.Sensor;
 
 /**
@@ -30,7 +31,7 @@ public class LightSensor implements Sensor {
 	}
 
 	@Override
-	public String[] getData(int seconds) {
+	public String getData(int seconds) {
 		// TODO Auto-generated method stub
 		
 		return null;

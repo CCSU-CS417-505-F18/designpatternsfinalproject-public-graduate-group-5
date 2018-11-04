@@ -1,7 +1,8 @@
 package edu.ccsu.utility;
 
-import org.python.core.PyObject;
-import org.python.util.PythonInterpreter;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Class contains common methods used throughout project
@@ -17,40 +18,52 @@ public class UtilityMethods {
 	
 	/**
 	 * Give method a pythonFileName stored in pythonScripts.  Will run the script.  
-	 * Returns a PyObject. If it's null the script failed or if the script throws an error
-	 * you can check what went wrong in PyObject
+	 * If an error occurred with return a String equaling "Error"
 	 * @param pythonFileName
 	 * @param function
-	 * @param args
-	 * @returns PyObject
+	 * @returns String
 	 */
-	public static PyObject callPython(String pythonFileName, String function, PyObject[] args) {
-		try{
-			 // Create an instance of the PythonInterpreter
-	        PythonInterpreter interpreter = new PythonInterpreter();
-	        //append pythonFileName to end of relative path
-	        interpreter.execfile(CommonConstants.RELATIVE_PATH + pythonFileName);
-	        PyObject fnct = interpreter.get(function);
-	        PyObject result = null;
-	        if(args == null) {
-	        	 result = fnct.__call__();
-	        }
-	        else {
-	        	 result = fnct.__call__(args);
-	        }
-	        String realResult = "";
-	        if(result != null) {
-	        	realResult = (String) result.__tojava__(String.class);
-	        }
-	        System.out.println(realResult);
-	        interpreter.cleanup();
-	        return result;
-		}catch(Exception e){
-			System.out.println(e.getMessage());
+	public static String callPython(String pythonFileName, String function) {
+		String response  = "";
+		 
+		try {
+			Process p = null;
+			if(function == null || function.isEmpty()) {
+				p = Runtime.getRuntime().exec(CommonConstants.PYTHON + CommonConstants.BLANK + CommonConstants.RELATIVE_PATH +  pythonFileName);
+			}
+			else {
+				p = Runtime.getRuntime().exec(CommonConstants.PYTHON + CommonConstants.BLANK + 
+												CommonConstants.RELATIVE_PATH +  pythonFileName + CommonConstants.BLANK +
+												function);
+			}
+			//get output from process and return it to the caller
+			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+           
+			response = input.readLine();
+			input.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return null;
+			return response;			
 	}
 	
+	/**
+	 * Builds the string needed in calling python process
+	 * @param portNumber
+	 * @param params
+	 * @return
+	 */
+	public static String buildArgsString(String portNumber, String params) {
+		StringBuilder args = new StringBuilder();
+		//NOTE - our custom Python code always will have portNumber as first entry in params string
+		args.append(portNumber.substring(1));
+		String[] strToAppend = params.split("\\s+");
+		for(String str: strToAppend) {
+			args.append(CommonConstants.BLANK);
+			args.append(str);			
+		}
+		return args.toString();
+	}
 	
 	/**
 	 * Returns true if you run code on raspberry pi

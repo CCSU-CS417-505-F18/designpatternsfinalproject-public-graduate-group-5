@@ -1,7 +1,8 @@
 package edu.ccsu.interfaces;
 
+import java.util.Objects;
+
 import edu.ccsu.error.IncompatibleDeviceError;
-import edu.ccsu.utility.CommonConstants;
 
 /**
  * Abstract class that specifies operations on Devices
@@ -12,7 +13,6 @@ public abstract class Device {
 	protected Device nextDevice;
 	protected String portNumber;
 	protected String color;
-	protected int brightness;
 	
 	/**
 	 * Sets another devices to be used in Chain of Responsiblity.
@@ -31,20 +31,23 @@ public abstract class Device {
 	 * @param portNumber
 	 * @return
 	 */
-	public abstract boolean isAvailable(Device device, String portNumber);
+	public  boolean isAvailable(Device device) {
+		return true;
+	};
 	
 	/**
-	 *
+	 * Given a brightness level between 0-1023 will adjust brightness of 
+	 * light enabled devices
 	 * @param brightness
 	 * @return
 	 */
 	public abstract void adjustBrightness(int brightness);
 	
 	/**
-	 * 
-	 * @param numberOfSeconds
+	 * Will blink for specified number of blinks
+	 * @param numberOfBlinks
 	 */
-	public abstract void blink(int numberOfSeconds);
+	public abstract void blink(int numberOfBlinks);
 	
 	/**
 	 * Can be used to turn on light capable devices
@@ -71,11 +74,17 @@ public abstract class Device {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public String getPortNumber() {
 		return portNumber;
 	}
-
+	/**
+	 * 
+	 * @param portNumber
+	 */
 	public void setPortNumber(String portNumber) {
 		this.portNumber = portNumber;
 	}
@@ -100,24 +109,17 @@ public abstract class Device {
 	 * 
 	 * @return
 	 */
-	public int getBrightness() {
-		return brightness;
-	}
-
-	/**
-	 * 
-	 * @param brightness
-	 */
-	public void setBrightness(int brightness) {
-		this.brightness = brightness;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
 	public Device getNextDevice() {
 		return nextDevice;
+	}
+	
+	@Override
+	public String toString() {
+		return "***********************************\n" +
+				"Name: " + this.name + "\n" +
+				"Port Number: " + this.portNumber + "\n" +
+				(this.getNextDevice()!= null ? "Next Device: " + this.getNextDevice().getName() : "Next Device: None")+
+				"\n***********************************\n";
 	}
 	
 	/**
@@ -159,5 +161,13 @@ public abstract class Device {
 	 * @return
 	 */
 	protected abstract boolean chainComparison(Device device);
-
+	
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 23 * hash + Objects.hashCode(this.getNextDevice());
+		hash = 23 * hash + Objects.hashCode(this.name);
+		hash = 23 * hash + Objects.hashCode(this.portNumber);
+		return hash;
+	}
 }

@@ -1,9 +1,5 @@
 package edu.ccsu.devices;
 
-import org.python.core.PyInteger;
-import org.python.core.PyObject;
-import org.python.core.PyString;
-
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.utility.CommonConstants;
@@ -24,27 +20,13 @@ public class Led extends Device {
 		this.portNumber = portNumber;
 	}
 
-	//TODO - at a later date refactor turnOn()/turnOff() into one switch() method
 	public void turnOn() {
 		//port must be a digital port starting with D
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
 		}
 		else if(UtilityMethods.checkOperatingSystem()) {
-				//NOTE - parsing port number because we want an integer respresentation of the last character
-			System.out.println("Turning on light to be implemented later");
-				/*
-				PyObject[] pyArray = {new PyString(CommonConstants.ON), new PyInteger(Integer.parseInt(this.getPortNumber().substring(1))) };
-				PyObject response = UtilityMethods.callPython(CommonConstants.SWITCH_PY, CommonConstants.SWITCH_PY_SWITCH, pyArray);
-				String result = response.asString();
-				if(result.equals(CommonConstants.ERROR)) {
-					System.out.println("Error occured trying to used LED " + this.name);
-					Device nxtDevice = this.getNextDevice();
-					if(nxtDevice!= null) {
-						nxtDevice.turnOn();
-					}
-				}
-				*/
+			UtilityMethods.callPython(CommonConstants.TOGGLE_LED, UtilityMethods.buildArgsString(this.getPortNumber(), CommonConstants.ON));			
 		}
 		else {
 			System.out.println("Cannot turn on LED: " + this.name);
@@ -56,20 +38,7 @@ public class Led extends Device {
 			System.out.println("Must use a digital port starting with D");
 		}
 		else if(UtilityMethods.checkOperatingSystem()) {
-			//NOTE - parsing port number because we want an integer respresentation of the last character
-			System.out.println("Turning off light to be implemented in next release");
-			/*
-			PyObject[] pyArray = {new PyString(CommonConstants.OFF), new PyInteger(Integer.parseInt(this.getPortNumber().substring(1))) };
-			PyObject response = UtilityMethods.callPython(CommonConstants.SWITCH_PY, CommonConstants.SWITCH_PY_SWITCH, pyArray);
-			String result = response.asString();
-			if(result.equals(CommonConstants.ERROR)) {
-				System.out.println("Error occured trying to used LED " + this.name);
-				Device nxtDevice = this.getNextDevice();
-				if(nxtDevice!= null) {
-					nxtDevice.turnOn();
-				}
-			}
-			*/
+			UtilityMethods.callPython(CommonConstants.TOGGLE_LED, UtilityMethods.buildArgsString(this.getPortNumber(),CommonConstants.OFF));
 		}
 		else {
 			System.out.println("Cannot turn off LED: " + this.name);
@@ -82,7 +51,7 @@ public class Led extends Device {
 	 */
 	public void blink(int numberOfSeconds) {
 		if(UtilityMethods.checkOperatingSystem()) {
-			//call python script to turn on light
+			UtilityMethods.callPython(CommonConstants.GROVE_LED_BLINK, UtilityMethods.buildArgsString(this.getPortNumber(), Integer.toString(numberOfSeconds)));
 		}
 		else {
 			System.out.println("Cannot blink LED: " + this.name);
@@ -95,20 +64,14 @@ public class Led extends Device {
 			this.nextDevice = nextDevice;
 		}
 		else {
-			throw new IncompatibleDeviceError("LED not compatible with device.  LED chain can only be use other LEDs");
+			throw new IncompatibleDeviceError("LED not compatible with device.  LED chain can only be used by other LEDs");
 		}
 	}
 
 	@Override
-	public boolean isAvailable(Device device, String portNumber) {
-		System.out.println("Will always return true until raspberry pi connection code is developed");
-		return true;
-	}
-	
-	@Override
 	public void adjustBrightness(int brightness) {
 		if(UtilityMethods.checkOperatingSystem()) {
-			System.out.println("Call python script to adjust brightness");
+			UtilityMethods.callPython(CommonConstants.ADJUST_BRIGHTNESS, UtilityMethods.buildArgsString(this.getPortNumber(), Integer.toString(brightness)));
 		}
 		else {
 			System.out.println("Cannot adjust brightness for LED: " + this.getName() + ". Must run on raspberry pi");
@@ -136,11 +99,4 @@ public class Led extends Device {
 		}
 		return false;
 	}
-	
-	@Override
-	public String toString() {
-		return "Name: " + this.name + "\n" +
-				"Port Number: " + this.portNumber;
-	}
-	//TODO implement hashCode
 }
