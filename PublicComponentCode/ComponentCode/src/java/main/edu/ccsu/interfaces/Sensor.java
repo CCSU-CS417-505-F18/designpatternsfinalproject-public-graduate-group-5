@@ -1,4 +1,7 @@
 package edu.ccsu.interfaces;
+
+import edu.ccsu.error.IncompatibleSensorError;
+
 /**
  * Interface that specifies operations on Sensors
  */
@@ -25,8 +28,9 @@ public interface Sensor {
 	 * current sensor throwing error or failing.
 	 * @param nextSensor
 	 * @param portNumber
+	 * @throws IncompatibleSensorError
 	 */
-	public void setNextSensor(Sensor nextSensor, String portNumber);
+	public void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError;
 	
 	/**
 	 * Check if sensor is available
