@@ -11,13 +11,16 @@ import edu.ccsu.utility.UtilityMethods;
 public class Led extends Device {
 	
 	/**
-	 * 
+	 * Default behavior is to use next device in chain.  If you wish to change this
+	 * behavior use setUseNext() method to set to false.  CoR used for adjustBrightness
+	 * given that only certain ports are capable of this
 	 * @param name
 	 * @param portNumber
 	 */
 	public Led(String name, String portNumber) {
 		this.name = name;
 		this.portNumber = portNumber;
+		this.useNext = true;
 	}
 
 	public void turnOn() {
@@ -71,7 +74,18 @@ public class Led extends Device {
 	@Override
 	public void adjustBrightness(int brightness) {
 		if(UtilityMethods.checkOperatingSystem()) {
-			UtilityMethods.callPython(CommonConstants.ADJUST_BRIGHTNESS, UtilityMethods.buildArgsString(this.getPortNumber(), Integer.toString(brightness)));
+			String output = UtilityMethods.callPython(CommonConstants.ADJUST_BRIGHTNESS, UtilityMethods.buildArgsString(this.getPortNumber(), Integer.toString(brightness)));
+			if(CommonConstants.TRY_NEXT_LED.equalsIgnoreCase(output)) {
+				Led nextLED = (Led) this.getNextDevice();
+				//use next LED in chain if useNext is true
+				if(this.isUseNext() == true && nextLED!=null ) {
+					System.out.println("Trying led: \n" + nextLED);
+					nextLED.adjustBrightness(brightness);
+				}
+				else {
+					System.out.println("No leds in chain are connected to port with PWM (pulse wave modulation)");
+				}
+			}
 		}
 		else {
 			System.out.println("Cannot adjust brightness for LED: " + this.getName() + ". Must run on raspberry pi");

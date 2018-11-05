@@ -13,6 +13,7 @@ public abstract class Device {
 	protected Device nextDevice;
 	protected String portNumber;
 	protected String color;
+	protected boolean useNext;
 	
 	/**
 	 * Sets another devices to be used in Chain of Responsiblity.
@@ -112,7 +113,21 @@ public abstract class Device {
 	public Device getNextDevice() {
 		return nextDevice;
 	}
-	
+	/**
+	 *
+	 * @return
+	 */
+	public boolean isUseNext() {
+		return useNext;
+	}
+	/**
+	 * 
+	 * @param useNext
+	 */
+	public void setUseNext(boolean useNext) {
+		this.useNext = useNext;
+	}
+
 	@Override
 	public String toString() {
 		return "***********************************\n" +

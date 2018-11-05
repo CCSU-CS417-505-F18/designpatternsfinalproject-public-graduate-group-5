@@ -43,28 +43,30 @@ import grovepi
 def adjustBrightness(portNumber, brightness):
    
     led = portNumber
-
-    if(grovepi.pinMode(led,"OUTPUT") != 1):
-        print("Error")
+    if(led not in [3,5,6,9]):
+        print("try_next_led")
     else:
-        try:
-            
-            if(brightness == 0):
-                grovepi.digitalWrite(led, 0)
-                print("LED turned off")
-            else:
-                if(brightness > 1023):
-                    brightness = 1023
-                #analogWrite takes args btw 0-255 which is why we divide by 4
-                grovepi.analogWrite(led, brightness//4)
-                print ("Brightness Adjusted")
-        except (IOError):
-            print ("Error")
+        if(grovepi.pinMode(led,"OUTPUT") != 1):
+            print("Error")
+        else:
+            try:
+                
+                if(brightness == 0):
+                    grovepi.digitalWrite(led, 0)
+                    print("LED turned off")
+                else:
+                    if(brightness > 1023):
+                        brightness = 1023
+                    #analogWrite takes args btw 0-255 which is why we divide by 4
+                    grovepi.analogWrite(led, brightness//4)
+                    print ("Brightness Adjusted")
+            except (IOError):
+                print ("Error")
 
-        except (KeyboardInterrupt):
-            grovepi.digitalWrite(led, 0)
-            print("Interrupted")
-            
+            except (KeyboardInterrupt):
+                grovepi.digitalWrite(led, 0)
+                print("Interrupted")
+                
 adjustBrightness(int(sys.argv[1]), int(sys.argv[2]))
 
 
