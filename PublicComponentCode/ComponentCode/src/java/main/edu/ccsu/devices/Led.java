@@ -1,14 +1,42 @@
 package edu.ccsu.devices;
 
+import java.util.Objects;
+
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.interfaces.Device;
+import edu.ccsu.interfaces.LightEnabledDevice;
 import edu.ccsu.utility.CommonConstants;
 import edu.ccsu.utility.UtilityMethods;
 
 /**
  * Class allows for operations on GrovePi LEDs.
  */
-public class Led extends Device {
+public class Led implements LightEnabledDevice {
+
+	private String name;
+	private Device nextDevice;
+	private String portNumber;
+	private boolean useNext;
+
+	@Override
+	public String getName() {
+		return name;
+	}
+	
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	@Override
+	public String getPortNumber() {
+		return portNumber;
+	}
+	
+	@Override
+	public void setPortNumber(String portNumber) {
+		this.portNumber = portNumber;
+	}
 	
 	/**
 	 * Default behavior is to use next device in chain.  If you wish to change this
@@ -23,6 +51,7 @@ public class Led extends Device {
 		this.useNext = true;
 	}
 
+	@Override
 	public void turnOn() {
 		//port must be a digital port starting with D
 		if(!this.getPortNumber().contains("D")) {
@@ -36,6 +65,7 @@ public class Led extends Device {
 		}
 	}
 	
+	@Override
 	public void turnOff() {
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
@@ -48,10 +78,7 @@ public class Led extends Device {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param numberOfSeconds
-	 */
+	@Override
 	public void blink(int numberOfSeconds) {
 		if(UtilityMethods.checkOperatingSystem()) {
 			UtilityMethods.callPython(CommonConstants.GROVE_LED_BLINK, UtilityMethods.buildArgsString(this.getPortNumber(), Integer.toString(numberOfSeconds)));
@@ -62,8 +89,25 @@ public class Led extends Device {
 	}
 	
 	@Override
+	public Device getNextDevice() {
+		if(this.nextDevice!= null)
+			return this.nextDevice;
+		return null;
+	}
+
+	@Override
+	public boolean isUseNext() {
+		return this.useNext;
+	}
+
+	@Override
+	public void setUseNext(boolean useNext) {
+		this.useNext = useNext;
+	}
+	
+	@Override
 	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError {
-		if(nextDevice instanceof Led) {
+		if(nextDevice instanceof LightEnabledDevice) {
 			this.nextDevice = nextDevice;
 		}
 		else {
@@ -94,10 +138,57 @@ public class Led extends Device {
 	}
 	
 	@Override
-	protected boolean chainComparison(Device device) {
+	public String toString() {
+		return "***********************************\n" +
+				"Name: " + this.name + "\n" +
+				"Port Number: " + this.portNumber + "\n" +
+				(this.getNextDevice()!= null ? "Next Device: " + this.getNextDevice().getName() : "Next Device: None")+
+				"\n***********************************\n";
+	}
+	
+	/**
+	 * Check to see if two devices are equal 
+	 */
+	@Override
+	public boolean equals(Object o) {
+		//check if references are equal
+		if(this == o) {
+			return true;
+		}
+		
+		//check if null
+		if(null == o) {
+			return false;
+		}
+	
+		//check if they are the same class
+		if(getClass() != o.getClass()) {
+			return false;
+		}
+		
+		Led device = (Led) o;
+		
+		//significant field field comparison
+		if(this.name.equals(device.getName())
+				&& this.portNumber.equals(device.getPortNumber())) {
+			//check if chain is equal after field comparison
+			 if(chainComparison(device)) {
+				 return true;
+			 }
+		}
+		return false;
+	}
+	
+	/**
+	 * Logic to evaluate if the Leds share the 
+	 * same CoR
+	 * @param led
+	 * @return
+	 */
+	private boolean chainComparison(Led led) {
 		//check chain
-		Device nextDevice1 = this.getNextDevice();
-		Device nextDevice2 = device.getNextDevice();
+		Led nextDevice1 = (Led) this.getNextDevice();
+		Led nextDevice2 = (Led) led.getNextDevice();
 		
 		if(nextDevice1 != null && nextDevice2 != null) {
 			if(nextDevice1.equals(nextDevice2)) {
@@ -112,5 +203,13 @@ public class Led extends Device {
 			return true;
 		}
 		return false;
+	}
+	
+	public int hashCode() {
+		int hash = 7;
+		hash = 23 * hash + Objects.hashCode(this.getNextDevice());
+		hash = 23 * hash + Objects.hashCode(this.name);
+		hash = 23 * hash + Objects.hashCode(this.portNumber);
+		return hash;
 	}
 }

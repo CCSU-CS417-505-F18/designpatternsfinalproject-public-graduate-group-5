@@ -1,19 +1,11 @@
 package edu.ccsu.interfaces;
 
-import java.util.Objects;
-
 import edu.ccsu.error.IncompatibleDeviceError;
 
 /**
- * Abstract class that specifies operations on Devices
+ * Interface that specifies operations on Devices
  */
-public abstract class Device {
-
-	protected String name;
-	protected Device nextDevice;
-	protected String portNumber;
-	protected String color;
-	protected boolean useNext;
+public interface Device {
 	
 	/**
 	 * Sets another devices to be used in Chain of Responsiblity.
@@ -23,166 +15,71 @@ public abstract class Device {
 	 * @throws IncompatibleDeviceError
 	 * @return 
 	 */
-	public abstract void setNextDevice(Device nextDevice) throws IncompatibleDeviceError;
+	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError;
 	
 	/**
-	 * Given a device and port number, checks to see if devices
-	 * is available for use.
-	 * @param device
-	 * @param portNumber
+	 * Returns next device in CoR
 	 * @return
 	 */
-	public  boolean isAvailable(Device device) {
-		return true;
-	};
-	
-	/**
-	 * Given a brightness level between 0-1023 will adjust brightness of 
-	 * light enabled devices
-	 * @param brightness
-	 * @return
-	 */
-	public abstract void adjustBrightness(int brightness);
-	
-	/**
-	 * Will blink for specified number of blinks
-	 * @param numberOfBlinks
-	 */
-	public abstract void blink(int numberOfBlinks);
+	public Device getNextDevice();
 	
 	/**
 	 * Can be used to turn on light capable devices
 	 */
-	public abstract void turnOn();
+	public void turnOn();
 	
 	/**
 	 * Can be used to turn off light capable devices
 	 */
-	public abstract void turnOff();
+	public void turnOff();
 	
 	/**
-	 * 
+	 * Returns name
 	 * @return
 	 */
-	public String getName() {
-		return name;
-	}
-
+	public String getName();
+	
 	/**
-	 * 
+	 * Set the name
 	 * @param name
 	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setName(String name);
+	
 	/**
-	 * 
+	 * Return this devices port number
 	 * @return
 	 */
-	public String getPortNumber() {
-		return portNumber;
-	}
+	public String getPortNumber();
+	
 	/**
-	 * 
+	 * Set this devices port number
 	 * @param portNumber
 	 */
-	public void setPortNumber(String portNumber) {
-		this.portNumber = portNumber;
-	}
+	public void setPortNumber(String portNumber);
 	
 	/**
-	 * 
+	 * Checks to see if device is allowed to use CoR
 	 * @return
 	 */
-	public String getColor() {
-		return color;
-	}
-
-	/**
-	 * 
-	 * @param color
-	 */
-	public void setColor(String color) {
-		this.color = color;
-	}
+	public boolean isUseNext();
 	
 	/**
-	 * 
-	 * @return
-	 */
-	public Device getNextDevice() {
-		return nextDevice;
-	}
-	/**
-	 *
-	 * @return
-	 */
-	public boolean isUseNext() {
-		return useNext;
-	}
-	/**
-	 * 
+	 * Set use next to true if you want to use an object's CoR.
+	 * Set to false if you don't want to use this object's CoR
 	 * @param useNext
 	 */
-	public void setUseNext(boolean useNext) {
-		this.useNext = useNext;
-	}
-
-	@Override
-	public String toString() {
-		return "***********************************\n" +
-				"Name: " + this.name + "\n" +
-				"Port Number: " + this.portNumber + "\n" +
-				(this.getNextDevice()!= null ? "Next Device: " + this.getNextDevice().getName() : "Next Device: None")+
-				"\n***********************************\n";
-	}
+	public void setUseNext(boolean useNext);
 	
 	/**
-	 * Check to see if two devices are equal 
-	 */
-	@Override
-	public boolean equals(Object o) {
-		//check if references are equal
-		if(this == o) {
-			return true;
-		}
-		
-		//check if null
-		if(null == o) {
-			return false;
-		}
-	
-		//check if they are the same class
-		if(getClass() != o.getClass()) {
-			return false;
-		}
-		
-		Device device = (Device) o;
-		
-		//significant field field comparison
-		if(this.name.equals(device.getName())
-				&& this.portNumber.equals(device.getPortNumber())) {
-			//check if chain is equal after field comparison
-			 if(chainComparison(device)) {
-				 return true;
-			 }
-		}
-		return false;
-	}
-	
-	/**
-	 * Checks to see if two objects have the same chain
-	 * @param device
+	 * 
+	 * @param o
 	 * @return
 	 */
-	protected abstract boolean chainComparison(Device device);
+	public boolean equals(Object o);
 	
-	@Override
-	public int hashCode() {
-		int hash = 7;
-		hash = 23 * hash + Objects.hashCode(this.getNextDevice());
-		hash = 23 * hash + Objects.hashCode(this.name);
-		hash = 23 * hash + Objects.hashCode(this.portNumber);
-		return hash;
-	}
+	/**
+	 * 
+	 * @return
+	 */
+	public int hashCode();
 }

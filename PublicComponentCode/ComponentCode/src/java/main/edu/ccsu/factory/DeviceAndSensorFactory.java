@@ -20,7 +20,7 @@ public class DeviceAndSensorFactory implements ProductFactory{
 	@Override
 	public Device makeDevice(String device, String name, String portNumber) {
 		if("LED".equalsIgnoreCase(device)) {
-			return new Led(name, portNumber);
+			 return new Led(name, portNumber);
 		}
 		else if("LCD".equalsIgnoreCase(device)) {
 			return new LcdScreen(name, portNumber);
