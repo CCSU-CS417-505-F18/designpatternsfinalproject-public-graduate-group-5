@@ -3,6 +3,8 @@ package edu.ccsu.sample;
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.factory.DeviceAndSensorFactory;
 import edu.ccsu.interfaces.Device;
+import edu.ccsu.interfaces.Iterator;
+import edu.ccsu.interfaces.Sensor;
 /**
  * This main class is simply here to demonstrate how to use our code.
  * @author Adrian
@@ -16,6 +18,10 @@ public class Main {
 		//instantiate factory to create objects 
 		DeviceAndSensorFactory productFactory = new DeviceAndSensorFactory();
 		
+		Sensor lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
+		Iterator itr = lightSensor.getIterator();
+		while(itr.hasNext())
+			System.out.println("Iterator Test " + itr.next());
 		//sample devices
 		Device display = productFactory.makeDevice("LCD", "MYLCD", "A1");
 		

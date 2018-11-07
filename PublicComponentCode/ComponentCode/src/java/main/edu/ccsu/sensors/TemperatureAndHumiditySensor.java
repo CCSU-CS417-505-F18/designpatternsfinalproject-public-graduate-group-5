@@ -1,6 +1,7 @@
 package edu.ccsu.sensors;
 
 import edu.ccsu.error.IncompatibleSensorError;
+import edu.ccsu.interfaces.Iterator;
 import edu.ccsu.interfaces.Sensor;
 
 /*

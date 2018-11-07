@@ -1,6 +1,10 @@
 package edu.ccsu.sensors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.ccsu.error.IncompatibleSensorError;
+import edu.ccsu.interfaces.Iterator;
 import edu.ccsu.interfaces.Sensor;
 
 /**
@@ -12,10 +16,16 @@ public class LightSensor implements Sensor {
 	private Sensor nextSensor;
 	private String name;
 	private String portNumber;
+	private List<LightSensorData> sensorData;
 	private double lightIntensity;
 	
-	public LightSensor(String name) {
+	public LightSensor(String name, String portNumber) {
 		this.name = name;
+		this.portNumber = portNumber;
+		this.sensorData = new ArrayList<>();
+		//TODO- delete this later
+		sensorData.add(new LightSensorData(100, 200));
+		sensorData.add(new LightSensorData(200, 500));
 	}
 	
 	@Override
@@ -103,4 +113,69 @@ public class LightSensor implements Sensor {
 		this.name = name;
 	}
 	
+	@Override
+	public Iterator getIterator() {
+		return new SensorIterator();
+	}
+	
+	/**
+	 * Class to hold LightSensorData.
+	 * @author Adrian
+	 *
+	 */
+	private class LightSensorData{
+		int lumens;
+		int voltage;
+		
+		public LightSensorData(int lumens, int voltage) {
+			this.lumens = lumens;
+			this.voltage =  voltage;
+		}
+		
+		public int getLumens() {
+			return this.lumens;
+		}
+		
+		public int getVoltage() {
+			return this.voltage;
+		}
+		 public String toString(){
+			return "\n**********************\n" +
+					"Lumens: " + this.lumens + "\n" +
+					"Voltage: " + this.voltage + "\n" + 
+					"**********************\n";
+		}
+	}
+	/**
+	 * Class provides iteration logic 
+	 * */
+	private class SensorIterator implements Iterator{
+		
+		int index;
+
+		@Override
+		public boolean hasNext() {
+			if(index < sensorData.size() )
+				return true;
+			return false;
+		}
+
+		@Override
+		public LightSensorData next() {
+			if(this.hasNext())
+				return sensorData.get(index++);
+			return null;
+		}
+
+		public List<String> filter(String filter) {
+			List<String> filteredData = new ArrayList<>();
+			for(LightSensorData data: sensorData) {
+				if("lumens".equalsIgnoreCase(filter))
+					filteredData.add(Integer.toString(data.getLumens()));
+				else
+					filteredData.add(Integer.toString(data.getVoltage()));
+			}
+			return filteredData;
+		}
+	}
 }

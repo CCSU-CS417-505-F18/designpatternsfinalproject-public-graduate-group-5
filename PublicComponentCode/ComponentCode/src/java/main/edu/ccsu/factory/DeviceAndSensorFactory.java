@@ -33,7 +33,7 @@ public class DeviceAndSensorFactory implements ProductFactory{
 	@Override
 	public Sensor makeSensor(String sensor, String name, String portNumber) {
 		if("LightSensor".equalsIgnoreCase(sensor)) {
-			return new LightSensor(name);
+			return new LightSensor(name, portNumber);
 		}
 		else if("TempAndHumiditySensor".equalsIgnoreCase(sensor)) {
 			return new TemperatureAndHumiditySensor(name);

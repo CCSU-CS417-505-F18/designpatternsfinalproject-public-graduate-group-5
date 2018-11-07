@@ -33,6 +33,12 @@ public interface Sensor {
 	public void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError;
 	
 	/**
+	 * Returns the iterator for the sensor.
+	 * @return
+	 */
+	public Iterator getIterator();
+	
+	/**
 	 * Check if sensor is available
 	 * @param sensor
 	 * @param portNumber
