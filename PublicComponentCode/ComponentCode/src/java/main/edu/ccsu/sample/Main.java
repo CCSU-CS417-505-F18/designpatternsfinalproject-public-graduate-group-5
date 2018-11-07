@@ -17,11 +17,18 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		//instantiate factory to create objects 
 		DeviceAndSensorFactory productFactory = new DeviceAndSensorFactory();
-		
+		/*
+		 * Example of how to use iterator for light sensor data
+		 * */
 		Sensor lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
 		Iterator itr = lightSensor.getIterator();
 		while(itr.hasNext())
 			System.out.println("Iterator Test " + itr.next());
+		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "A1");
+		Iterator itrTemp = tempAndHumid.getIterator();
+		while(itrTemp.hasNext()) {
+			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
+		}
 		//sample devices
 		Device display = productFactory.makeDevice("LCD", "MYLCD", "A1");
 		

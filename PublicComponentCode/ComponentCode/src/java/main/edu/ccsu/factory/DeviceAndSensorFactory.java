@@ -36,7 +36,7 @@ public class DeviceAndSensorFactory implements ProductFactory{
 			return new LightSensor(name, portNumber);
 		}
 		else if("TempAndHumiditySensor".equalsIgnoreCase(sensor)) {
-			return new TemperatureAndHumiditySensor(name);
+			return new TemperatureAndHumiditySensor(name, portNumber);
 		}
 		return null;
 	}	

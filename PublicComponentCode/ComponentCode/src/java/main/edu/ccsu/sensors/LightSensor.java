@@ -1,6 +1,7 @@
 package edu.ccsu.sensors;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import edu.ccsu.error.IncompatibleSensorError;
@@ -24,8 +25,8 @@ public class LightSensor implements Sensor {
 		this.portNumber = portNumber;
 		this.sensorData = new ArrayList<>();
 		//TODO- delete this later
-		sensorData.add(new LightSensorData(100, 200));
-		sensorData.add(new LightSensorData(200, 500));
+		sensorData.add(new LightSensorData(100, 200, new Date()));
+		sensorData.add(new LightSensorData(200, 500, new Date()));
 	}
 	
 	@Override
@@ -42,8 +43,10 @@ public class LightSensor implements Sensor {
 
 	@Override
 	public String getData(int seconds) {
-		// TODO Auto-generated method stub
-		
+		//call python
+		//if python returns error try next sensor if it exists
+		//parse output string and add to sensorData
+		//return that original string and maintain data in list...can be accessed again later
 		return null;
 	}
 
@@ -126,10 +129,12 @@ public class LightSensor implements Sensor {
 	private class LightSensorData{
 		int lumens;
 		int voltage;
+		Date date;
 		
-		public LightSensorData(int lumens, int voltage) {
+		public LightSensorData(int lumens, int voltage, Date date) {
 			this.lumens = lumens;
 			this.voltage =  voltage;
+			this.date = date;
 		}
 		
 		public int getLumens() {
@@ -139,10 +144,16 @@ public class LightSensor implements Sensor {
 		public int getVoltage() {
 			return this.voltage;
 		}
+		
+		public Date getDate() {
+			return this.date;
+		}
+		
 		 public String toString(){
 			return "\n**********************\n" +
 					"Lumens: " + this.lumens + "\n" +
 					"Voltage: " + this.voltage + "\n" + 
+					"Date: " + this.date + "\n" +
 					"**********************\n";
 		}
 	}
