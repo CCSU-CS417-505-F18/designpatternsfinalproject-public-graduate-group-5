@@ -20,7 +20,9 @@ public class CommonConstants {
 	//device and sensor constants
 	public static final String LCD = "LCD";
 	public static final String LED = "LED";
-	
+	public static final String LIGHT_SENSOR = "LightSensor";
+	public static final String TEMP_HUMIDITY_SENSOR  = "TempAndHumiditySensor";
+
 	//python method constants
 	//NOTE - please follow convention starting with pythonFileName_Function
 	public static final String PYTHON = "python";

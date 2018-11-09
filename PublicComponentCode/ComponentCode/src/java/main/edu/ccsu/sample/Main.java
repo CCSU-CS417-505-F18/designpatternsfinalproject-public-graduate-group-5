@@ -2,9 +2,9 @@ package edu.ccsu.sample;
 
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.factory.DeviceAndSensorFactory;
-import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.Iterator;
 import edu.ccsu.interfaces.LightEnabledDevice;
+import edu.ccsu.interfaces.ProductFactory;
 import edu.ccsu.interfaces.ScreenEnabledDevice;
 import edu.ccsu.interfaces.Sensor;
 /**
@@ -18,7 +18,7 @@ public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
 		//instantiate factory to create objects 
-		DeviceAndSensorFactory productFactory = new DeviceAndSensorFactory();
+		ProductFactory productFactory = new DeviceAndSensorFactory();
 		
 		/*
 		 * Example of how to use iterator for sensors
@@ -34,17 +34,21 @@ public class Main {
 		}
 		
 		//sample devices
-		//is this bad design to have to type cast????
-		ScreenEnabledDevice display = (ScreenEnabledDevice)productFactory.makeDevice("LCD", "MYLCD", "A1");
+		/*
+		 * NOTE that we have a hierarchy of interfaces extending Device interface.  If you just 
+		 * need the basic functionality of Device interface use productFactory.makeDevice(...)
+		 * If you need specific methods associated with different devices, use the specified methods in DeviceAndSensorFactory
+		 *  */
+		ScreenEnabledDevice display = productFactory.makeScreenEnabledDevice("LCD", "MYLCD", "A1");
 		display.printMessage("Hello World");
 		
-		LightEnabledDevice ledOne =  (LightEnabledDevice)productFactory.makeDevice("LED", "LED", "D3");
-		LightEnabledDevice ledTwo = (LightEnabledDevice) productFactory.makeDevice("LED", "LED2", "D4");
-		LightEnabledDevice ledThree = (LightEnabledDevice) productFactory.makeDevice("LED", "LED3", "D5");
+		LightEnabledDevice ledOne =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
+		LightEnabledDevice ledTwo =  productFactory.makeLightEnabledDevice("LED", "LED2", "D4");
+		LightEnabledDevice ledThree = productFactory.makeLightEnabledDevice("LED", "LED3", "D5");
 		
-		LightEnabledDevice ledFour = (LightEnabledDevice) productFactory.makeDevice("LED", "LED", "D3");
-		LightEnabledDevice ledSix = (LightEnabledDevice) productFactory.makeDevice("LED", "LED2", "D4");
-		LightEnabledDevice ledNine = (LightEnabledDevice) productFactory.makeDevice("LED", "LED3", "D5");
+		LightEnabledDevice ledFour =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
+		LightEnabledDevice ledSix =   productFactory.makeLightEnabledDevice("LED", "LED2", "D4");
+		LightEnabledDevice ledNine =  productFactory.makeLightEnabledDevice("LED", "LED3", "D5");
 		
 		/*
 		 * Sample of building CoR with LEDs

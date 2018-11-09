@@ -48,6 +48,7 @@ public class UtilityMethods {
 	}
 	
 	/**
+	 * TODO- delete this method completely unneccessary 
 	 * Builds the string needed in calling python process
 	 * @param portNumber
 	 * @param params
