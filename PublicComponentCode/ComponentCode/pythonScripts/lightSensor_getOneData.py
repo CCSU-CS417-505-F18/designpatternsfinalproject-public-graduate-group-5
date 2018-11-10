@@ -41,42 +41,34 @@ import grovepi
 from grove_rgb_lcd import *
 
 
-def grove_light_sensor(sensorPort, seconds):
-    returnValues = []
-
+def grove_light_sensor(sensorPort, desiredData):
     # Connect the Grove Light Sensor to analog port A0
     # SIG,NC,VCC,GND
     light_sensor = int(sensorPort)
 
+    # Connect the LED to digital port D3
+    # SIG,NC,VCC,GND
+    led = 3
 
     # Turn on LED once sensor exceeds threshold resistance
     threshold = 10
-    seconds = int(seconds)
-
-    if not isinstance(seconds, int) :
-        seconds = 10
 
     grovepi.pinMode(light_sensor,"INPUT")
-    timeout = time.time() + seconds
+    grovepi.pinMode(led,"OUTPUT")
 
-    while True:
-        try:
-            # Get sensor value
-            sensor_value = grovepi.analogRead(light_sensor)
+    # Get sensor value
+    sensor_value = grovepi.analogRead(light_sensor)
 
-            # Calculate resistance of sensor in K
-            resistance = (float)(1023 - sensor_value) * 10 / sensor_value
+    # Calculate resistance of sensor in K
+    resistance = (float)(1023 - sensor_value) * 10 / sensor_value
 
-            #add sensor_value in returnValues array
-            returnValues.append(sensor_value)
+    if desiredData == "resistance":
+        returnVal = resistance
 
-            if time.time() > timeout:
-                break
-            time.sleep(1)
+    else:
+        returnVal = sensor_value
 
-        except IOError:
-            print ("Error")
 
-    print(returnValues)
+    print returnVal
 
 grove_light_sensor(sys.argv[1], sys.argv[2])

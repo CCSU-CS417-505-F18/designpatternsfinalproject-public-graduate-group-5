@@ -11,11 +11,13 @@ public class CommonConstants {
 	public static final String RELATIVE_PATH = "pythonScripts//";
 	public static final String TEST_PY = "test.py";
 	public static final String GROVE_LED_BLINK = "grove_led_blink.py";
-	public static final String GROVE_LIGHT_SENSOR = "grove_light_sensor.py";
+	public static final String GROVE_LIGHT_SENSOR_ONE_DATA = "light_sensor_getOneData.py";
+	public static final String GROVE_LIGHT_SENSOR = "grove_light_sensor.py";	
 	public static final String SWITCH_PY = "switch.py";
 	public static final String TOGGLE_LED = "ToggleLED.py";
 	public static final String AUTOMATIC_LED = "automaticAdjustingLED.py";
 	public static final String ADJUST_BRIGHTNESS = "adjustBrightness.py";
+	public static final String Test_LCD = "Lcd.py";
 	
 	//device and sensor constants
 	public static final String LCD = "LCD";

@@ -33,21 +33,32 @@ public class Main {
 			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
 		}
 		
+		
+		// lightSensor test - getting data for 10 seconds
+		String str = lightSensor.getData(10);
+		if(str == null) str = "NONE";
+		System.out.println("DATA from light sensor :"+str);
+
+		// lightSensor test - getting data with string argument
+		String lightstr = lightSensor.getData("name");
+		System.out.println("DATA without python :"+lightstr);
+		
+		
 		//sample devices
 		/*
 		 * NOTE that we have a hierarchy of interfaces extending Device interface.  If you just 
 		 * need the basic functionality of Device interface use productFactory.makeDevice(...)
 		 * If you need specific methods associated with different devices, use the specified methods in DeviceAndSensorFactory
 		 *  */
-		ScreenEnabledDevice display = productFactory.makeScreenEnabledDevice("LCD", "MYLCD", "A1");
+		ScreenEnabledDevice display = productFactory.makeScreenEnabledDevice("LCD", "MYLCD", "I2C-1");
 		display.printMessage("Hello World");
 		
 		LightEnabledDevice ledOne =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
-		LightEnabledDevice ledTwo =  productFactory.makeLightEnabledDevice("LED", "LED2", "D4");
+		LightEnabledDevice ledTwo =  productFactory.makeLightEnabledDevice("LED", "LED2", "D5");
 		LightEnabledDevice ledThree = productFactory.makeLightEnabledDevice("LED", "LED3", "D5");
 		
 		LightEnabledDevice ledFour =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
-		LightEnabledDevice ledSix =   productFactory.makeLightEnabledDevice("LED", "LED2", "D4");
+		LightEnabledDevice ledSix =   productFactory.makeLightEnabledDevice("LED", "LED2", "D5");
 		LightEnabledDevice ledNine =  productFactory.makeLightEnabledDevice("LED", "LED3", "D5");
 		
 		/*
@@ -70,10 +81,13 @@ public class Main {
 			e1.printStackTrace();
 		}
 		
+		
+		
+		
 		/*
 		 * No need to do this but just checking that chain was properly created
 		 * */ 
-		System.out.println(ledOne.getNextDevice().getNextDevice().getName());
+		//System.out.println(ledOne.getNextDevice().getNextDevice().getName());
 		
 		/*
 		 * Demonstration of the equals method
@@ -93,7 +107,7 @@ public class Main {
 		 * Simple demo of how to use turnOn and turnOff
 		 * Note that Thread.sleep is simply here to allow you so see the LEDs being
 		 * toggled and off otherwise the program would run so fast you'd miss it!
-		 * If you are not running this code on Rapsberry Pi it methods will print message
+		 * If you are not running this code on Raspberry Pi it methods will print message
 		 * telling you to run it on Raspberry Pi
 		 * */
 		System.out.println("Toggle " + ledOne.getName() + " On and Off");
@@ -101,6 +115,10 @@ public class Main {
 		Thread.sleep(1800);
 		ledOne.turnOff();
 		Thread.sleep(1800);
+		
+		
+		
+		
 		//at the moment blink speed cannot be adjusted
 		System.out.println("Blinking led " + ledOne.getName());
 		ledOne.blink(2);
@@ -129,5 +147,8 @@ public class Main {
 		System.out.println("Deactivate CoR");
 		ledTwo.setUseNext(false);
 		ledTwo.adjustBrightness(0);
+		
+
+		
 	}
 }

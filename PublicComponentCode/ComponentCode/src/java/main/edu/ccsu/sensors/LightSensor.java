@@ -7,6 +7,9 @@ import java.util.List;
 import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.interfaces.Iterator;
 import edu.ccsu.interfaces.Sensor;
+import edu.ccsu.utility.CommonConstants;
+import edu.ccsu.utility.UtilityMethods;
+
 
 /**
  * Class can access light sensor and 
@@ -19,7 +22,11 @@ public class LightSensor implements Sensor {
 	private String portNumber;
 	private List<LightSensorData> sensorData;
 	private double lightIntensity;
-	
+
+	/**
+	 * @param name
+	 * @param portNumber
+	 */
 	public LightSensor(String name, String portNumber) {
 		this.name = name;
 		this.portNumber = portNumber;
@@ -28,26 +35,43 @@ public class LightSensor implements Sensor {
 		sensorData.add(new LightSensorData(100, 200, new Date()));
 		sensorData.add(new LightSensorData(200, 500, new Date()));
 	}
-	
-	@Override
+
+	/***
+	 * Returns String. 		
+	 * if user just wants name, then returns name of Light Sensor
+	 * if user just wants lightIntensity, then returns lightintensity 
+	 * if user wants both grab both
+	 * @param desiredData 	name, lightIntensity, both
+	 */
 	public String getData(String desiredData) {
-		//if user just wants name only get that
-		//if user just wants lightIntensity just get that
-		//if user wants both grab both
 		String returnValue = "";
 		if(desiredData.equals("name")) returnValue = name;
 		else if(desiredData.equals("intensity")) returnValue = Double.toString(lightIntensity);
 		else if(desiredData.equals("b")) returnValue = name+":"+Double.toString(lightIntensity);
-		return returnValue;	
+		return returnValue;
 	}
 
-	@Override
+	/**
+	 * Returns data from python for the time of 'seconds' seconds
+	 * if python returns error try next sensor 
+	 * if it exist parse output string and add to sensorData
+	 * return that original string and maintain data in list...can be accessed again later
+	 * @param seconds	seconds getting data from python
+	 * @return returns array form string ex) [419, 417, 420 ]
+	 */
 	public String getData(int seconds) {
-		//call python
-		//if python returns error try next sensor if it exists
-		//parse output string and add to sensorData
-		//return that original string and maintain data in list...can be accessed again later
-		return null;
+		String returnValue = "";
+		String desired = "";
+		
+		if(UtilityMethods.checkOperatingSystem()) {
+			returnValue = UtilityMethods.callPython(CommonConstants.GROVE_LIGHT_SENSOR, UtilityMethods.buildArgsString(this.getPortNumber(), seconds+""));
+		} else {
+			if(this.nextSensor != null) nextSensor.getData(seconds);
+			else {
+				System.out.println("Cannot use the light sensor: " + this.getName() + ". Must run on raspberry pi");
+			}
+		}		
+		return returnValue;
 	}
 
 	@Override
@@ -123,7 +147,7 @@ public class LightSensor implements Sensor {
 	
 	/**
 	 * Class to hold LightSensorData.
-	 * @author Adrian
+	 * @author Adrian, GaYoung, Kim
 	 *
 	 */
 	private class LightSensorData{
