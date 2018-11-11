@@ -2,6 +2,7 @@ package edu.ccsu.sample;
 
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.factory.DeviceAndSensorFactory;
+import edu.ccsu.interfaces.Fan;
 import edu.ccsu.interfaces.Iterator;
 import edu.ccsu.interfaces.LightEnabledDevice;
 import edu.ccsu.interfaces.ProductFactory;
@@ -15,11 +16,19 @@ import edu.ccsu.interfaces.Sensor;
  *
  */
 public class Main {
-
 	public static void main(String[] args) throws InterruptedException {
 		//instantiate factory to create objects 
 		ProductFactory productFactory = new DeviceAndSensorFactory();
 		
+		Fan fan = productFactory.makeFan("minifan", "myFan", "D5");
+		System.out.println("************************");
+		System.out.println("Testing Fan");
+		fan.turnOn();
+		Thread.sleep(1800l);
+		fan.adjustSpeed(40);
+		Thread.sleep(1800l);
+		fan.turnOff();
+		System.out.println("************************");
 		/*
 		 * Example of how to use iterator for sensors
 		 * */

@@ -20,6 +20,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 		this.color = "Blue";
 		this.name = name;
 		this.portNumber = portNumber;
+		this.useNext = true;
 	}
 	
 	/**

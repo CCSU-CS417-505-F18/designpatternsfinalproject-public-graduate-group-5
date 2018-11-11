@@ -24,27 +24,29 @@ public class UtilityMethods {
 	 * @returns String
 	 */
 	public static String callPython(String pythonFileName, String function) {
-		String response  = "";
+		StringBuilder response = new StringBuilder();
 		 
 		try {
-			Process p = null;
+			Process process = null;
 			if(function == null || function.isEmpty()) {
-				p = Runtime.getRuntime().exec(CommonConstants.PYTHON + CommonConstants.BLANK + CommonConstants.RELATIVE_PATH +  pythonFileName);
+				process = Runtime.getRuntime().exec(CommonConstants.PYTHON + CommonConstants.BLANK + CommonConstants.RELATIVE_PATH +  pythonFileName);
 			}
 			else {
-				p = Runtime.getRuntime().exec(CommonConstants.PYTHON + CommonConstants.BLANK + 
+				process = Runtime.getRuntime().exec(CommonConstants.PYTHON + CommonConstants.BLANK + 
 												CommonConstants.RELATIVE_PATH +  pythonFileName + CommonConstants.BLANK +
 												function);
 			}
 			//get output from process and return it to the caller
-			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-           
-			response = input.readLine();
+			BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String bufferString = "";
+			while((bufferString = input.readLine()) != null)
+				response.append(bufferString);
 			input.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-			return response;			
+		
+		return response.toString();			
 	}
 	
 	/**

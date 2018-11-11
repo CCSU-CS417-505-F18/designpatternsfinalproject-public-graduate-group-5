@@ -70,16 +70,4 @@ public interface Device {
 	 */
 	public void setUseNext(boolean useNext);
 	
-	/**
-	 * 
-	 * @param o
-	 * @return
-	 */
-	public boolean equals(Object o);
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public int hashCode();
 }

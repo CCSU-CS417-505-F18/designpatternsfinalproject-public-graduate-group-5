@@ -18,6 +18,15 @@ public interface ProductFactory {
 	public Device makeDevice(String device, String name, String portNumber);
 	
 	/**
+	 * Use method to create Fan device (currently supports the Grove MiniFan v1.1)
+	 * @param device
+	 * @param name
+	 * @param portNumber
+	 * @return
+	 */
+	public Fan makeFan(String device, String name, String portNumber);
+	
+	/**
 	 * Generates a light enabled device (Currently LEDs are supported)
 	 * @param device
 	 * @param name

@@ -18,6 +18,19 @@ public class Led implements LightEnabledDevice {
 	private String portNumber;
 	private boolean useNext;
 
+	/**
+	 * Default behavior is to use next device in chain.  If you wish to change this
+	 * behavior use setUseNext() method to set to false.  CoR used for adjustBrightness
+	 * given that only certain ports are capable of this
+	 * @param name
+	 * @param portNumber
+	 */
+	public Led(String name, String portNumber) {
+		this.name = name;
+		this.portNumber = portNumber;
+		this.useNext = true;
+	}
+
 	@Override
 	public String getName() {
 		return name;
@@ -38,19 +51,6 @@ public class Led implements LightEnabledDevice {
 		this.portNumber = portNumber;
 	}
 	
-	/**
-	 * Default behavior is to use next device in chain.  If you wish to change this
-	 * behavior use setUseNext() method to set to false.  CoR used for adjustBrightness
-	 * given that only certain ports are capable of this
-	 * @param name
-	 * @param portNumber
-	 */
-	public Led(String name, String portNumber) {
-		this.name = name;
-		this.portNumber = portNumber;
-		this.useNext = true;
-	}
-
 	@Override
 	public void turnOn() {
 		//port must be a digital port starting with D

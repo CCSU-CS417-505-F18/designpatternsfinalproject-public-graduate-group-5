@@ -16,10 +16,12 @@ public class CommonConstants {
 	public static final String TOGGLE_LED = "ToggleLED.py";
 	public static final String AUTOMATIC_LED = "automaticAdjustingLED.py";
 	public static final String ADJUST_BRIGHTNESS = "adjustBrightness.py";
+	public static final String MINIFAN = "minifan.py";
 	
 	//device and sensor constants
 	public static final String LCD = "LCD";
 	public static final String LED = "LED";
+	public static final String GROVEMINIFAN = "minifan";
 	public static final String LIGHT_SENSOR = "LightSensor";
 	public static final String TEMP_HUMIDITY_SENSOR  = "TempAndHumiditySensor";
 
@@ -29,7 +31,7 @@ public class CommonConstants {
 	public static final String TEST_PY_MESSAGE = "message";
 	public static final String GROVE_LED_BLINK_BLINK = "blink";
 	public static final String SWITCH_PY_SWITCH = "switch";
-	
+	public static final String ADJUST_FAN_SPEED = "adjustSpeed";
 	//misc constants
 	public static final String ON = "ON";
 	public static final String OFF = "OFF";

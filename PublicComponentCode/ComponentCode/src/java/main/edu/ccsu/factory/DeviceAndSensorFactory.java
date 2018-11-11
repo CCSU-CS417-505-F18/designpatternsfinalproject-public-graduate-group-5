@@ -1,8 +1,10 @@
 package edu.ccsu.factory;
 
+import edu.ccsu.devices.GrovePiFan;
 import edu.ccsu.devices.LcdScreen;
 import edu.ccsu.devices.Led;
 import edu.ccsu.interfaces.Device;
+import edu.ccsu.interfaces.Fan;
 import edu.ccsu.interfaces.LightEnabledDevice;
 import edu.ccsu.interfaces.ProductFactory;
 import edu.ccsu.interfaces.ScreenEnabledDevice;
@@ -27,6 +29,9 @@ public class DeviceAndSensorFactory implements ProductFactory{
 		}
 		else if(CommonConstants.LCD.equalsIgnoreCase(device)) {
 			return new LcdScreen(name, portNumber);
+		}
+		else if(CommonConstants.MINIFAN.equals(device)) {
+			return new GrovePiFan(name, portNumber);
 		}
 		return null;			
 	}
@@ -57,6 +62,14 @@ public class DeviceAndSensorFactory implements ProductFactory{
 	public ScreenEnabledDevice makeScreenEnabledDevice(String device, String name, String portNumber) {
 		if(CommonConstants.LCD.equalsIgnoreCase(device)) {
 			return new LcdScreen(name, portNumber);
+		}
+		return null;
+	}
+
+	@Override
+	public Fan makeFan(String device, String name, String portNumber) {
+		if(CommonConstants.GROVEMINIFAN.equalsIgnoreCase(device)) {
+			return new GrovePiFan(name, portNumber);
 		}
 		return null;
 	}	
