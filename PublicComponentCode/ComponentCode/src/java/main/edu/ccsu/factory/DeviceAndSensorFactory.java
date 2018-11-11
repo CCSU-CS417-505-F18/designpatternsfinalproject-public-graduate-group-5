@@ -40,12 +40,7 @@ public class DeviceAndSensorFactory implements ProductFactory{
 		}
 		return null;			
 	}
-    /**
-     * Creates a sensor, checking if Light Sensor or Temperature and Humidity sensor is being created
-     * @param sensor
-     * @param name
-     * @param portNumber
-     */
+    
 	@Override
 	public Sensor makeSensor(String sensor, String name, String portNumber) {
 		if(CommonConstants.LIGHT_SENSOR.equalsIgnoreCase(sensor)) {
@@ -56,12 +51,7 @@ public class DeviceAndSensorFactory implements ProductFactory{
 		}
 		return null;
 	}
-    /**
-     * Creates a light enabled device, checking if LED or LCD
-     * @param device
-     * @param name
-     * @param portNumber
-     */
+    
 	@Override
 	public LightEnabledDevice makeLightEnabledDevice(String device, String name, String portNumber) {
 		if(CommonConstants.LED.equalsIgnoreCase(device)) {
@@ -72,12 +62,7 @@ public class DeviceAndSensorFactory implements ProductFactory{
 		}
 		return null;
 	}
-    /**
-     * Creates a screen-enabled device, checks if device being created is LCD
-     * @param device
-     * @param name
-     * @param portNumber
-     */
+    
 	@Override
 	public ScreenEnabledDevice makeScreenEnabledDevice(String device, String name, String portNumber) {
 		if(CommonConstants.LCD.equalsIgnoreCase(device)) {
@@ -85,12 +70,7 @@ public class DeviceAndSensorFactory implements ProductFactory{
 		}
 		return null;
 	}
-    /**
-     * Creates a fan device, checking if device being created is Grove mini fan
-     * @param device
-     * @param name
-     * @param portNumber
-     */
+    
 	@Override
 	public Fan makeFan(String device, String name, String portNumber) {
 		if(CommonConstants.GROVEMINIFAN.equalsIgnoreCase(device)) {

@@ -30,39 +30,27 @@ public class Led implements LightEnabledDevice {
 		this.portNumber = portNumber;
 		this.useNext = true;
 	}
-    /**
-     * Returns name of LED device
-     */
+    
 	@Override
 	public String getName() {
 		return name;
 	}
-	/**
-	 * Sets name of LED device
-	 * @param name
-	 */
+	
 	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
-	/**
-	 * Returns the port number of LED device
-	 */
+	
 	@Override
 	public String getPortNumber() {
 		return portNumber;
 	}
-	/**
-	 * Sets port number of LED device
-	 * @param portNumber
-	 */
+	
 	@Override
 	public void setPortNumber(String portNumber) {
 		this.portNumber = portNumber;
 	}
-	/**
-	 * Turns on LED after checking correct port and operating system
-	 */
+	
 	@Override
 	public void turnOn() {
 		//port must be a digital port starting with D
@@ -76,9 +64,7 @@ public class Led implements LightEnabledDevice {
 			System.out.println("Cannot turn on LED: " + this.name);
 		}
 	}
-	/**
-	 * Turns off LED after checking port and operating system
-	 */
+	
 	@Override
 	public void turnOff() {
 		if(!this.getPortNumber().contains("D")) {
@@ -91,10 +77,7 @@ public class Led implements LightEnabledDevice {
 			System.out.println("Cannot turn off LED: " + this.name);
 		}
 	}
-	/**
-	 * Makes the LED blink after checking operating system
-	 * @param numberOfSeconds
-	 */
+	
 	@Override
 	public void blink(int numberOfSeconds) {
 		if(UtilityMethods.checkOperatingSystem()) {
@@ -104,9 +87,7 @@ public class Led implements LightEnabledDevice {
 			System.out.println("Cannot blink LED: " + this.name);
 		}
 	}
-	/**
-	 * Gets the next device in the chain
-	 */
+	
 	@Override
 	public Device getNextDevice() {
 		if(this.nextDevice!= null)
@@ -123,10 +104,7 @@ public class Led implements LightEnabledDevice {
 	public void setUseNext(boolean useNext) {
 		this.useNext = useNext;
 	}
-	/**
-	 * Sets next device in the LED chain. If not an LED device, throws error
-	 * @param nextDevice
-	 */
+	
 	@Override
 	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError {
 		if(nextDevice instanceof LightEnabledDevice) {
@@ -136,10 +114,7 @@ public class Led implements LightEnabledDevice {
 			throw new IncompatibleDeviceError("LED not compatible with device.  LED chain can only be used by other LEDs");
 		}
 	}
-    /**
-     * Adjusts the brightness of the LED after checking operating system and if LED chain is connected to port
-     * @param brightness
-     */
+    
 	@Override
 	public void adjustBrightness(int brightness) {
 		if(UtilityMethods.checkOperatingSystem()) {
@@ -171,9 +146,7 @@ public class Led implements LightEnabledDevice {
 				"\n***********************************\n";
 	}
 	
-	/**
-	 * Check to see if two devices are equal 
-	 */
+	
 	@Override
 	public boolean equals(Object o) {
 		//check if references are equal

@@ -31,10 +31,7 @@ public class TemperatureAndHumiditySensor implements Sensor {
 		this.portNumber = portNumber;
 		this.sensorData = new ArrayList<>();
 	}
-    /**
-     * Gets the data from the temp and humidity sensor. Checks port number and operating system first
-     * @param seconds
-     */
+    
 	@Override
 	public String getData(int seconds) {
 		String data = "";
@@ -67,11 +64,7 @@ public class TemperatureAndHumiditySensor implements Sensor {
 			sensorData.add(new TempAndHumidityData(Float.parseFloat(makeIntoData[0]), Float.parseFloat(makeIntoData[1]), Float.parseFloat(makeIntoData[2]), new Date()));
 		}
 	}
-	/**
-	 * Sets the next sensor in the chain. Checks it is compatible for sensor chain
-	 * @param nextSensor
-	 * @param portNumber
-	 */
+	
 	@Override
 	public void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError {
 		if(nextSensor instanceof TemperatureAndHumiditySensor) {
@@ -81,33 +74,22 @@ public class TemperatureAndHumiditySensor implements Sensor {
 		}
 	}
 
-	/**
-	 * Returns the next sensor in the chain
-	 * @return nextSensor
-	 */
+	
 	@Override
 	public Sensor getNextSensor() {
 		return this.nextSensor;
 	}
-    /**
-     * Gets the port number
-     * @return portNumber
-     */
+    
 	@Override
 	public String getPortNumber() {
 		return portNumber;
 	}
-    /**
-     * Sets the portNumber
-     * @param portNumber
-     */
+    
 	@Override
 	public void setPortNumber(String portNumber) {
 		this.portNumber = portNumber;
 	}
-    /**
-     * Gets and creates new iterator for the temperature and humidity sensor
-     */
+    
 	@Override
 	public Iterator getIterator() {
 		return new TempAndHumidityIterator();
@@ -154,18 +136,14 @@ public class TemperatureAndHumiditySensor implements Sensor {
 	private class TempAndHumidityIterator implements Iterator{
 
 		int index;
-        /**
-         * Checks if there is more data to iterate
-         */
+       
 		@Override
 		public boolean hasNext() {
 			if(index < sensorData.size() )
 				return true;
 			return false;
 		}
-        /**
-         * Checks if temperature and humidity sensor has more data to iterate
-         */
+        
 		@Override
 		public TempAndHumidityData next() {
 			if(this.hasNext())

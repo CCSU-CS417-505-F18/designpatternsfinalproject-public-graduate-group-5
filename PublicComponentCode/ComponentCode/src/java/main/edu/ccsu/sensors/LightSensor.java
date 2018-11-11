@@ -30,11 +30,7 @@ public class LightSensor implements Sensor {
 		this.portNumber = portNumber;
 		this.sensorData = new ArrayList<>();
 	}
-	/**
-	 * Gets the data from the light sensor, reading for a certain number of seconds
-	 * Checks the port number of sensor and operating system first
-	 * @param seconds
-	 */
+	
 	@Override
 	public String getData(int seconds) {
 		String data = "";
@@ -67,11 +63,7 @@ public class LightSensor implements Sensor {
 			sensorData.add(new LightSensorData(Integer.parseInt(makeIntoData[0]), Float.parseFloat(makeIntoData[1]), Float.parseFloat(makeIntoData[2]), new Date()));
 		}
 	}
-    /**
-     * Sets the next sensor in the chain. Must be sensor type to add to chain
-     * @param nextSensor
-     * @param portNumber
-     */
+    
 	@Override
 	public void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError  {
 		if(nextSensor instanceof LightSensor) {
@@ -130,9 +122,7 @@ public class LightSensor implements Sensor {
 	public void setName(String name) {
 		this.name = name;
 	}
-	/**
-	 * Creates a sensor iterator and returns new
-	 */
+	
 	@Override
 	public Iterator getIterator() {
 		return new SensorIterator();
@@ -179,18 +169,14 @@ public class LightSensor implements Sensor {
 	private class SensorIterator implements Iterator{
 		
 		int index;
-        /**
-         * Checks if there is more data to iterate
-         */
+        
 		@Override
 		public boolean hasNext() {
 			if(index < sensorData.size() )
 				return true;
 			return false;
 		}
-        /**
-         * Checks if light sensor has more data to iterate
-         */
+        
 		@Override
 		public LightSensorData next() {
 			if(this.hasNext())
