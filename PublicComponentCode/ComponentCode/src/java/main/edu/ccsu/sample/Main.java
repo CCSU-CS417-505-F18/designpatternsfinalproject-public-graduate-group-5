@@ -37,18 +37,18 @@ public class Main {
 //		System.out.println("Testing LightSensor Iterator");
 		//lightSensor.getData(2);
 		
-//		Iterator itr = lightSensor.getIterator();
-//		while(itr.hasNext())
-//			System.out.println(itr.next());
-//		System.out.println("************************");
-//		System.out.println("Testing Temp and Humidity Iterator");
-//		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D4");
-//		tempAndHumid.getData(3);
-		
-//		Iterator itrTemp = tempAndHumid.getIterator();
-//		while(itrTemp.hasNext()) {
-//			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
-//		}
+		Iterator itr = lightSensor.getIterator();
+		while(itr.hasNext())
+			System.out.println(itr.next());
+		System.out.println("************************");
+		System.out.println("Testing Temp and Humidity Iterator");
+		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D4");
+		tempAndHumid.getData(3);
+
+		Iterator itrTemp = tempAndHumid.getIterator();
+		while(itrTemp.hasNext()) {
+			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
+		}
 		
 		//sample devices
 		/*
@@ -61,10 +61,17 @@ public class Main {
 		display.turnOff();
 		System.out.println("Turning on Lcd Screen");
 		display.turnOn();		
+		
+		display.printMessage("Hello World");
+		System.out.println("Adjust brightness of " + display.getName()+"to 3");
+		display.adjustBrightness(3);
+		System.out.println("Adjust brightness of " + display.getName()+"to 10");
+		display.adjustBrightness(10);		
+		System.out.println("Adjust brightness of " + display.getName()+"to 1");
+		display.adjustBrightness(1);				
 		System.out.println("Blink 3 times");
 		display.blink(3);
-		display.printMessage("Hello World");
-		
+
 		
 		LightEnabledDevice ledOne =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
 		LightEnabledDevice ledTwo =  productFactory.makeLightEnabledDevice("LED", "LED2", "D4");

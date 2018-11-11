@@ -93,7 +93,18 @@ public class LcdScreen implements ScreenEnabledDevice {
 	
 	@Override
 	public void adjustBrightness(int brightness) {
-		
+		//port must be a digital port starting with I
+		if(!this.getPortNumber().contains("I")) {
+			System.out.println("Must use a digital port starting with I");
+		}
+		else if(UtilityMethods.checkOperatingSystem()) {
+			
+            UtilityMethods.callPython(CommonConstants.GROVE_LCD_BRIGHTNESS,""+brightness);
+
+		}
+		else {
+			System.out.println("Cannot turn on LCD: " + this.name);
+		}									
 	}
     
 	@Override
