@@ -11,6 +11,7 @@ public class CommonConstants {
 	public static final String RELATIVE_PATH = "pythonScripts//";
 	public static final String TEST_PY = "test.py";
 	public static final String GROVE_LED_BLINK = "grove_led_blink.py";
+	public static final String GROVE_LCD = "grove_lcd.py";
 	public static final String GROVE_LIGHT_SENSOR = "grove_light_sensor.py";
 	public static final String SWITCH_PY = "switch.py";
 	public static final String TOGGLE_LED = "ToggleLED.py";
