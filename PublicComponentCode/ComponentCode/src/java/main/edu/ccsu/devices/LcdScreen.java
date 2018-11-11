@@ -32,8 +32,35 @@ public class LcdScreen implements ScreenEnabledDevice {
 	 * @param message
 	 */
 	public void printMessage(String message) {
+		//port must be a digital port starting with I
+		if(!this.getPortNumber().contains("I")) {
+			System.out.println("Must use a digital port starting with I");
+		}
+		else if(UtilityMethods.checkOperatingSystem()) {
+			
+			UtilityMethods.callPython(CommonConstants.GROVE_LCD, buildMessage(message));			
+		}
+		else {
+			System.out.println("Cannot turn on LCD: " + this.name);
+		}			
 	}
 	
+
+	/**
+	 * Change space in msg to underscore "_" 
+	 * @param msg
+	 * @return String	returns msg with space changed to "_"
+	 */
+	private String buildMessage(String msg) {
+		StringBuilder buildMsg = new StringBuilder();
+		String[] concatMsg = msg.split("\\s+");
+		for(String str: concatMsg) {
+			buildMsg.append(str);
+			buildMsg.append(CommonConstants.UNDERSCORE);
+		}
+		return buildMsg.toString();	
+	}	
+		
 	/**
 	 * Print a message to the LCD RGB Backlight for
 	 * a certain number of seconds
@@ -41,6 +68,17 @@ public class LcdScreen implements ScreenEnabledDevice {
 	 * @param duration
 	 */
 	public void printMessage(String message, int duration) {
+		//port must be a digital port starting with I
+		if(!this.getPortNumber().contains("I")) {
+			System.out.println("Must use a digital port starting with I");
+		}
+		else if(UtilityMethods.checkOperatingSystem()) {
+			
+			UtilityMethods.callPython(CommonConstants.GROVE_LCD_TIME, buildMessage(message));			
+		}
+		else {
+			System.out.println("Cannot turn on LCD: " + this.name);
+		}					
 	}
    
 	@Override
@@ -71,10 +109,11 @@ public class LcdScreen implements ScreenEnabledDevice {
 	@Override
 	public void turnOn() {
         if(!this.getPortNumber().contains("I")) {
+        	System.out.println(this.getPortNumber());
             System.out.println("Must use a digital port starting with I");
-        }
+       }
         else if(UtilityMethods.checkOperatingSystem()) {
-            UtilityMethods.callPython(CommonConstants.GROVE_LCD, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.ON);
+            UtilityMethods.callPython(CommonConstants.GROVE_LCD_ONOFF, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.ON);
         }
         else {
             System.out.println("Cannot turn on LcdScreen: " + this.name);
@@ -88,7 +127,7 @@ public class LcdScreen implements ScreenEnabledDevice {
             System.out.println("Must use a digital port starting with I");
         }
         else if(UtilityMethods.checkOperatingSystem()) {
-            UtilityMethods.callPython(CommonConstants.GROVE_LCD, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.OFF);
+            UtilityMethods.callPython(CommonConstants.GROVE_LCD_ONOFF, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.OFF);
         }
         else {
             System.out.println("Cannot turn on LcdScreen: " + this.name);

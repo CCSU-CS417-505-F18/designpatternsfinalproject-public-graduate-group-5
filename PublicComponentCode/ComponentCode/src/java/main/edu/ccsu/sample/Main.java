@@ -32,22 +32,23 @@ public class Main {
 		/*
 		 * Example of how to use iterator for sensors
 		 * */
-		Sensor lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
-		System.out.println("************************");
-		System.out.println("Testing LightSensor Iterator");
-		lightSensor.getData(2);
-		Iterator itr = lightSensor.getIterator();
-		while(itr.hasNext())
-			System.out.println(itr.next());
-		System.out.println("************************");
-		System.out.println("Testing Temp and Humidity Iterator");
-		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D4");
-		tempAndHumid.getData(3);
+//		Sensor lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
+//		System.out.println("************************");
+//		System.out.println("Testing LightSensor Iterator");
+		//lightSensor.getData(2);
 		
-		Iterator itrTemp = tempAndHumid.getIterator();
-		while(itrTemp.hasNext()) {
-			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
-		}
+//		Iterator itr = lightSensor.getIterator();
+//		while(itr.hasNext())
+//			System.out.println(itr.next());
+//		System.out.println("************************");
+//		System.out.println("Testing Temp and Humidity Iterator");
+//		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D4");
+//		tempAndHumid.getData(3);
+		
+//		Iterator itrTemp = tempAndHumid.getIterator();
+//		while(itrTemp.hasNext()) {
+//			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
+//		}
 		
 		//sample devices
 		/*
@@ -55,8 +56,13 @@ public class Main {
 		 * need the basic functionality of Device interface use productFactory.makeDevice(...)
 		 * If you need specific methods associated with different devices, use the specified methods in DeviceAndSensorFactory
 		 *  */
-		ScreenEnabledDevice display = productFactory.makeScreenEnabledDevice("LCD", "MYLCD", "A1");
+		ScreenEnabledDevice display = productFactory.makeScreenEnabledDevice("LCD", "MYLCD", "I2C-1");
 		display.printMessage("Hello World");
+		System.out.println("Turning off Lcd Screen");
+		display.turnOff();
+		System.out.println("Turning on Lcd Screen");
+		display.turnOn();		
+		
 		
 		LightEnabledDevice ledOne =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
 		LightEnabledDevice ledTwo =  productFactory.makeLightEnabledDevice("LED", "LED2", "D4");
