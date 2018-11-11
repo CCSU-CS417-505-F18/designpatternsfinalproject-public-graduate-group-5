@@ -15,7 +15,7 @@ white = 1   # The White colored sensor.
 def tempAndHumData(portNumber, duration):
     
     sensor = portNumber
-    
+  
     if(duration <= 0):
         duration = 1
     if(duration > 2):
@@ -35,11 +35,12 @@ def tempAndHumData(portNumber, duration):
             if math.isnan(celcius) == False and math.isnan(humidity) == False:
                 fahrenheit = (1.8*celcius) + 32
                 print("%.02f %.02f %.02f,"%(fahrenheit, celcius, humidity))
+            else:
+                print("nan values")
             time.sleep(.5)
 
-
         except IOError:
-
             print ("Error")
+            break
             
 tempAndHumData(int(sys.argv[1]), int(sys.argv[2]))

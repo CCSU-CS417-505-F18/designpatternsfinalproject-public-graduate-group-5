@@ -8,17 +8,13 @@ import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.interfaces.Iterator;
 import edu.ccsu.interfaces.Sensor;
 import edu.ccsu.utility.CommonConstants;
-import edu.ccsu.utility.UtilityMethods;
 
 /**
  * Class can access light sensor and 
  * get the light intensity
  */
-public class LightSensor implements Sensor {
+public class LightSensor extends Sensor {
 
-	private Sensor nextSensor;
-	private String name;
-	private String portNumber;
 	private List<LightSensorData> sensorData;
 	/**
 	 * Creates a concrete LightSensor object
@@ -29,23 +25,7 @@ public class LightSensor implements Sensor {
 		this.name = name;
 		this.portNumber = portNumber;
 		this.sensorData = new ArrayList<>();
-	}
-	
-	@Override
-	public String getData(int seconds) {
-		String data = "";
-		if(!this.getPortNumber().contains("A")) {
-			System.out.println("Must use a digital port starting with A");
-		}
-		else if(UtilityMethods.checkOperatingSystem()) {
-			data = UtilityMethods.callPython(CommonConstants.LIGHTSENSOR, this.portNumber.substring(1) + CommonConstants.BLANK + Integer.toString(seconds));
-			
-			addToList(data);
-		} 
-		else {
-			System.out.println("Cannot turn on Fan: " + this.name);
-		}
-		return data;	
+		this.sensorFile = CommonConstants.LIGHTSENSOR;
 	}
 	
 	/**
@@ -53,11 +33,10 @@ public class LightSensor implements Sensor {
 	 * and adds them to list
 	 * @param data
 	 */
-	private void addToList(String data) {
+	@Override
+	protected void addToList(String data) {
 		String[] dataToAdd = data.split(",");
-		System.out.println("Adding data to list");
 		for(String str: dataToAdd) {
-			System.out.println(str);
 			String[] makeIntoData = str.split(" ");
 			//value from output will be three numbers, first is sensorValue second is voltage, third is watts
 			sensorData.add(new LightSensorData(Integer.parseInt(makeIntoData[0]), Float.parseFloat(makeIntoData[1]), Float.parseFloat(makeIntoData[2]), new Date()));
@@ -65,36 +44,21 @@ public class LightSensor implements Sensor {
 	}
     
 	@Override
+	protected boolean checkPort(String portNumber) {
+		if(!this.getPortNumber().contains("A")) {
+			System.out.println("Must use a digital port starting with A");
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
 	public void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError  {
 		if(nextSensor instanceof LightSensor) {
 			this.nextSensor = nextSensor;
 		} else {
 			throw new IncompatibleSensorError("Sensor not compatible with sensor. Sensor chain can only be use other Sensors");
 		}
-	}
-
-	/**
-	 * Gets the port number of the sensor
-	 * @return
-	 */
-	public String getPortNumber() {
-		return portNumber;
-	}
-	
-	/**
-	 * Sets the port number of the sensor
-	 * @param portNumber
-	 */
-	public void setPortNumber(String portNumber) {
-		this.portNumber = portNumber;
-	}
-
-	/**
-	 * Gets the next sensor in the chain
-	 * @return
-	 */
-	public Sensor getNextSensor() {
-		return nextSensor;
 	}
 
 	/**
