@@ -9,7 +9,7 @@ package edu.ccsu.interfaces;
 public interface ScreenEnabledDevice extends LightEnabledDevice {
 
 	/**
-	 * Print a message to the 
+	 * Print a message to the ScreenEnabledDevice 
 	 * @param message
 	 */
 	public void printMessage(String message);

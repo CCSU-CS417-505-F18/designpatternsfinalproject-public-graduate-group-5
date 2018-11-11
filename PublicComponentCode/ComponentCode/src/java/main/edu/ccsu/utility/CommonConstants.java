@@ -38,5 +38,6 @@ public class CommonConstants {
 	public static final String ERROR = "Error";
 	public static final String LINUX = "linux";
 	public static final String BLANK = " ";
+	public static final String UNDERSCORE = "_";
 	public static final String TRY_NEXT_LED = "try_next_led";
 }
