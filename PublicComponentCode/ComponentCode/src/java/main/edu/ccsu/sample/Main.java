@@ -57,11 +57,13 @@ public class Main {
 		 * If you need specific methods associated with different devices, use the specified methods in DeviceAndSensorFactory
 		 *  */
 		ScreenEnabledDevice display = productFactory.makeScreenEnabledDevice("LCD", "MYLCD", "I2C-1");
-		display.printMessage("Hello World");
 		System.out.println("Turning off Lcd Screen");
 		display.turnOff();
 		System.out.println("Turning on Lcd Screen");
 		display.turnOn();		
+		System.out.println("Blink 3 times");
+		display.blink(3);
+		display.printMessage("Hello World");
 		
 		
 		LightEnabledDevice ledOne =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
