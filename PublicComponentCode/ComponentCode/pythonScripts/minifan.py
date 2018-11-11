@@ -42,7 +42,7 @@ import grovepi
     
 #can only use grovepi.analogWrite(led, val) on ports 3,5,6,9
 def off(portNumber):
-    minifan = 5
+    minifan = portNumber
 
     grovepi.pinMode(minifan, "OUTPUT")
     
