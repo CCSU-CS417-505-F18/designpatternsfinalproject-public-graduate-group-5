@@ -33,15 +33,20 @@ public class Main {
 		 * Example of how to use iterator for sensors
 		 * */
 		Sensor lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
+		System.out.println("************************");
+		System.out.println("Testing LightSensor Iterator");
+		lightSensor.getData(5);
 		Iterator itr = lightSensor.getIterator();
 		while(itr.hasNext())
-			System.out.println("Iterator Test " + itr.next());
-		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "A1");
-		Iterator itrTemp = tempAndHumid.getIterator();
-		while(itrTemp.hasNext()) {
-			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
-		}
-		
+			System.out.println(itr.next());
+		System.out.println("************************");
+//		
+//		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "A1");
+//		Iterator itrTemp = tempAndHumid.getIterator();
+//		while(itrTemp.hasNext()) {
+//			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
+//		}
+//		
 		//sample devices
 		/*
 		 * NOTE that we have a hierarchy of interfaces extending Device interface.  If you just 

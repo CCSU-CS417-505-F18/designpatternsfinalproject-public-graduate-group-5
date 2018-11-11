@@ -1,7 +1,5 @@
 package edu.ccsu.interfaces;
 
-import java.util.List;
-
 /**
  * Iterator used by classes that realize sensor interface.
  * Used to iterate through the data these classes hold
@@ -20,10 +18,4 @@ public interface Iterator {
 	 */
 	public Object next();
 	
-	/**
-	 * Given a filter string will return just that data
-	 * @param filter
-	 * @return
-	 */
-	public List<String> filter(String filter);
 }

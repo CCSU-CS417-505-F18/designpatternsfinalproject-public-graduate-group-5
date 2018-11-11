@@ -27,20 +27,6 @@ public class TemperatureAndHumiditySensor implements Sensor {
 		sensorData.add(new TempAndHumidityData(56, 45, new Date()));
 	}
 
-	//NOTE - will call python, parse string and store TempAndHumidityData objects 
-	//		 in the sensorData list 
-	@Override
-	public String getData(String desiredData) {
-		//if user just wants humidity only get that
-		//if user just wants temp just get that
-		//if user wants both grab both
-		String returnValue = "";
-//		if(desiredData.equals("d")) returnValue = Double.toString(degreesFahrenheit);
-//		else if(desiredData.equals("h")) returnValue = Double.toString(humidityValue);
-//		else if(desiredData.equals("b")) returnValue = Double.toString(degreesFahrenheit)+":"+Double.toString(humidityValue);
-		return returnValue;
-	}
-
 	@Override
 	public String getData(int seconds) {
 		// TODO Auto-generated method stub
@@ -143,14 +129,6 @@ public class TemperatureAndHumiditySensor implements Sensor {
 			if(this.hasNext())
 				return sensorData.get(index++);
 			return null;
-		}
-
-		public List<String> filter(String filter) {
-			List<String> filteredData = new ArrayList<>();
-			for(TempAndHumidityData data: sensorData) {
-				
-			}
-			return filteredData;
 		}
 	}
 }

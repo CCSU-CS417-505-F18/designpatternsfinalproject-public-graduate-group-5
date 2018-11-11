@@ -7,6 +7,8 @@ import java.util.List;
 import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.interfaces.Iterator;
 import edu.ccsu.interfaces.Sensor;
+import edu.ccsu.utility.CommonConstants;
+import edu.ccsu.utility.UtilityMethods;
 
 /**
  * Class can access light sensor and 
@@ -18,40 +20,48 @@ public class LightSensor implements Sensor {
 	private String name;
 	private String portNumber;
 	private List<LightSensorData> sensorData;
-	private double lightIntensity;
 	
 	public LightSensor(String name, String portNumber) {
 		this.name = name;
 		this.portNumber = portNumber;
 		this.sensorData = new ArrayList<>();
-		//TODO- delete this later
-		sensorData.add(new LightSensorData(100, 200, new Date()));
-		sensorData.add(new LightSensorData(200, 500, new Date()));
 	}
 	
 	@Override
-	public String getData(String desiredData) {
-		//if user just wants name only get that
-		//if user just wants lightIntensity just get that
-		//if user wants both grab both
-		String returnValue = "";
-		if(desiredData.equals("name")) returnValue = name;
-		else if(desiredData.equals("intensity")) returnValue = Double.toString(lightIntensity);
-		else if(desiredData.equals("b")) returnValue = name+":"+Double.toString(lightIntensity);
-		return returnValue;	
-	}
-
-	@Override
 	public String getData(int seconds) {
-		//call python
-		//if python returns error try next sensor if it exists
-		//parse output string and add to sensorData
-		//return that original string and maintain data in list...can be accessed again later
-		return null;
+		String data = "";
+		if(!this.getPortNumber().contains("A")) {
+			System.out.println("Must use a digital port starting with A");
+		}
+		else if(UtilityMethods.checkOperatingSystem()) {
+			data = UtilityMethods.callPython(CommonConstants.LIGHTSENSOR, this.portNumber.substring(1) + CommonConstants.BLANK + Integer.toString(seconds));
+			
+			addToList(data);
+		} 
+		else {
+			System.out.println("Cannot turn on Fan: " + this.name);
+		}
+		return data;	
+	}
+	
+	/**
+	 * Method that takes data string, parses it, creates LightSensorData objects,
+	 * and adds them to list
+	 * @param data
+	 */
+	private void addToList(String data) {
+		String[] dataToAdd = data.split(",");
+		System.out.println("Adding data to list");
+		for(String str: dataToAdd) {
+			System.out.println(str);
+			String[] makeIntoData = str.split(" ");
+			//value from output will be three numbers, second is voltage, third is watts
+			//first is sensorvalue, second is 
+			sensorData.add(new LightSensorData(Integer.parseInt(makeIntoData[0]), Float.parseFloat(makeIntoData[1]), Float.parseFloat(makeIntoData[2]), new Date()));
+		}
 	}
 
 	@Override
-
 	public void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError  {
 		if(nextSensor instanceof LightSensor) {
 			this.nextSensor = nextSensor;
@@ -127,31 +137,21 @@ public class LightSensor implements Sensor {
 	 *
 	 */
 	private class LightSensorData{
-		int lumens;
-		int voltage;
+		int sensorValue;
+		float watts;
+		float voltage;
 		Date date;
 		
-		public LightSensorData(int lumens, int voltage, Date date) {
-			this.lumens = lumens;
+		public LightSensorData(int sensor, float voltage, float watts, Date date) {
+			this.sensorValue = sensor;
 			this.voltage =  voltage;
+			this.watts = watts;
 			this.date = date;
-		}
-		
-		public int getLumens() {
-			return this.lumens;
-		}
-		
-		public int getVoltage() {
-			return this.voltage;
-		}
-		
-		public Date getDate() {
-			return this.date;
 		}
 		
 		 public String toString(){
 			return "\n**********************\n" +
-					"Lumens: " + this.lumens + "\n" +
+					"Lumens: " + this.sensorValue + "\n" +
 					"Voltage: " + this.voltage + "\n" + 
 					"Date: " + this.date + "\n" +
 					"**********************\n";
@@ -176,17 +176,6 @@ public class LightSensor implements Sensor {
 			if(this.hasNext())
 				return sensorData.get(index++);
 			return null;
-		}
-
-		public List<String> filter(String filter) {
-			List<String> filteredData = new ArrayList<>();
-			for(LightSensorData data: sensorData) {
-				if("lumens".equalsIgnoreCase(filter))
-					filteredData.add(Integer.toString(data.getLumens()));
-				else
-					filteredData.add(Integer.toString(data.getVoltage()));
-			}
-			return filteredData;
 		}
 	}
 }

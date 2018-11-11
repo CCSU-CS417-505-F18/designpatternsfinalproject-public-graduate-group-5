@@ -17,6 +17,7 @@ public class CommonConstants {
 	public static final String AUTOMATIC_LED = "automaticAdjustingLED.py";
 	public static final String ADJUST_BRIGHTNESS = "adjustBrightness.py";
 	public static final String MINIFAN = "minifan.py";
+	public static final String LIGHTSENSOR = "Light.py";
 	
 	//device and sensor constants
 	public static final String LCD = "LCD";

@@ -7,17 +7,11 @@ import edu.ccsu.error.IncompatibleSensorError;
  */
 public interface Sensor {
 
-	/**
-	 * Returns a string representation of sensor data
-	 * for the current moment
-	 * @param desiredData
-	 * @return
-	 */
-	public String getData(String desiredData);
 	
 	/**
 	 * Returns a string representation of data for a sensor
-	 * collected over a given number of seconds
+	 * collected over a given number of seconds.  To get data for current moment
+	 * enter 0 seconds as argument
 	 * @param seconds
 	 * @return
 	 */
