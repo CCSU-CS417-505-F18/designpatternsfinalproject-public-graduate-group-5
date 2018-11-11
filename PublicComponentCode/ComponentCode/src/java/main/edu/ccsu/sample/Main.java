@@ -19,34 +19,36 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		//instantiate factory to create objects 
 		ProductFactory productFactory = new DeviceAndSensorFactory();
-		
-		Fan fan = productFactory.makeFan("minifan", "myFan", "D5");
-		System.out.println("************************");
-		System.out.println("Testing Fan");
-		fan.turnOn();
-		Thread.sleep(1800l);
-		fan.adjustSpeed(40);
-		Thread.sleep(1800l);
-		fan.turnOff();
-		System.out.println("************************");
+//		
+//		Fan fan = productFactory.makeFan("minifan", "myFan", "D5");
+//		System.out.println("************************");
+//		System.out.println("Testing Fan");
+//		fan.turnOn();
+//		Thread.sleep(1800l);
+//		fan.adjustSpeed(40);
+//		Thread.sleep(1800l);
+//		fan.turnOff();
+//		System.out.println("************************");
 		/*
 		 * Example of how to use iterator for sensors
 		 * */
 		Sensor lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
 		System.out.println("************************");
 		System.out.println("Testing LightSensor Iterator");
-		lightSensor.getData(5);
+		lightSensor.getData(2);
 		Iterator itr = lightSensor.getIterator();
 		while(itr.hasNext())
 			System.out.println(itr.next());
 		System.out.println("************************");
-//		
-//		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "A1");
-//		Iterator itrTemp = tempAndHumid.getIterator();
-//		while(itrTemp.hasNext()) {
-//			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
-//		}
-//		
+		System.out.println("Testing Temp and Humidity Iterator");
+		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D4");
+		tempAndHumid.getData(3);
+		
+		Iterator itrTemp = tempAndHumid.getIterator();
+		while(itrTemp.hasNext()) {
+			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
+		}
+		
 		//sample devices
 		/*
 		 * NOTE that we have a hierarchy of interfaces extending Device interface.  If you just 

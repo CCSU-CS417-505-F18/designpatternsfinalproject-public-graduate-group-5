@@ -55,8 +55,7 @@ public class LightSensor implements Sensor {
 		for(String str: dataToAdd) {
 			System.out.println(str);
 			String[] makeIntoData = str.split(" ");
-			//value from output will be three numbers, second is voltage, third is watts
-			//first is sensorvalue, second is 
+			//value from output will be three numbers, first is sensorValue second is voltage, third is watts
 			sensorData.add(new LightSensorData(Integer.parseInt(makeIntoData[0]), Float.parseFloat(makeIntoData[1]), Float.parseFloat(makeIntoData[2]), new Date()));
 		}
 	}
@@ -68,12 +67,6 @@ public class LightSensor implements Sensor {
 		} else {
 			throw new IncompatibleSensorError("Sensor not compatible with sensor. Sensor chain can only be use other Sensors");
 		}
-	}
-	
-	@Override
-	public boolean isAvailable(Sensor sensor, String portNumber) {
-		// TODO  connect with python file 
-		return false;
 	}
 
 	/**
@@ -151,8 +144,9 @@ public class LightSensor implements Sensor {
 		
 		 public String toString(){
 			return "\n**********************\n" +
-					"Lumens: " + this.sensorValue + "\n" +
+					"SensorValue: " + this.sensorValue + "\n" +
 					"Voltage: " + this.voltage + "\n" + 
+					"Watts: " + this.watts + "\n" +
 					"Date: " + this.date + "\n" +
 					"**********************\n";
 		}

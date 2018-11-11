@@ -37,14 +37,6 @@ public interface Sensor {
 	 * @return
 	 */
 	public Iterator getIterator();
-	
-	/**
-	 * Check if sensor is available
-	 * @param sensor
-	 * @param portNumber
-	 * @return
-	 */
-	public boolean isAvailable(Sensor sensor, String portNumber);
 
 	/**
 	 * Returns port number of Sensor
