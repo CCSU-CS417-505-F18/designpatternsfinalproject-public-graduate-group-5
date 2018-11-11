@@ -28,7 +28,6 @@ public class LcdScreen implements ScreenEnabledDevice {
 	 * @param message
 	 */
 	public void printMessage(String message) {
-		//TODO implementation - 
 	}
 	
 	/**
@@ -38,9 +37,11 @@ public class LcdScreen implements ScreenEnabledDevice {
 	 * @param duration
 	 */
 	public void printMessage(String message, int duration) {
-		//TODO implementation
 	}
-
+    /**
+     * Sets the next device in the chain. Must be a sensor
+     * @param nextDevice
+     */
 	@Override
 	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError {
 		if(nextDevice instanceof LcdScreen) {
@@ -49,87 +50,109 @@ public class LcdScreen implements ScreenEnabledDevice {
 			throw new IncompatibleDeviceError("Sensor not compatible with sensor. Sensor chain can only be use other Sensors");
 		}		
 	}
-	
+	/**
+	 * Adjusts the brightness of LCD Screen
+	 * @param brightness
+	 */
 	@Override
 	public void adjustBrightness(int brightness) {
-		// TODO Auto-generated method stub
 		
 	}
-
+    /**
+     * Makes the LCD screen blink
+     * @param numberOfSeconds
+     */
 	@Override
 	public void blink(int numberOfSeconds) {
-		// TODO Auto-generated method stub
 		
 	}
-	
+	/**
+	 * Displays LCD Screen as string, including name and portnumber 
+	 */
 	@Override
 	public String toString() {
 		return "Name: " + this.name + "\n" +
 				"Port Number: " + this.portNumber;	}
-
+    /**
+     * Turns on the LCD
+     */
 	@Override
 	public void turnOn() {
-		// TODO Auto-generated method stub
 		
 	}
-
+    /**
+     * Turns off the LCD
+     */
 	@Override
 	public void turnOff() {
-		// TODO Auto-generated method stub
 		
 	}
-
+    /**
+     * Gets the name of the LCD
+     */
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
+    /**
+     * Sets the name of the LCD
+     * @param name
+     */
 	@Override
 	public void setName(String name) {
-		// TODO Auto-generated method stub
 		
 	}
-
+    /**
+     * Gets the port number of the LCD
+     */
 	@Override
 	public String getPortNumber() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
+    /**
+     * Sets the port number of the LCD
+     * @param portNumber
+     */
 	@Override
 	public void setPortNumber(String portNumber) {
-		// TODO Auto-generated method stub
 		
 	}
-
+    /**
+     * Gets the color of the LCD background
+     */
 	@Override
 	public String getColor() {
 		return this.color;
 	}
-
+    /**
+     * Sets the color of the LCD background
+     * @param color
+     */
 	@Override
 	public void setColor(String color) {
 		this.color = color;
 	}
-
+    /**
+     * Gets the next device in the chain of LCDs
+     */
 	@Override
 	public Device getNextDevice() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
+    /**
+     * Determines if there is a next device to use
+     */
 	@Override
 	public boolean isUseNext() {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
+    /**
+     * If there is a next device, sets next device to use next
+     * @param useNext
+     */
 	@Override
 	public void setUseNext(boolean useNext) {
-		// TODO Auto-generated method stub
 		
 	}
 
-	//TODO implement object equality and hashCode
 }

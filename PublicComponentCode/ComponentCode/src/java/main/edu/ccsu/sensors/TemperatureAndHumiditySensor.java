@@ -21,13 +21,20 @@ public class TemperatureAndHumiditySensor implements Sensor {
 	private String portNumber;
 	private String name;
 	private List<TempAndHumidityData> sensorData;
-	
+	/**
+	 * Creates a new Temperature and Humidity Sensor
+	 * @param name
+	 * @param portNumber
+	 */
 	public TemperatureAndHumiditySensor(String name, String portNumber) {
 		this.name = name;
 		this.portNumber = portNumber;
 		this.sensorData = new ArrayList<>();
 	}
-
+    /**
+     * Gets the data from the temp and humidity sensor. Checks port number and operating system first
+     * @param seconds
+     */
 	@Override
 	public String getData(int seconds) {
 		String data = "";
@@ -60,6 +67,11 @@ public class TemperatureAndHumiditySensor implements Sensor {
 			sensorData.add(new TempAndHumidityData(Float.parseFloat(makeIntoData[0]), Float.parseFloat(makeIntoData[1]), Float.parseFloat(makeIntoData[2]), new Date()));
 		}
 	}
+	/**
+	 * Sets the next sensor in the chain. Checks it is compatible for sensor chain
+	 * @param nextSensor
+	 * @param portNumber
+	 */
 	@Override
 	public void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError {
 		if(nextSensor instanceof TemperatureAndHumiditySensor) {
@@ -71,26 +83,33 @@ public class TemperatureAndHumiditySensor implements Sensor {
 
 	/**
 	 * Returns the next sensor in the chain
-	 * @return
+	 * @return nextSensor
 	 */
 	@Override
 	public Sensor getNextSensor() {
 		return this.nextSensor;
 	}
-
+    /**
+     * Gets the port number
+     * @return portNumber
+     */
 	@Override
 	public String getPortNumber() {
 		return portNumber;
 	}
-
+    /**
+     * Sets the portNumber
+     * @param portNumber
+     */
 	@Override
 	public void setPortNumber(String portNumber) {
 		this.portNumber = portNumber;
 	}
-
+    /**
+     * Gets and creates new iterator for the temperature and humidity sensor
+     */
 	@Override
 	public Iterator getIterator() {
-		// TODO Auto-generated method stub
 		return new TempAndHumidityIterator();
 	}
 	
@@ -104,14 +123,22 @@ public class TemperatureAndHumiditySensor implements Sensor {
 		 float celcius;
 		 float humidityValue;
 		 Date date;
-		 
+		 /**
+		  * Takes in data from temperature and humidity sensor and stores it
+		  * @param degreesFahrenheit
+		  * @param celcius
+		  * @param humidityValue
+		  * @param date
+		  */
 		 public TempAndHumidityData(float degreesFahrenheit, float celcius, float humidityValue, Date date) {
 			 this.degreesFahrenheit = degreesFahrenheit;
 			 this.celcius = celcius;
 			 this.humidityValue = humidityValue;
 			 this.date = date;
 		 }
-		 
+		 /**
+		  * Returns data as string
+		  */
 		 public String toString() {
 			 return "\n******************\n" + 
 					 "DegressFahrenheit: " + this.degreesFahrenheit + "\n" +
@@ -127,14 +154,18 @@ public class TemperatureAndHumiditySensor implements Sensor {
 	private class TempAndHumidityIterator implements Iterator{
 
 		int index;
-
+        /**
+         * Checks if there is more data to iterate
+         */
 		@Override
 		public boolean hasNext() {
 			if(index < sensorData.size() )
 				return true;
 			return false;
 		}
-
+        /**
+         * Checks if temperature and humidity sensor has more data to iterate
+         */
 		@Override
 		public TempAndHumidityData next() {
 			if(this.hasNext())
