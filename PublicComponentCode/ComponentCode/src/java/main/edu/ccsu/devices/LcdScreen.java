@@ -1,8 +1,12 @@
 package edu.ccsu.devices;
 
+import java.util.Objects;
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.ScreenEnabledDevice;
+import edu.ccsu.utility.CommonConstants;
+import edu.ccsu.utility.UtilityMethods;
+
 /**
  * Class connects to LCD RGB Backlight and allows
  * calling classes to print messages to the screen using
@@ -20,7 +24,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 		this.color = "Blue";
 		this.name = name;
 		this.portNumber = portNumber;
-		this.useNext = true;
+		this.useNext = false;
 	}
 	
 	/**
@@ -45,6 +49,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError {
 		if(nextDevice instanceof LcdScreen) {
 			this.nextDevice = nextDevice;
+			this.setUseNext(true);
 		} else {
 			throw new IncompatibleDeviceError("Sensor not compatible with sensor. Sensor chain can only be use other Sensors");
 		}		
@@ -69,38 +74,50 @@ public class LcdScreen implements ScreenEnabledDevice {
 
 	@Override
 	public void turnOn() {
-		// TODO Auto-generated method stub
+        if(!this.getPortNumber().contains("I")) {
+            System.out.println("Must use a digital port starting with I");
+        }
+        else if(UtilityMethods.checkOperatingSystem()) {
+            UtilityMethods.callPython(CommonConstants.GROVE_LCD, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.ON);
+        }
+        else {
+            System.out.println("Cannot turn on LcdScreen: " + this.name);
+        }
 		
 	}
 
 	@Override
 	public void turnOff() {
-		// TODO Auto-generated method stub
+        if(!this.getPortNumber().contains("I")) {
+            System.out.println("Must use a digital port starting with I");
+        }
+        else if(UtilityMethods.checkOperatingSystem()) {
+            UtilityMethods.callPython(CommonConstants.GROVE_LCD, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.OFF);
+        }
+        else {
+            System.out.println("Cannot turn on LcdScreen: " + this.name);
+        }
 		
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public void setName(String name) {
-		// TODO Auto-generated method stub
-		
+		this.name = name;	
 	}
 
 	@Override
 	public String getPortNumber() {
-		// TODO Auto-generated method stub
-		return null;
+		return portNumber;
 	}
 
 	@Override
 	public void setPortNumber(String portNumber) {
-		// TODO Auto-generated method stub
-		
+		this.portNumber = portNumber;		
 	}
 
 	@Override
@@ -115,21 +132,25 @@ public class LcdScreen implements ScreenEnabledDevice {
 
 	@Override
 	public Device getNextDevice() {
-		// TODO Auto-generated method stub
-		return null;
+		return nextDevice;
 	}
 
 	@Override
 	public boolean isUseNext() {
-		// TODO Auto-generated method stub
-		return false;
+		return useNext;
 	}
 
 	@Override
 	public void setUseNext(boolean useNext) {
-		// TODO Auto-generated method stub
-		
+		this.useNext = useNext;		
 	}
 
-	//TODO implement object equality and hashCode
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.getNextDevice());
+        hash = 23 * hash + Objects.hashCode(this.name);
+        hash = 23 * hash + Objects.hashCode(this.portNumber);
+        return hash;
+    }
+
 }
