@@ -70,7 +70,6 @@ public class LcdScreen implements ScreenEnabledDevice {
     
 	@Override
 	public void turnOn() {
-<<<<<<< HEAD
         if(!this.getPortNumber().contains("I")) {
             System.out.println("Must use a digital port starting with I");
         }
@@ -80,14 +79,11 @@ public class LcdScreen implements ScreenEnabledDevice {
         else {
             System.out.println("Cannot turn on LcdScreen: " + this.name);
         }
-=======
->>>>>>> f2275b2bd21f4461ac5ae3d9e5e1e199252cae5c
 		
 	}
     
 	@Override
 	public void turnOff() {
-<<<<<<< HEAD
         if(!this.getPortNumber().contains("I")) {
             System.out.println("Must use a digital port starting with I");
         }
@@ -97,45 +93,27 @@ public class LcdScreen implements ScreenEnabledDevice {
         else {
             System.out.println("Cannot turn on LcdScreen: " + this.name);
         }
-=======
->>>>>>> f2275b2bd21f4461ac5ae3d9e5e1e199252cae5c
 		
 	}
     
 	@Override
 	public String getName() {
-<<<<<<< HEAD
 		return name;
-=======
-		return null;
->>>>>>> f2275b2bd21f4461ac5ae3d9e5e1e199252cae5c
 	}
    
 	@Override
 	public void setName(String name) {
-<<<<<<< HEAD
 		this.name = name;	
-=======
-		
->>>>>>> f2275b2bd21f4461ac5ae3d9e5e1e199252cae5c
 	}
     
 	@Override
 	public String getPortNumber() {
-<<<<<<< HEAD
 		return portNumber;
-=======
-		return null;
->>>>>>> f2275b2bd21f4461ac5ae3d9e5e1e199252cae5c
 	}
     
 	@Override
 	public void setPortNumber(String portNumber) {
-<<<<<<< HEAD
 		this.portNumber = portNumber;		
-=======
-		
->>>>>>> f2275b2bd21f4461ac5ae3d9e5e1e199252cae5c
 	}
     
 	@Override
@@ -150,39 +128,26 @@ public class LcdScreen implements ScreenEnabledDevice {
     
 	@Override
 	public Device getNextDevice() {
-<<<<<<< HEAD
 		return nextDevice;
-=======
-		return null;
->>>>>>> f2275b2bd21f4461ac5ae3d9e5e1e199252cae5c
 	}
     
 	@Override
 	public boolean isUseNext() {
-<<<<<<< HEAD
 		return useNext;
-=======
-		return false;
->>>>>>> f2275b2bd21f4461ac5ae3d9e5e1e199252cae5c
 	}
     
 	@Override
 	public void setUseNext(boolean useNext) {
-<<<<<<< HEAD
 		this.useNext = useNext;		
 	}
 
-    public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.getNextDevice());
-        hash = 23 * hash + Objects.hashCode(this.name);
-        hash = 23 * hash + Objects.hashCode(this.portNumber);
-        return hash;
+	public int hashCode() {
+        	int hash = 7;
+	        hash = 23 * hash + Objects.hashCode(this.getNextDevice());
+	        hash = 23 * hash + Objects.hashCode(this.name);
+	        hash = 23 * hash + Objects.hashCode(this.portNumber);
+	        return hash;
     }
 
-=======
-		
-	}
 
->>>>>>> f2275b2bd21f4461ac5ae3d9e5e1e199252cae5c
 }
