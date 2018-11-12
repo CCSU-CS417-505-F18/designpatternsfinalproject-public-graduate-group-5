@@ -37,18 +37,18 @@ public class Main {
 //		System.out.println("Testing LightSensor Iterator");
 		//lightSensor.getData(2);
 		
-		Iterator itr = lightSensor.getIterator();
-		while(itr.hasNext())
-			System.out.println(itr.next());
-		System.out.println("************************");
-		System.out.println("Testing Temp and Humidity Iterator");
-		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D4");
-		tempAndHumid.getData(3);
+//		Iterator itr = lightSensor.getIterator();
+//		while(itr.hasNext())
+//			System.out.println(itr.next());
+//		System.out.println("************************");
+//		System.out.println("Testing Temp and Humidity Iterator");
+//		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D4");
+//		tempAndHumid.getData(3);
 
-		Iterator itrTemp = tempAndHumid.getIterator();
-		while(itrTemp.hasNext()) {
-			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
-		}
+//		Iterator itrTemp = tempAndHumid.getIterator();
+//		while(itrTemp.hasNext()) {
+//			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
+//		}
 		
 		//sample devices
 		/*
@@ -63,6 +63,12 @@ public class Main {
 		display.turnOn();		
 		
 		display.printMessage("Hello World");
+		System.out.println("Setting color to Cyan");
+		display.printMessageColor("Hello, Team","Cyan");
+		System.out.println("Setting color to Blue");
+		display.printMessageColor("Hello, Team","Blue");
+		System.out.println("Setting color to Red");
+		display.printMessageColor("Hello, Team","Red");		
 		System.out.println("Adjust brightness of " + display.getName()+"to 3");
 		display.adjustBrightness(3);
 		System.out.println("Adjust brightness of " + display.getName()+"to 10");

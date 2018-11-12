@@ -26,7 +26,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 		this.portNumber = portNumber;
 		this.useNext = false;
 	}
-	
+		
 	/**
 	 * Print a message to the 
 	 * @param message
@@ -60,7 +60,8 @@ public class LcdScreen implements ScreenEnabledDevice {
 		}
 		return buildMsg.toString();	
 	}	
-		
+
+
 	/**
 	 * Print a message to the LCD RGB Backlight for
 	 * a certain number of seconds
@@ -74,13 +75,33 @@ public class LcdScreen implements ScreenEnabledDevice {
 		}
 		else if(UtilityMethods.checkOperatingSystem()) {
 			
-			UtilityMethods.callPython(CommonConstants.GROVE_LCD_TIME, buildMessage(message));			
+			UtilityMethods.callPython(CommonConstants.GROVE_LCD_TIME, buildMessage(message)+" "+duration);			
 		}
 		else {
 			System.out.println("Cannot turn on LCD: " + this.name);
 		}					
 	}
    
+	/**
+	 * Print a message to the LCD RGB Backlight for
+	 * a certain number of seconds
+	 * @param message
+	 * @param duration
+	 */
+	public void printMessageColor(String message, String Color) {
+		//port must be a digital port starting with I
+		if(!this.getPortNumber().contains("I")) {
+			System.out.println("Must use a digital port starting with I");
+		}
+		else if(UtilityMethods.checkOperatingSystem()) {
+			
+			UtilityMethods.callPython(CommonConstants.GROVE_LCD_COLOR, buildMessage(message)+" "+Color);			
+		}
+		else {
+			System.out.println("Cannot turn on LCD: " + this.name);
+		}					
+	}	
+	
 	@Override
 	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError {
 		if(nextDevice instanceof LcdScreen) {
@@ -191,7 +212,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 	public Device getNextDevice() {
 		return nextDevice;
 	}
-    
+     
 	@Override
 	public boolean isUseNext() {
 		return useNext;

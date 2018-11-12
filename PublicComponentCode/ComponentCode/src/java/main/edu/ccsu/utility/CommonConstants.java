@@ -16,6 +16,7 @@ public class CommonConstants {
 	public static final String GROVE_LCD_TIME 		= "grove_lcd_with_time.py";
 	public static final String GROVE_LCD_BLINK		= "grove_lcd_blink.py";	
 	public static final String GROVE_LCD_BRIGHTNESS	= "grove_lcd_adjustBrightness.py";
+	public static final String GROVE_LCD_COLOR		= "grove_lcd_color.py";
 	public static final String GROVE_LIGHT_SENSOR 	= "grove_light_sensor.py";
 	public static final String SWITCH_PY 			= "switch.py";
 	public static final String TOGGLE_LED 			= "ToggleLED.py";
