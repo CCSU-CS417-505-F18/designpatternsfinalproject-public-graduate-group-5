@@ -19,36 +19,36 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		//instantiate factory to create objects 
 		ProductFactory productFactory = new DeviceAndSensorFactory();
-//		
-//		Fan fan = productFactory.makeFan("minifan", "myFan", "D5");
-//		System.out.println("************************");
-//		System.out.println("Testing Fan");
-//		fan.turnOn();
-//		Thread.sleep(1800l);
-//		fan.adjustSpeed(40);
-//		Thread.sleep(1800l);
-//		fan.turnOff();
-//		System.out.println("************************");
+		
+		Fan fan = productFactory.makeFan("minifan", "myFan", "D6");
+		System.out.println("************************");
+		System.out.println("Testing Fan");
+		fan.turnOn();
+		Thread.sleep(1800l);
+		fan.adjustSpeed(40);
+		Thread.sleep(1800l);
+		fan.turnOff();
+		System.out.println("************************");
 		/*
 		 * Example of how to use iterator for sensors
 		 * */
-//		Sensor lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
-//		System.out.println("************************");
-//		System.out.println("Testing LightSensor Iterator");
-		//lightSensor.getData(2);
+		Sensor lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
+		System.out.println("************************");
+		System.out.println("Testing LightSensor Iterator");
+		lightSensor.getData(2);
 		
-//		Iterator itr = lightSensor.getIterator();
-//		while(itr.hasNext())
-//			System.out.println(itr.next());
-//		System.out.println("************************");
-//		System.out.println("Testing Temp and Humidity Iterator");
-//		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D4");
-//		tempAndHumid.getData(3);
+		Iterator itr = lightSensor.getIterator();
+		while(itr.hasNext())
+			System.out.println(itr.next());
+		System.out.println("************************");
+		System.out.println("Testing Temp and Humidity Iterator");
+		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D4");
+		tempAndHumid.getData(3);
 
-//		Iterator itrTemp = tempAndHumid.getIterator();
-//		while(itrTemp.hasNext()) {
-//			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
-//		}
+		Iterator itrTemp = tempAndHumid.getIterator();
+		while(itrTemp.hasNext()) {
+			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
+		}
 		
 		//sample devices
 		/*
@@ -57,10 +57,11 @@ public class Main {
 		 * If you need specific methods associated with different devices, use the specified methods in DeviceAndSensorFactory
 		 *  */
 		ScreenEnabledDevice display = productFactory.makeScreenEnabledDevice("LCD", "MYLCD", "I2C-1");
+		System.out.println("Turning on Lcd Screen");
+		display.turnOn();
+		Thread.sleep(1800l);
 		System.out.println("Turning off Lcd Screen");
 		display.turnOff();
-		System.out.println("Turning on Lcd Screen");
-		display.turnOn();		
 		
 		display.printMessage("Hello World");
 		System.out.println("Setting color to Cyan");
@@ -71,10 +72,13 @@ public class Main {
 		display.printMessageColor("Hello, Team","Red");		
 		System.out.println("Adjust brightness of " + display.getName()+"to 3");
 		display.adjustBrightness(3);
+		Thread.sleep(1800l);
 		System.out.println("Adjust brightness of " + display.getName()+"to 10");
-		display.adjustBrightness(10);		
+		display.adjustBrightness(10);
+		Thread.sleep(1800l);
 		System.out.println("Adjust brightness of " + display.getName()+"to 1");
-		display.adjustBrightness(1);				
+		display.adjustBrightness(1);
+		Thread.sleep(1800l);
 		System.out.println("Blink 3 times");
 		display.blink(3);
 
