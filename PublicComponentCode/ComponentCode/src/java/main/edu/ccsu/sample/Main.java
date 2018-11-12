@@ -1,6 +1,9 @@
 package edu.ccsu.sample;
 
+import java.util.List;
+
 import edu.ccsu.error.IncompatibleDeviceError;
+import edu.ccsu.error.PortInUseException;
 import edu.ccsu.factory.DeviceAndSensorFactory;
 import edu.ccsu.interfaces.Fan;
 import edu.ccsu.interfaces.Iterator;
@@ -8,6 +11,7 @@ import edu.ccsu.interfaces.LightEnabledDevice;
 import edu.ccsu.interfaces.ProductFactory;
 import edu.ccsu.interfaces.ScreenEnabledDevice;
 import edu.ccsu.interfaces.Sensor;
+import edu.ccsu.utility.PortManagement;
 /**
  * This main class is simply here to demonstrate how to use our code.
  * @author Adrian
@@ -42,7 +46,7 @@ public class Main {
 			System.out.println(itr.next());
 		System.out.println("************************");
 		System.out.println("Testing Temp and Humidity Iterator");
-		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D4");
+		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D2");
 		tempAndHumid.getData(3);
 
 		Iterator itrTemp = tempAndHumid.getIterator();
@@ -66,10 +70,13 @@ public class Main {
 		display.printMessage("Hello World");
 		System.out.println("Setting color to Cyan");
 		display.printMessageColor("Hello, Team","Cyan");
+		Thread.sleep(1800l);
 		System.out.println("Setting color to Blue");
 		display.printMessageColor("Hello, Team","Blue");
+		Thread.sleep(1800l);
 		System.out.println("Setting color to Red");
 		display.printMessageColor("Hello, Team","Red");		
+		Thread.sleep(1800l);
 		System.out.println("Adjust brightness of " + display.getName()+"to 3");
 		display.adjustBrightness(3);
 		Thread.sleep(1800l);
@@ -86,11 +93,22 @@ public class Main {
 		LightEnabledDevice ledOne =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
 		LightEnabledDevice ledTwo =  productFactory.makeLightEnabledDevice("LED", "LED2", "D4");
 		LightEnabledDevice ledThree = productFactory.makeLightEnabledDevice("LED", "LED3", "D5");
+		try {
+			lightSensor.setPortNumber("D3");
+		}
+		catch(PortInUseException p) {
+			//p.printStackTrace();
+			List<String>pInUse = PortManagement.getPortsInUse();
+			for(String port: pInUse)
+				System.out.println(port);
+			//NOTE: logic to handle situation goes here
+			//if doing UI you may offer user list of used ports and ask them to choose an open one
+		}
 		
+		//If you try to create an object on a port already in use the return value will be null
 		LightEnabledDevice ledFour =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
-		LightEnabledDevice ledSix =   productFactory.makeLightEnabledDevice("LED", "LED2", "D4");
-		LightEnabledDevice ledNine =  productFactory.makeLightEnabledDevice("LED", "LED3", "D5");
-		
+		System.out.println(ledFour == null);
+	
 		/*
 		 * Sample of building CoR with LEDs
 		 * */
@@ -99,37 +117,15 @@ public class Main {
 			ledOne.setNextDevice(ledTwo);
 			ledTwo.setNextDevice(ledThree);
 			
-			//set ledFour chain
-			ledFour.setNextDevice(ledSix);
-			ledSix.setNextDevice(ledNine);
-			
 			/*
 			 * Setting LED equal to device not of type LED will throw an error
 			 * */
 			//ledThree.setNextDevice(display);
 		} catch (IncompatibleDeviceError e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
+			System.out.println("Incompatible Device Error!!!");
 		}
-		
-		/*
-		 * No need to do this but just checking that chain was properly created
-		 * */ 
-		System.out.println(ledOne.getNextDevice().getNextDevice().getName());
-		
-		/*
-		 * Demonstration of the equals method
-		 * */
-		System.out.println("***************");
-		System.out.println("Check that ledOne equals ledeFour");
-		System.out.println(ledOne.equals(ledFour));
-		System.out.println("***************");
-		/*
-		 * Printing hash codes because why not
-		 * */
-		System.out.println("***************");
-		System.out.println(ledOne.hashCode());
-		System.out.println(ledFour.hashCode());
-		System.out.println("***************");
+
 		/*
 		 * Simple demo of how to use turnOn and turnOff
 		 * Note that Thread.sleep is simply here to allow you so see the LEDs being

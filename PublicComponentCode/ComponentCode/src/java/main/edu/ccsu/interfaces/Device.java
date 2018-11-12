@@ -1,6 +1,7 @@
 package edu.ccsu.interfaces;
 
 import edu.ccsu.error.IncompatibleDeviceError;
+import edu.ccsu.error.PortInUseException;
 
 /**
  * Interface that specifies operations on Devices
@@ -54,8 +55,9 @@ public interface Device {
 	/**
 	 * Set this devices port number
 	 * @param portNumber
+	 * @throws PortInUseException 
 	 */
-	public void setPortNumber(String portNumber);
+	public void setPortNumber(String portNumber) throws PortInUseException;
 	
 	/**
 	 * Checks to see if device is allowed to use CoR

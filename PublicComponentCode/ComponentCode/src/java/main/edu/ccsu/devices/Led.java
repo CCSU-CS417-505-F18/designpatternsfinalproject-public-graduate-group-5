@@ -3,9 +3,11 @@ package edu.ccsu.devices;
 import java.util.Objects;
 
 import edu.ccsu.error.IncompatibleDeviceError;
+import edu.ccsu.error.PortInUseException;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.LightEnabledDevice;
 import edu.ccsu.utility.CommonConstants;
+import edu.ccsu.utility.PortManagement;
 import edu.ccsu.utility.UtilityMethods;
 
 /**
@@ -17,7 +19,8 @@ public class Led implements LightEnabledDevice {
 	private Device nextDevice;
 	private String portNumber;
 	private boolean useNext;
-
+	private static PortManagement portManagement = PortManagement.getInstance();
+	
 	/**
 	 * Default behavior is to use next device in chain.  If you wish to change this
 	 * behavior use setUseNext() method to set to false.  CoR used for adjustBrightness
@@ -47,8 +50,13 @@ public class Led implements LightEnabledDevice {
 	}
 	
 	@Override
-	public void setPortNumber(String portNumber) {
-		this.portNumber = portNumber;
+	public void setPortNumber(String portNumber) throws PortInUseException {
+		if(portManagement.add(portNumber) != false) {
+			portManagement.remove(this.portNumber);
+			this.portNumber = portNumber;
+		}
+		else
+			throw new PortInUseException(portNumber + " already in use");
 	}
 	
 	@Override

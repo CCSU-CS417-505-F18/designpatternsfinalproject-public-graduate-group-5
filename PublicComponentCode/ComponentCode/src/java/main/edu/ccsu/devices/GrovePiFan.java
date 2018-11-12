@@ -1,9 +1,11 @@
 package edu.ccsu.devices;
 
 import edu.ccsu.error.IncompatibleDeviceError;
+import edu.ccsu.error.PortInUseException;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.Fan;
 import edu.ccsu.utility.CommonConstants;
+import edu.ccsu.utility.PortManagement;
 import edu.ccsu.utility.UtilityMethods;
 /**
  * Class that has implementations to interact with Grove Minifan v1.1
@@ -16,6 +18,7 @@ public class GrovePiFan implements Fan {
 	private String name;
 	private boolean useNext;
 	private Device nextDevice;
+	private static PortManagement portManagement = PortManagement.getInstance();
 	
 	/**
 	 * Constructs the grovepi fan
@@ -97,8 +100,13 @@ public class GrovePiFan implements Fan {
 	}
    
 	@Override
-	public void setPortNumber(String portNumber) {
-		this.portNumber = portNumber;
+	public void setPortNumber(String portNumber) throws PortInUseException {
+		if(portManagement.add(portNumber) != false) {
+			portManagement.remove(this.portNumber);
+			this.portNumber = portNumber;
+		}
+		else
+			throw new PortInUseException(portNumber + " already in use");
 	}
     
 	@Override

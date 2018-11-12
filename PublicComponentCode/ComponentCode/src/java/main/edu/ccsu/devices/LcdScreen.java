@@ -2,9 +2,11 @@ package edu.ccsu.devices;
 
 import java.util.Objects;
 import edu.ccsu.error.IncompatibleDeviceError;
+import edu.ccsu.error.PortInUseException;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.ScreenEnabledDevice;
 import edu.ccsu.utility.CommonConstants;
+import edu.ccsu.utility.PortManagement;
 import edu.ccsu.utility.UtilityMethods;
 
 /**
@@ -14,11 +16,12 @@ import edu.ccsu.utility.UtilityMethods;
  */
 public class LcdScreen implements ScreenEnabledDevice {
 	
-	protected String name;
-	protected Device nextDevice;
-	protected String portNumber;
-	protected String color;
-	protected boolean useNext;
+	private String name;
+	private Device nextDevice;
+	private String portNumber;
+	private String color;
+	private boolean useNext;
+	private static PortManagement portManagement = PortManagement.getInstance();
 	
 	public LcdScreen(String name, String portNumber) {
 		this.color = "Blue";
@@ -75,7 +78,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 		}
 		else if(UtilityMethods.checkOperatingSystem()) {
 			
-			UtilityMethods.callPython(CommonConstants.GROVE_LCD_TIME, buildMessage(message)+" "+duration);			
+			UtilityMethods.callPython(CommonConstants.GROVE_LCD_TIME, buildMessage(message)+ CommonConstants.BLANK +duration);			
 		}
 		else {
 			System.out.println("Cannot turn on LCD: " + this.name);
@@ -194,8 +197,13 @@ public class LcdScreen implements ScreenEnabledDevice {
 	}
     
 	@Override
-	public void setPortNumber(String portNumber) {
-		this.portNumber = portNumber;		
+	public void setPortNumber(String portNumber) throws PortInUseException {
+		if(portManagement.add(portNumber) != false) {
+			portManagement.remove(this.portNumber);
+			this.portNumber = portNumber;
+		}
+		else
+			throw new PortInUseException(portNumber + " already in use");
 	}
     
 	@Override
@@ -230,6 +238,4 @@ public class LcdScreen implements ScreenEnabledDevice {
 	        hash = 23 * hash + Objects.hashCode(this.portNumber);
 	        return hash;
     }
-
-
 }

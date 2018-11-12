@@ -1,7 +1,9 @@
 package edu.ccsu.interfaces;
 
 import edu.ccsu.error.IncompatibleSensorError;
+import edu.ccsu.error.PortInUseException;
 import edu.ccsu.utility.CommonConstants;
+import edu.ccsu.utility.PortManagement;
 import edu.ccsu.utility.UtilityMethods;
 
 /**
@@ -16,6 +18,7 @@ public abstract class Sensor {
 	protected String portNumber;
 	protected String name;
 	protected String sensorFile;
+	private static PortManagement portManagement = PortManagement.getInstance();
 	
 	/**
 	 * Returns a string representation of data for a sensor
@@ -29,7 +32,6 @@ public abstract class Sensor {
 		if(checkPort(portNumber)) {
 		   if(UtilityMethods.checkOperatingSystem()) {
 				data = UtilityMethods.callPython(this.sensorFile, this.portNumber.substring(1) + CommonConstants.BLANK + Integer.toString(seconds));
-				System.out.println("data " + data);
 				if(!data.isEmpty() && !data.contains("nan values"))
 					addToList(data);
 			} 
@@ -88,9 +90,15 @@ public abstract class Sensor {
 	/**
 	 * Set port number of Sensor
 	 * @param portNumber
+	 * @throws PortInUseException
 	 */
-	public void setPortNumber(String portNumber) {
-		this.portNumber = portNumber;
+	public void setPortNumber(String portNumber) throws PortInUseException {
+		if(portManagement.add(portNumber) != false) {
+			portManagement.remove(this.portNumber);
+			this.portNumber = portNumber;
+		}
+		else
+			throw new PortInUseException(portNumber + " already in use");
 	}
 	
 	//TODO - implement hash and equals

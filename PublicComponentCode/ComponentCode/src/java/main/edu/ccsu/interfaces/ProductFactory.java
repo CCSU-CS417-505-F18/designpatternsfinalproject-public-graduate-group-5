@@ -1,7 +1,8 @@
 package edu.ccsu.interfaces;
 /**
  * Interface that specifies methods that can be used to create 
- * different devices and sensors 
+ * different devices and sensors
+ * NOTE: Methods will return null if you try to use port that is already in use
  * @author Adrian
  * @author Kim
  * @author GaYoung
