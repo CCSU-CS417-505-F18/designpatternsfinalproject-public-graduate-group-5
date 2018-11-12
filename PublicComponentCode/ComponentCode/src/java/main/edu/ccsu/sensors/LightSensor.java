@@ -53,38 +53,12 @@ public class LightSensor extends Sensor {
 	}
 	
 	@Override
-	public void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError  {
+	public void setNextSensor(Sensor nextSensor) throws IncompatibleSensorError  {
 		if(nextSensor instanceof LightSensor) {
 			this.nextSensor = nextSensor;
 		} else {
 			throw new IncompatibleSensorError("Sensor not compatible with sensor. Sensor chain can only be use other Sensors");
 		}
-	}
-
-	/**
-	 * Sets the next sensor in the chain
-	 * @param nextSensor
-	 */
-	public void setNextSensor(Sensor nextSensor) {
-		if(nextSensor instanceof LightSensor) {
-			this.nextSensor = nextSensor;
-		} 
-	}
-
-	/**
-	 * Gets the name of the sensor
-	 * @return
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets the name of the sensor
-	 * @param name
-	 */
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	@Override

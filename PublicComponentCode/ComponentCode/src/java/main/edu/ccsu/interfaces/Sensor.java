@@ -63,7 +63,7 @@ public abstract class Sensor {
 	 * @param portNumber
 	 * @throws IncompatibleSensorError
 	 */
-	public abstract void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError;
+	public abstract void setNextSensor(Sensor nextSensor) throws IncompatibleSensorError;
 	
 	/**
 	 * Returns next sensor in CoR
@@ -86,7 +86,22 @@ public abstract class Sensor {
 	public String getPortNumber() {
 		return portNumber;
 	}
-    
+	
+	/**
+	 * Gets the name of the sensor
+	 * @return
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Sets the name of the sensor
+	 * @param name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 	/**
 	 * Set port number of Sensor
 	 * @param portNumber

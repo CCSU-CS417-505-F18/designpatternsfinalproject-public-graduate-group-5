@@ -54,7 +54,7 @@ public class TemperatureAndHumiditySensor extends Sensor {
 	}
 	
 	@Override
-	public void setNextSensor(Sensor nextSensor, String portNumber) throws IncompatibleSensorError {
+	public void setNextSensor(Sensor nextSensor) throws IncompatibleSensorError {
 		if(nextSensor instanceof TemperatureAndHumiditySensor) {
 			this.nextSensor = nextSensor;
 		} else {
