@@ -88,7 +88,10 @@ public class Led implements LightEnabledDevice {
 	
 	@Override
 	public void blink(int numberOfSeconds) {
-		if(UtilityMethods.checkOperatingSystem()) {
+		if(!this.getPortNumber().contains("D")) {
+			System.out.println("Must use a digital port starting with D");
+		}
+		else if(UtilityMethods.checkOperatingSystem()) {
 			UtilityMethods.callPython(CommonConstants.GROVE_LED_BLINK, UtilityMethods.buildArgsString(this.getPortNumber(), Integer.toString(numberOfSeconds)));
 		}
 		else {
