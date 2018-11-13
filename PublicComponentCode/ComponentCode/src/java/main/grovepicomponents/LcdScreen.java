@@ -129,6 +129,34 @@ public class LcdScreen implements ScreenEnabledDevice {
 			System.out.println("Cannot turn on LCD: " + this.name);
 		}									
 	}
+	
+
+	@Override
+	public boolean equals(Object o) {
+		//check if references are equal
+		if(this == o) {
+			return true;
+		}
+		
+		//check if null
+		if(null == o) {
+			return false;
+		}
+	
+		//check if they are the same class
+		if(getClass() != o.getClass()) {
+			return false;
+		}
+		
+		LcdScreen device = (LcdScreen) o;
+		
+		//significant field field comparison
+		if(this.name.equals(device.getName())
+				&& this.portNumber.equals(device.getPortNumber())) {
+				 return true;
+		}
+		return false;
+	}
     
 	@Override
 	public void blink(int numberOfSeconds) {

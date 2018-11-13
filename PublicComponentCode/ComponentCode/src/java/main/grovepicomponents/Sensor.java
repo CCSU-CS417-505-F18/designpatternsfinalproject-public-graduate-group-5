@@ -1,5 +1,7 @@
 package grovepicomponents;
 
+import java.util.Objects;
+
 import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.error.PortInUseException;
 import edu.ccsu.interfaces.Iterator;
@@ -116,5 +118,39 @@ public abstract class Sensor {
 			throw new PortInUseException(portNumber + " already in use");
 	}
 	
-	//TODO - implement hash and equals
+	@Override
+	public boolean equals(Object o) {
+		//check if references are equal
+		if(this == o) {
+			return true;
+		}
+		
+		//check if null
+		if(null == o) {
+			return false;
+		}
+	
+		//check if they are the same class
+		if(getClass() != o.getClass()) {
+			return false;
+		}
+		
+		Led device = (Led) o;
+		
+		//significant field field comparison
+		if(this.name.equals(device.getName())
+				&& this.portNumber.equals(device.getPortNumber())) {
+			//check if chain is equal after field comparison
+				 return true;
+		}
+		return false;
+	}
+	
+	public int hashCode() {
+    	int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.getNextSensor());
+        hash = 23 * hash + Objects.hashCode(this.name);
+        hash = 23 * hash + Objects.hashCode(this.portNumber);
+        return hash;
+}
 }
