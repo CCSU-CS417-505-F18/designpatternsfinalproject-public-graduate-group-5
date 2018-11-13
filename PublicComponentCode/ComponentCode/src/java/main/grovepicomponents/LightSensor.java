@@ -1,4 +1,4 @@
-package edu.ccsu.sensors;
+package grovepicomponents;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,7 +6,6 @@ import java.util.List;
 
 import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.interfaces.Iterator;
-import edu.ccsu.interfaces.Sensor;
 import edu.ccsu.utility.CommonConstants;
 
 /**

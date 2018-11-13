@@ -1,4 +1,4 @@
-package edu.ccsu.devices;
+package grovepicomponents;
 
 import java.util.Objects;
 import edu.ccsu.error.IncompatibleDeviceError;
@@ -7,7 +7,6 @@ import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.ScreenEnabledDevice;
 import edu.ccsu.utility.CommonConstants;
 import edu.ccsu.utility.PortManagement;
-import edu.ccsu.utility.UtilityMethods;
 
 /**
  * Class connects to LCD RGB Backlight and allows
@@ -39,9 +38,9 @@ public class LcdScreen implements ScreenEnabledDevice {
 		if(!this.getPortNumber().contains("I")) {
 			System.out.println("Must use a digital port starting with I");
 		}
-		else if(UtilityMethods.checkOperatingSystem()) {
+		else if(GrovePiUtilities.checkOperatingSystem()) {
 			
-			UtilityMethods.callPython(CommonConstants.GROVE_LCD, buildMessage(message));			
+			GrovePiUtilities.callPython(CommonConstants.GROVE_LCD, buildMessage(message));			
 		}
 		else {
 			System.out.println("Cannot turn on LCD: " + this.name);
@@ -76,9 +75,9 @@ public class LcdScreen implements ScreenEnabledDevice {
 		if(!this.getPortNumber().contains("I")) {
 			System.out.println("Must use a digital port starting with I");
 		}
-		else if(UtilityMethods.checkOperatingSystem()) {
+		else if(GrovePiUtilities.checkOperatingSystem()) {
 			
-			UtilityMethods.callPython(CommonConstants.GROVE_LCD_TIME, buildMessage(message)+ CommonConstants.BLANK +duration);			
+			GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_TIME, buildMessage(message)+ CommonConstants.BLANK +duration);			
 		}
 		else {
 			System.out.println("Cannot turn on LCD: " + this.name);
@@ -96,9 +95,9 @@ public class LcdScreen implements ScreenEnabledDevice {
 		if(!this.getPortNumber().contains("I")) {
 			System.out.println("Must use a digital port starting with I");
 		}
-		else if(UtilityMethods.checkOperatingSystem()) {
+		else if(GrovePiUtilities.checkOperatingSystem()) {
 			
-			UtilityMethods.callPython(CommonConstants.GROVE_LCD_COLOR, buildMessage(message)+" "+Color);			
+			GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_COLOR, buildMessage(message)+" "+Color);			
 		}
 		else {
 			System.out.println("Cannot turn on LCD: " + this.name);
@@ -121,9 +120,9 @@ public class LcdScreen implements ScreenEnabledDevice {
 		if(!this.getPortNumber().contains("I")) {
 			System.out.println("Must use a digital port starting with I");
 		}
-		else if(UtilityMethods.checkOperatingSystem()) {
+		else if(GrovePiUtilities.checkOperatingSystem()) {
 			
-            UtilityMethods.callPython(CommonConstants.GROVE_LCD_BRIGHTNESS,""+brightness);
+            GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_BRIGHTNESS,""+brightness);
 
 		}
 		else {
@@ -137,9 +136,9 @@ public class LcdScreen implements ScreenEnabledDevice {
 		if(!this.getPortNumber().contains("I")) {
 			System.out.println("Must use a digital port starting with I");
 		}
-		else if(UtilityMethods.checkOperatingSystem()) {
+		else if(GrovePiUtilities.checkOperatingSystem()) {
 			
-            UtilityMethods.callPython(CommonConstants.GROVE_LCD_BLINK,""+numberOfSeconds);
+            GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_BLINK,""+numberOfSeconds);
 
 		}
 		else {
@@ -158,8 +157,8 @@ public class LcdScreen implements ScreenEnabledDevice {
         	System.out.println(this.getPortNumber());
             System.out.println("Must use a digital port starting with I");
        }
-        else if(UtilityMethods.checkOperatingSystem()) {
-            UtilityMethods.callPython(CommonConstants.GROVE_LCD_ONOFF, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.ON);
+        else if(GrovePiUtilities.checkOperatingSystem()) {
+            GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_ONOFF, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.ON);
         }
         else {
             System.out.println("Cannot turn on LcdScreen: " + this.name);
@@ -172,8 +171,8 @@ public class LcdScreen implements ScreenEnabledDevice {
         if(!this.getPortNumber().contains("I")) {
             System.out.println("Must use a digital port starting with I");
         }
-        else if(UtilityMethods.checkOperatingSystem()) {
-            UtilityMethods.callPython(CommonConstants.GROVE_LCD_ONOFF, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.OFF);
+        else if(GrovePiUtilities.checkOperatingSystem()) {
+            GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_ONOFF, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.OFF);
         }
         else {
             System.out.println("Cannot turn on LcdScreen: " + this.name);

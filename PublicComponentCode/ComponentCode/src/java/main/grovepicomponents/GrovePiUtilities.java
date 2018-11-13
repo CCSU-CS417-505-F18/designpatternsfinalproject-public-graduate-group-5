@@ -1,18 +1,20 @@
-package edu.ccsu.utility;
+package grovepicomponents;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import edu.ccsu.utility.CommonConstants;
+
 /**
- * Class contains common methods used throughout project
+ * Class contains common methods used throughout package
  * @author Adrian
  * @author Kim
  * @author Ga Young
  */
-public class UtilityMethods {
+ class GrovePiUtilities {
 
-	private UtilityMethods() {
+	private GrovePiUtilities() {
 		//prevent instantiation
 	}
 	

@@ -1,4 +1,4 @@
-package edu.ccsu.devices;
+package grovepicomponents;
 
 import java.util.Objects;
 
@@ -8,7 +8,6 @@ import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.LightEnabledDevice;
 import edu.ccsu.utility.CommonConstants;
 import edu.ccsu.utility.PortManagement;
-import edu.ccsu.utility.UtilityMethods;
 
 /**
  * Class allows for operations on GrovePi LEDs.
@@ -65,8 +64,8 @@ public class Led implements LightEnabledDevice {
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
 		}
-		else if(UtilityMethods.checkOperatingSystem()) {
-			UtilityMethods.callPython(CommonConstants.TOGGLE_LED, UtilityMethods.buildArgsString(this.getPortNumber(), CommonConstants.ON));			
+		else if(GrovePiUtilities.checkOperatingSystem()) {
+			GrovePiUtilities.callPython(CommonConstants.TOGGLE_LED, GrovePiUtilities.buildArgsString(this.getPortNumber(), CommonConstants.ON));			
 		}
 		else {
 			System.out.println("Cannot turn on LED: " + this.name);
@@ -78,8 +77,8 @@ public class Led implements LightEnabledDevice {
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
 		}
-		else if(UtilityMethods.checkOperatingSystem()) {
-			UtilityMethods.callPython(CommonConstants.TOGGLE_LED, UtilityMethods.buildArgsString(this.getPortNumber(),CommonConstants.OFF));
+		else if(GrovePiUtilities.checkOperatingSystem()) {
+			GrovePiUtilities.callPython(CommonConstants.TOGGLE_LED, GrovePiUtilities.buildArgsString(this.getPortNumber(),CommonConstants.OFF));
 		}
 		else {
 			System.out.println("Cannot turn off LED: " + this.name);
@@ -91,8 +90,8 @@ public class Led implements LightEnabledDevice {
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
 		}
-		else if(UtilityMethods.checkOperatingSystem()) {
-			UtilityMethods.callPython(CommonConstants.GROVE_LED_BLINK, UtilityMethods.buildArgsString(this.getPortNumber(), Integer.toString(numberOfSeconds)));
+		else if(GrovePiUtilities.checkOperatingSystem()) {
+			GrovePiUtilities.callPython(CommonConstants.GROVE_LED_BLINK, GrovePiUtilities.buildArgsString(this.getPortNumber(), Integer.toString(numberOfSeconds)));
 		}
 		else {
 			System.out.println("Cannot blink LED: " + this.name);
@@ -128,8 +127,8 @@ public class Led implements LightEnabledDevice {
     
 	@Override
 	public void adjustBrightness(int brightness) {
-		if(UtilityMethods.checkOperatingSystem()) {
-			String output = UtilityMethods.callPython(CommonConstants.ADJUST_BRIGHTNESS, UtilityMethods.buildArgsString(this.getPortNumber(), Integer.toString(brightness)));
+		if(GrovePiUtilities.checkOperatingSystem()) {
+			String output = GrovePiUtilities.callPython(CommonConstants.ADJUST_BRIGHTNESS, GrovePiUtilities.buildArgsString(this.getPortNumber(), Integer.toString(brightness)));
 			if(CommonConstants.TRY_NEXT_LED.equalsIgnoreCase(output)) {
 				Led nextLED = (Led) this.getNextDevice();
 				//use next LED in chain if useNext is true

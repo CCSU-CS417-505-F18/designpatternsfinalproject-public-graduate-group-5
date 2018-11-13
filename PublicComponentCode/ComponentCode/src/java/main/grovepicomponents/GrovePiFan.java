@@ -1,4 +1,4 @@
-package edu.ccsu.devices;
+package grovepicomponents;
 
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.error.PortInUseException;
@@ -6,7 +6,6 @@ import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.Fan;
 import edu.ccsu.utility.CommonConstants;
 import edu.ccsu.utility.PortManagement;
-import edu.ccsu.utility.UtilityMethods;
 /**
  * Class that has implementations to interact with Grove Minifan v1.1
  * @author Adrian
@@ -49,8 +48,8 @@ public class GrovePiFan implements Fan {
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
 		}
-		else if(UtilityMethods.checkOperatingSystem()) {
-			UtilityMethods.callPython(CommonConstants.MINIFAN, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.ON);			
+		else if(GrovePiUtilities.checkOperatingSystem()) {
+			GrovePiUtilities.callPython(CommonConstants.MINIFAN, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.ON);			
 		}
 		else {
 			System.out.println("Cannot turn on Fan: " + this.name);
@@ -62,8 +61,8 @@ public class GrovePiFan implements Fan {
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
 		}
-		else if(UtilityMethods.checkOperatingSystem()) {
-			UtilityMethods.callPython(CommonConstants.MINIFAN, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.OFF);			
+		else if(GrovePiUtilities.checkOperatingSystem()) {
+			GrovePiUtilities.callPython(CommonConstants.MINIFAN, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.OFF);			
 		}
 		else {
 			System.out.println("Cannot turn off Fan: " + this.name);
@@ -75,8 +74,8 @@ public class GrovePiFan implements Fan {
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
 		}
-		else if(UtilityMethods.checkOperatingSystem()) {
-			UtilityMethods.callPython(CommonConstants.MINIFAN, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.ADJUST_FAN_SPEED
+		else if(GrovePiUtilities.checkOperatingSystem()) {
+			GrovePiUtilities.callPython(CommonConstants.MINIFAN, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.ADJUST_FAN_SPEED
 										+ CommonConstants.BLANK + Integer.toString(speed));			
 		}
 		else {

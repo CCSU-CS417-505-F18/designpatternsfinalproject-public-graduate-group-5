@@ -1,4 +1,7 @@
 package edu.ccsu.interfaces;
+
+import grovepicomponents.Sensor;
+
 /**
  * Interface that specifies methods that can be used to create 
  * different devices and sensors

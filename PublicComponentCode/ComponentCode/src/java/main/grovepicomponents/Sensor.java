@@ -1,10 +1,10 @@
-package edu.ccsu.interfaces;
+package grovepicomponents;
 
 import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.error.PortInUseException;
+import edu.ccsu.interfaces.Iterator;
 import edu.ccsu.utility.CommonConstants;
 import edu.ccsu.utility.PortManagement;
-import edu.ccsu.utility.UtilityMethods;
 
 /**
  * Interface that specifies operations on Sensors
@@ -30,8 +30,8 @@ public abstract class Sensor {
 	public String getData(int seconds) {
 		String data = "";
 		if(checkPort(portNumber)) {
-		   if(UtilityMethods.checkOperatingSystem()) {
-				data = UtilityMethods.callPython(this.sensorFile, this.portNumber.substring(1) + CommonConstants.BLANK + Integer.toString(seconds));
+		   if(GrovePiUtilities.checkOperatingSystem()) {
+				data = GrovePiUtilities.callPython(this.sensorFile, this.portNumber.substring(1) + CommonConstants.BLANK + Integer.toString(seconds));
 				if(!data.isEmpty() && !data.contains("nan values"))
 					addToList(data);
 			} 

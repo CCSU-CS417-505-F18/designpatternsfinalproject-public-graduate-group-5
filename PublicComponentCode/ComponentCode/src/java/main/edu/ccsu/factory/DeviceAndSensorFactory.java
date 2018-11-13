@@ -1,18 +1,18 @@
 package edu.ccsu.factory;
 
-import edu.ccsu.devices.GrovePiFan;
-import edu.ccsu.devices.LcdScreen;
-import edu.ccsu.devices.Led;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.Fan;
 import edu.ccsu.interfaces.LightEnabledDevice;
 import edu.ccsu.interfaces.ProductFactory;
 import edu.ccsu.interfaces.ScreenEnabledDevice;
-import edu.ccsu.interfaces.Sensor;
-import edu.ccsu.sensors.LightSensor;
-import edu.ccsu.sensors.TemperatureAndHumiditySensor;
 import edu.ccsu.utility.CommonConstants;
 import edu.ccsu.utility.PortManagement;
+import grovepicomponents.GrovePiFan;
+import grovepicomponents.LcdScreen;
+import grovepicomponents.Led;
+import grovepicomponents.LightSensor;
+import grovepicomponents.Sensor;
+import grovepicomponents.TemperatureAndHumiditySensor;
 /**
  * Class used to dynamically create Device and Sensor objects
  * to be used by client code.
