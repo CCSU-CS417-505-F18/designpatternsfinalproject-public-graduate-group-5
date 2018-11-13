@@ -33,13 +33,20 @@ public class LightSensor extends Sensor {
 	 * @param data
 	 */
 	@Override
-	protected void addToList(String data) {
+	protected String addToList(String data) {
+		StringBuilder builder = new StringBuilder();
 		String[] dataToAdd = data.split(",");
 		for(String str: dataToAdd) {
 			String[] makeIntoData = str.split(" ");
+			String sensorValue = makeIntoData[0];
+			String voltage = makeIntoData[1];
+			String watts = makeIntoData[2];
+			Date date = new Date();
+			builder.append("SensorValue: " + sensorValue + " Voltage: " + voltage + " Watts: " + watts + " Date: " + date + "\n");
 			//value from output will be three numbers, first is sensorValue second is voltage, third is watts
-			sensorData.add(new LightSensorData(Integer.parseInt(makeIntoData[0]), Float.parseFloat(makeIntoData[1]), Float.parseFloat(makeIntoData[2]), new Date()));
+			sensorData.add(new LightSensorData(Integer.parseInt(sensorValue), Float.parseFloat(voltage), Float.parseFloat(watts), date));
 		}
+		return builder.toString();
 	}
     
 	@Override

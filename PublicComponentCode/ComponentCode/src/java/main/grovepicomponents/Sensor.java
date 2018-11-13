@@ -33,7 +33,7 @@ public abstract class Sensor {
 		   if(GrovePiUtilities.checkOperatingSystem()) {
 				data = GrovePiUtilities.callPython(this.sensorFile, this.portNumber.substring(1) + CommonConstants.BLANK + Integer.toString(seconds));
 				if(!data.isEmpty() && !data.contains("nan values"))
-					addToList(data);
+					data = addToList(data);
 			} 
 			else {
 				System.out.println("Cannot get data from: " + this.name);
@@ -54,7 +54,7 @@ public abstract class Sensor {
 	 * internally by concrete sensor classes
 	 * @param data
 	 */
-	protected abstract void addToList(String data);
+	protected abstract String addToList(String data);
 	
 	/**
 	 * Set next sensor to use in case of

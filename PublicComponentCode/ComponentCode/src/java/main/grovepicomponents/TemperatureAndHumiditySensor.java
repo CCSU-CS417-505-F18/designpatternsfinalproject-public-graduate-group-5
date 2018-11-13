@@ -34,13 +34,20 @@ public class TemperatureAndHumiditySensor extends Sensor {
 	 * @param data
 	 */
 	@Override
-	protected void addToList(String data) {
+	protected String addToList(String data) {
+		StringBuilder builder = new StringBuilder();
 		String[] dataToAdd = data.split(",");
 		for(String str: dataToAdd) {
 			String[] makeIntoData = str.split(" ");
+			String fahrenheit = makeIntoData[0];
+			String celcius = makeIntoData[1];
+			String humidityPercentage = makeIntoData[2];
+			Date date = new Date();
+			builder.append("Fahrenheit: " + fahrenheit + " Celcius: " + celcius + " HumidityPercentage: " + humidityPercentage + " Date: "+ date + "\n");
 			//value from output will be three numbers, first is fahrenheit, second is celcius, third is humidity percentage
-			sensorData.add(new TempAndHumidityData(Float.parseFloat(makeIntoData[0]), Float.parseFloat(makeIntoData[1]), Float.parseFloat(makeIntoData[2]), new Date()));
+			sensorData.add(new TempAndHumidityData(Float.parseFloat(fahrenheit), Float.parseFloat(celcius), Float.parseFloat(humidityPercentage), date));
 		}
+		return builder.toString();
 	}
 	
 	@Override

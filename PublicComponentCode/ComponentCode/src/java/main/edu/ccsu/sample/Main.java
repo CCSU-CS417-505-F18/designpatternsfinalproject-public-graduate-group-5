@@ -39,7 +39,8 @@ public class Main {
 		Sensor lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
 		System.out.println("************************");
 		System.out.println("Testing LightSensor Iterator");
-		lightSensor.getData(2);
+		//NOTE: this call will print the current data and also store data internally in light sensor class...data is cached and can be retrieved again 
+		System.out.println(lightSensor.getData(2));
 		
 		Iterator itr = lightSensor.getIterator();
 		while(itr.hasNext())
@@ -47,7 +48,8 @@ public class Main {
 		System.out.println("************************");
 		System.out.println("Testing Temp and Humidity Iterator");
 		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D2");
-		tempAndHumid.getData(3);
+		//NOTE: this call will print the current data and also store data internally in temp sensor class...data is cached and can be retrieved again 
+		System.out.println(tempAndHumid.getData(3));
 
 		Iterator itrTemp = tempAndHumid.getIterator();
 		while(itrTemp.hasNext()) {
