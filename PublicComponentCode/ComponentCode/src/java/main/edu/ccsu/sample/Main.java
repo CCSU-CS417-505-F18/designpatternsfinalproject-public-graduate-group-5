@@ -90,7 +90,7 @@ public class Main {
 		Thread.sleep(1800l);
 		System.out.println("Blink 3 times");
 		display.blink(3);
-
+		display.turnOff();
 		
 		LightEnabledDevice ledOne =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
 		LightEnabledDevice ledTwo =  productFactory.makeLightEnabledDevice("LED", "LED2", "D4");

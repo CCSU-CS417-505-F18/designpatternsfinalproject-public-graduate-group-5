@@ -40,7 +40,7 @@ def grove_lcd(msg, duration):
     i = 0
     while (i < numberOfSeconds):
         try:
-            setText(msg)
+            setText(msg.replace("_", " "))
             setRGB(0,128,64)
             time.sleep(1)
             i = i + 1
