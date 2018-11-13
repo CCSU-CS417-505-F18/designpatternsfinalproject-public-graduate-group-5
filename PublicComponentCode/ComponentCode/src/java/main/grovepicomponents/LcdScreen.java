@@ -90,14 +90,14 @@ public class LcdScreen implements ScreenEnabledDevice {
 	 * @param message
 	 * @param duration
 	 */
-	public void printMessageColor(String message, String Color) {
+	public void printMessageColor(String message, String color) {
 		//port must be a digital port starting with I
 		if(!this.getPortNumber().contains("I")) {
 			System.out.println("Must use a digital port starting with I");
 		}
 		else if(GrovePiUtilities.checkOperatingSystem()) {
 			
-			GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_COLOR, buildMessage(message)+" "+Color);			
+			GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_COLOR, buildMessage(message)+ CommonConstants.BLANK +color);			
 		}
 		else {
 			System.out.println("Cannot turn on LCD: " + this.name);
