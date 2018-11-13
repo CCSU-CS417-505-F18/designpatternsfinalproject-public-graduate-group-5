@@ -17,7 +17,7 @@ public interface Device {
 	 * @return 
 	 */
 	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError;
-	
+
 	/**
 	 * Returns next device in CoR
 	 * @return
@@ -35,7 +35,7 @@ public interface Device {
 	public void turnOff();
 	
 	/**
-	 * Returns name
+	 * 
 	 * @return
 	 */
 	public String getName();

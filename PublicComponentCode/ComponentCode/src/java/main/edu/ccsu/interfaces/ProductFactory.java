@@ -1,7 +1,7 @@
 package edu.ccsu.interfaces;
 
+import ccsu.edu.grovepicomponents.Sensor;
 import edu.ccsu.error.PortInUseException;
-import grovepicomponents.Sensor;
 
 /**
  * Interface that specifies methods that can be used to create 
@@ -48,6 +48,7 @@ public interface ProductFactory {
 	 * @param device
 	 * @param name
 	 * @param portNumber
+>>>>>>> master
 	 * @return
 	 * @throws PortInUseException
 	 */

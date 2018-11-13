@@ -1,5 +1,11 @@
 package edu.ccsu.factory;
 
+import ccsu.edu.grovepicomponents.GrovePiFan;
+import ccsu.edu.grovepicomponents.LcdScreen;
+import ccsu.edu.grovepicomponents.Led;
+import ccsu.edu.grovepicomponents.LightSensor;
+import ccsu.edu.grovepicomponents.Sensor;
+import ccsu.edu.grovepicomponents.TemperatureAndHumiditySensor;
 import edu.ccsu.error.PortInUseException;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.Fan;
@@ -8,12 +14,6 @@ import edu.ccsu.interfaces.ProductFactory;
 import edu.ccsu.interfaces.ScreenEnabledDevice;
 import edu.ccsu.utility.CommonConstants;
 import edu.ccsu.utility.PortManagement;
-import grovepicomponents.GrovePiFan;
-import grovepicomponents.LcdScreen;
-import grovepicomponents.Led;
-import grovepicomponents.LightSensor;
-import grovepicomponents.Sensor;
-import grovepicomponents.TemperatureAndHumiditySensor;
 /**
  * Class used to dynamically create Device and Sensor objects
  * to be used by client code.

@@ -2,6 +2,7 @@ package edu.ccsu.sample;
 
 import java.util.List;
 
+import ccsu.edu.grovepicomponents.Sensor;
 import edu.ccsu.error.IncompatibleDeviceError;
 import edu.ccsu.error.PortInUseException;
 import edu.ccsu.factory.DeviceAndSensorFactory;
@@ -11,7 +12,7 @@ import edu.ccsu.interfaces.LightEnabledDevice;
 import edu.ccsu.interfaces.ProductFactory;
 import edu.ccsu.interfaces.ScreenEnabledDevice;
 import edu.ccsu.utility.PortManagement;
-import grovepicomponents.Sensor;
+
 /**
  * This main class is simply here to demonstrate how to use our code.
  * @author Adrian
