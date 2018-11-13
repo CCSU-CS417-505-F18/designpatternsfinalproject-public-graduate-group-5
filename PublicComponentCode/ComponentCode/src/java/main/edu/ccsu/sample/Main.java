@@ -23,8 +23,18 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		//instantiate factory to create objects 
 		ProductFactory productFactory = new DeviceAndSensorFactory();
-		
-		Fan fan = productFactory.makeFan("minifan", "myFan", "D6");
+		Fan fan = null;
+		Sensor lightSensor = null;
+		Sensor tempAndHumid = null;
+		try {
+			 fan = productFactory.makeFan("minifan", "myFan", "D6");
+			 lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
+			 tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D2");			
+		}
+		catch(PortInUseException ex) {
+			ex.printStackTrace();
+			//handle in use port exception here
+		}
 		System.out.println("************************");
 		System.out.println("Testing Fan");
 		fan.turnOn();
@@ -36,7 +46,7 @@ public class Main {
 		/*
 		 * Example of how to use iterator for sensors
 		 * */
-		Sensor lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
+		
 		System.out.println("************************");
 		System.out.println("Testing LightSensor Iterator");
 		//NOTE: this call will print the current data and also store data internally in light sensor class...data is cached and can be retrieved again 
@@ -47,7 +57,7 @@ public class Main {
 			System.out.println(itr.next());
 		System.out.println("************************");
 		System.out.println("Testing Temp and Humidity Iterator");
-		Sensor tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D2");
+		
 		//NOTE: this call will print the current data and also store data internally in temp sensor class...data is cached and can be retrieved again 
 		System.out.println(tempAndHumid.getData(3));
 
@@ -62,7 +72,20 @@ public class Main {
 		 * need the basic functionality of Device interface use productFactory.makeDevice(...)
 		 * If you need specific methods associated with different devices, use the specified methods in DeviceAndSensorFactory
 		 *  */
-		ScreenEnabledDevice display = productFactory.makeScreenEnabledDevice("LCD", "MYLCD", "I2C-1");
+		ScreenEnabledDevice display = null;
+		LightEnabledDevice ledOne = null;
+		LightEnabledDevice ledTwo = null;
+		LightEnabledDevice ledThree = null;
+		try {
+			 display = productFactory.makeScreenEnabledDevice("LCD", "MYLCD", "I2C-1");
+			 ledOne =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
+			 ledTwo =  productFactory.makeLightEnabledDevice("LED", "LED2", "D4");
+			 ledThree = productFactory.makeLightEnabledDevice("LED", "LED3", "D5");			
+		}
+		catch(PortInUseException ex) {
+			ex.printStackTrace();
+			//port in use exception here
+		}
 		System.out.println("Turning on Lcd Screen");
 		display.turnOn();
 		Thread.sleep(1800l);
@@ -92,9 +115,7 @@ public class Main {
 		display.blink(3);
 		display.turnOff();
 		
-		LightEnabledDevice ledOne =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
-		LightEnabledDevice ledTwo =  productFactory.makeLightEnabledDevice("LED", "LED2", "D4");
-		LightEnabledDevice ledThree = productFactory.makeLightEnabledDevice("LED", "LED3", "D5");
+		
 		try {
 			lightSensor.setPortNumber("D3");
 		}
@@ -106,10 +127,6 @@ public class Main {
 			//NOTE: logic to handle situation goes here
 			//if doing UI you may offer user list of used ports and ask them to choose an open one
 		}
-		
-		//If you try to create an object on a port already in use the return value will be null
-		LightEnabledDevice ledFour =  productFactory.makeLightEnabledDevice("LED", "LED", "D3");
-		System.out.println(ledFour == null);
 	
 		/*
 		 * Sample of building CoR with LEDs

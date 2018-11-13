@@ -1,5 +1,6 @@
 package edu.ccsu.factory;
 
+import edu.ccsu.error.PortInUseException;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.Fan;
 import edu.ccsu.interfaces.LightEnabledDevice;
@@ -16,13 +17,16 @@ import grovepicomponents.TemperatureAndHumiditySensor;
 /**
  * Class used to dynamically create Device and Sensor objects
  * to be used by client code.
+ * @author Adrian
+ * @author Kim
+ * @author Ga Young
  */
 public class DeviceAndSensorFactory implements ProductFactory{
 
 	PortManagement portManagement = PortManagement.getInstance();
 	
 	public DeviceAndSensorFactory() {
-		
+		//default constructor
 	}
     /**
      * Makes devices, checking LED, LCD, or Minifan is being created
@@ -31,7 +35,7 @@ public class DeviceAndSensorFactory implements ProductFactory{
      * @param portNumber
      */
 	@Override
-	public Device makeDevice(String device, String name, String portNumber) {
+	public Device makeDevice(String device, String name, String portNumber) throws PortInUseException{
 		if(checkIfPortAvailable(portNumber)) {
 			if(CommonConstants.LED.equalsIgnoreCase(device)) {
 				 return new Led(name, portNumber);
@@ -43,11 +47,13 @@ public class DeviceAndSensorFactory implements ProductFactory{
 				return new GrovePiFan(name, portNumber);
 			}
 		}
+		else
+			throw new PortInUseException(portNumber + " already in use");
 		return null;			
 	}
     
 	@Override
-	public Sensor makeSensor(String sensor, String name, String portNumber) {
+	public Sensor makeSensor(String sensor, String name, String portNumber) throws PortInUseException{
 		if(checkIfPortAvailable(portNumber)) {
 			if(CommonConstants.LIGHT_SENSOR.equalsIgnoreCase(sensor)) {
 				return new LightSensor(name, portNumber);
@@ -56,11 +62,13 @@ public class DeviceAndSensorFactory implements ProductFactory{
 				return new TemperatureAndHumiditySensor(name, portNumber);
 			}
 		}
+		else
+			throw new PortInUseException(portNumber + " already in use");
 		return null;
 	}
     
 	@Override
-	public LightEnabledDevice makeLightEnabledDevice(String device, String name, String portNumber) {
+	public LightEnabledDevice makeLightEnabledDevice(String device, String name, String portNumber) throws PortInUseException {
 		if(checkIfPortAvailable(portNumber)) {
 			if(CommonConstants.LED.equalsIgnoreCase(device)) {
 				return new Led(name, portNumber);
@@ -69,26 +77,32 @@ public class DeviceAndSensorFactory implements ProductFactory{
 				return new LcdScreen(name, portNumber);
 			}
 		}
+		else
+			throw new PortInUseException(portNumber + " already in use");
 		return null;
 	}
     
 	@Override
-	public ScreenEnabledDevice makeScreenEnabledDevice(String device, String name, String portNumber) {
+	public ScreenEnabledDevice makeScreenEnabledDevice(String device, String name, String portNumber)  throws PortInUseException {
 		if(checkIfPortAvailable(portNumber)) {
 			if(CommonConstants.LCD.equalsIgnoreCase(device)) {
 				return new LcdScreen(name, portNumber);
 			}
 		}
+		else 
+			throw new PortInUseException(portNumber + " already in use");
 		return null;
 	}
     
 	@Override
-	public Fan makeFan(String device, String name, String portNumber) {
+	public Fan makeFan(String device, String name, String portNumber) throws PortInUseException {
 		if(checkIfPortAvailable(portNumber)) {
 			if(CommonConstants.GROVEMINIFAN.equalsIgnoreCase(device)) {
 				return new GrovePiFan(name, portNumber);
 			}
 		}
+		else 
+			throw new PortInUseException(portNumber + " already in use");
 		return null;
 	}	
 	

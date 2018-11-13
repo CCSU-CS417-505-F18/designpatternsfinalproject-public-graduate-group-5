@@ -1,5 +1,6 @@
 package edu.ccsu.interfaces;
 
+import edu.ccsu.error.PortInUseException;
 import grovepicomponents.Sensor;
 
 /**
@@ -18,8 +19,9 @@ public interface ProductFactory {
 	 * @param name
 	 * @param portNumber
 	 * @return
+	 * @throws PortInUseException
 	 */
-	public Device makeDevice(String device, String name, String portNumber);
+	public Device makeDevice(String device, String name, String portNumber) throws PortInUseException;
 	
 	/**
 	 * Use method to create Fan device (currently supports the Grove MiniFan v1.1)
@@ -27,8 +29,9 @@ public interface ProductFactory {
 	 * @param name
 	 * @param portNumber
 	 * @return
+	 * @throws PortInUseException
 	 */
-	public Fan makeFan(String device, String name, String portNumber);
+	public Fan makeFan(String device, String name, String portNumber) throws PortInUseException;
 	
 	/**
 	 * Generates a light enabled device (Currently LEDs are supported)
@@ -36,8 +39,9 @@ public interface ProductFactory {
 	 * @param name
 	 * @param portNumber
 	 * @return
+	 * @throws PortInUseException
 	 */
-	public LightEnabledDevice makeLightEnabledDevice(String device, String name, String portNumber);
+	public LightEnabledDevice makeLightEnabledDevice(String device, String name, String portNumber) throws PortInUseException;
 	
 	/**
 	 * Used to create a screen enabled device (currently supports the LCD display)
@@ -45,8 +49,9 @@ public interface ProductFactory {
 	 * @param name
 	 * @param portNumber
 	 * @return
+	 * @throws PortInUseException
 	 */
-	public ScreenEnabledDevice makeScreenEnabledDevice(String device, String name, String portNumber);
+	public ScreenEnabledDevice makeScreenEnabledDevice(String device, String name, String portNumber) throws PortInUseException;
 	
 	/**
 	 * Creates a sensor based on the name and returns it
@@ -54,6 +59,7 @@ public interface ProductFactory {
 	 * @param name
 	 * @param portNumber
 	 * @return
+	 * @throws PortInUseException
 	 */
-	public Sensor makeSensor(String sensor, String name, String portNumber);
+	public Sensor makeSensor(String sensor, String name, String portNumber) throws PortInUseException;
 }
