@@ -1,39 +1,15 @@
-
-<<<<<<< HEAD
 # CS505 - GrovePi Interaction Simplified
 
 Authors: Kim Niehaus, Ga Young Lee, Adrian Ward-Manthey
 
 ## What it Does
-=======
-<<<<<<< HEAD
-# CS505 - GrovePi Interaction Simplified
-
-Authors: Kim Niehaus, Ga Young Lee, Adrian Ward-Manthey
-
-## What it Does
-=======
-#CS505 - GrovePi Interaction Simplified
-
-Authors: Kim Niehaus, Ga Young Lee, Adrian Ward-Manthey
-
-##What it Does
->>>>>>> master
->>>>>>> master
 
 The interface provided will allow users to interact with the sensors without having to use GrovePi API, allowing the user to work strictly with Java code.
 
 For example, methods would allow users to specify what data they want from the light sensor, such as light intensity, or specify certain messages for the LCD RGB Backlight to display to their users.
 
-<<<<<<< HEAD
 ## Classes and Interfaces
-=======
-<<<<<<< HEAD
-## Classes and Interfaces
-=======
-##Classes and Interfaces
->>>>>>> master
->>>>>>> master
+
 
 ### ProductFactory Interface
 Provides methods for Device, LightEnabledDevice, ScreenEnabledDevice, and Fan device creation.
@@ -44,7 +20,6 @@ Realizes the ProductFactory Interface and provides implementation for the inheri
 ### Device Interface
 Provides methods for setNextDevice and getNextDevice for generic devices
 
-<<<<<<< HEAD
 ### Fan Interface
 Extends off of device interface and provides method for adjusting speed
 
@@ -80,14 +55,3 @@ Interanlly maintains the ports that are already in use
 
 # Notes
 Please see demo provided for indepth code and examples
-=======
-<<<<<<< HEAD
-DeviceAndSensorFactory Class - the class that implements the ProductFactory and will have the functionality to create devices and sensors
-
-## Notes
-
-Make sure to add the jar for jython to the build path in Eclipse
-=======
-DeviceAndSensorFactory Class - the class that implements the ProductFactory and will have the functionality to create devices and sensors
->>>>>>> master
->>>>>>> master
