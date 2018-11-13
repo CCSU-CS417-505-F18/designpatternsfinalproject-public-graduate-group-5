@@ -35,6 +35,32 @@ THE SOFTWARE.
 
 import time
 from grovepi import *
+<<<<<<< HEAD
+def blink(portNumber, numberOfSeconds):
+    
+    led = portNumber
+
+    pinMode(led,"OUTPUT")
+    i = 0
+    while (i < numberOfSeconds):
+        try:
+            #Blink the LED
+            digitalWrite(led,1)		# Send HIGH to switch on LED
+            time.sleep(1)
+
+            digitalWrite(led,0)		# Send LOW to switch off LED
+            time.sleep(1)
+            i = i+ 1
+
+        except KeyboardInterrupt:	# Turn LED off before stopping
+            digitalWrite(led,0)
+            print("Error")
+            break
+        except IOError:		        # Print "Error" if communication error encountered
+            print ("Error")
+            break
+blink(int(sys.argv[1]), int(sys.argv[2]))
+=======
 def blink():
     # Connect the Grove LED to digital port D4
     led = 4
@@ -63,3 +89,4 @@ def blink():
         except IOError:		        # Print "Error" if communication error encountered
             print ("Error")
 blink()
+>>>>>>> master
