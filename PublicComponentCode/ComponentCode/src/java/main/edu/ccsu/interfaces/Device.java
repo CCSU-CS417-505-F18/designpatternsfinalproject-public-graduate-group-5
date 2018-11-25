@@ -1,6 +1,8 @@
 package edu.ccsu.interfaces;
 
+import ccsu.edu.grovepicomponents.Sensor;
 import edu.ccsu.error.IncompatibleDeviceError;
+import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.error.PortInUseException;
 
 /**
@@ -33,6 +35,15 @@ public interface Device {
 	 * Can be used to turn off light capable devices
 	 */
 	public void turnOff();
+	
+	/**
+	 * Given a sensor will run appropriate run scripts to run automated processes.
+	 * For LEDs, will run script that uses given light sensor to adjust the brightness.
+	 * For LCDs, will run script to display current temperature.
+	 * For Fans, will run script to use current weather temperature to determine fan speed.
+	 * @param lightSensor
+	 */
+	public void automate(Sensor sensor) throws IncompatibleSensorError;
 	
 	/**
 	 * 

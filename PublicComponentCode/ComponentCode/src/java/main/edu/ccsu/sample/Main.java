@@ -4,6 +4,7 @@ import java.util.List;
 
 import ccsu.edu.grovepicomponents.Sensor;
 import edu.ccsu.error.IncompatibleDeviceError;
+import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.error.PortInUseException;
 import edu.ccsu.factory.DeviceAndSensorFactory;
 import edu.ccsu.interfaces.Fan;
@@ -36,6 +37,7 @@ public class Main {
 			ex.printStackTrace();
 			//handle in use port exception here
 		}
+		/*
 		System.out.println("************************");
 		System.out.println("Testing Fan");
 		fan.turnOn();
@@ -44,10 +46,11 @@ public class Main {
 		Thread.sleep(1800l);
 		fan.turnOff();
 		System.out.println("************************");
+		*/
 		/*
 		 * Example of how to use iterator for sensors
 		 * */
-		
+		/*
 		System.out.println("************************");
 		System.out.println("Testing LightSensor Iterator");
 		//NOTE: this call will print the current data and also store data internally in light sensor class...data is cached and can be retrieved again 
@@ -66,7 +69,7 @@ public class Main {
 		while(itrTemp.hasNext()) {
 			System.out.println("TempAndHumidity Iterator: " + itrTemp.next());
 		}
-		
+		*/
 		//sample devices
 		/*
 		 * NOTE that we have a hierarchy of interfaces extending Device interface.  If you just 
@@ -87,6 +90,7 @@ public class Main {
 			ex.printStackTrace();
 			//port in use exception here
 		}
+		/*
 		System.out.println("Turning on Lcd Screen");
 		display.turnOn();
 		Thread.sleep(1800l);
@@ -115,14 +119,14 @@ public class Main {
 		System.out.println("Blink 3 times");
 		display.blink(3);
 		display.turnOff();
-		
+		*/
 		
 		try {
 			lightSensor.setPortNumber("D3");
 		}
 		catch(PortInUseException p) {
 			//p.printStackTrace();
-			List<String>pInUse = PortManagement.getPortsInUse();
+			List<String> pInUse = PortManagement.getPortsInUse();
 			for(String port: pInUse)
 				System.out.println(port);
 			//NOTE: logic to handle situation goes here
@@ -147,44 +151,56 @@ public class Main {
 		}
 
 		/*
+		 * Test Automate Modes
+		 * */
+		System.out.println("Testing automated mode for leds");
+		try {
+			
+			ledThree.automate(lightSensor);
+		}
+		catch(IncompatibleSensorError ex) {
+			ex.printStackTrace();
+			//handle your exceptions here
+		}
+		/*
 		 * Simple demo of how to use turnOn and turnOff
 		 * Note that Thread.sleep is simply here to allow you so see the LEDs being
 		 * toggled and off otherwise the program would run so fast you'd miss it!
 		 * If you are not running this code on Rapsberry Pi it methods will print message
 		 * telling you to run it on Raspberry Pi
 		 * */
-		System.out.println("Toggle " + ledOne.getName() + " On and Off");
-		ledOne.turnOn();
-		Thread.sleep(1800);
-		ledOne.turnOff();
-		Thread.sleep(1800);
-		//at the moment blink speed cannot be adjusted
-		System.out.println("Blinking led " + ledOne.getName());
-		ledOne.blink(2);
-		Thread.sleep(1800);
+//		System.out.println("Toggle " + ledOne.getName() + " On and Off");
+//		ledOne.turnOn();
+//		Thread.sleep(1800);
+//		ledOne.turnOff();
+//		Thread.sleep(1800);
+//		//at the moment blink speed cannot be adjusted
+//		System.out.println("Blinking led " + ledOne.getName());
+//		ledOne.blink(2);
+//		Thread.sleep(1800);
 		
 		/*
 		 * Demo of adjusting brightness.  Note that by default LEDs will attempt to use next led in chain
 		 * Use the setUseNext() method to adjust this behavior
 		 * */
-		System.out.println("Adjusting brightness of " + ledOne.getName());
-		ledOne.adjustBrightness(500);
-		Thread.sleep(1800);
-		ledOne.adjustBrightness(1023);
-		Thread.sleep(1800);
-		ledOne.adjustBrightness(0);
+//		System.out.println("Adjusting brightness of " + ledOne.getName());
+//		ledOne.adjustBrightness(500);
+//		Thread.sleep(1800);
+//		ledOne.adjustBrightness(1023);
+//		Thread.sleep(1800);
+//		ledOne.adjustBrightness(0);
 		/*
 		 * Try using adjustBrightness on ledTwo it's not set to port that can handle 
 		 * pulse wave modulation. ledTwo is set to use ledThree in this situation...run it to 
 		 * confirm that it works.  Using CoR it will use the next LED in the chain
 		 * */
-		System.out.println("Adjust brightness of " + ledTwo.getName());
-		ledTwo.adjustBrightness(1023);
-		Thread.sleep(1800);
-		System.out.println("Again, Adjust brightness of " + ledTwo.getName());
-		ledTwo.adjustBrightness(0);	
-		System.out.println("Deactivate CoR");
-		ledTwo.setUseNext(false);
-		ledTwo.adjustBrightness(0);
+//		System.out.println("Adjust brightness of " + ledTwo.getName());
+//		ledTwo.adjustBrightness(1023);
+//		Thread.sleep(1800);
+//		System.out.println("Again, Adjust brightness of " + ledTwo.getName());
+//		ledTwo.adjustBrightness(0);	
+//		System.out.println("Deactivate CoR");
+//		ledTwo.setUseNext(false);
+//		ledTwo.adjustBrightness(0);
 	}
 }

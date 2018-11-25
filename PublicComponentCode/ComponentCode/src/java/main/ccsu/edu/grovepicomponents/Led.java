@@ -3,6 +3,7 @@ package ccsu.edu.grovepicomponents;
 import java.util.Objects;
 
 import edu.ccsu.error.IncompatibleDeviceError;
+import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.error.PortInUseException;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.LightEnabledDevice;
@@ -56,6 +57,23 @@ public class Led implements LightEnabledDevice {
 		}
 		else
 			throw new PortInUseException(portNumber + " already in use");
+	}
+	
+	@Override
+	public void automate(Sensor sensor) throws IncompatibleSensorError {
+		if(sensor != null) {
+			if(!(sensor instanceof LightSensor)) {
+				throw new IncompatibleSensorError("Sensor " + sensor.getName() + " is not compatible with LEDs!");
+			}
+			else if(GrovePiUtilities.checkOperatingSystem()) {
+				//python filename sensorPortNumber ledPortNumber
+				GrovePiUtilities.callPython(CommonConstants.AUTOMATIC_LED, sensor.getPortNumber().substring(1) + CommonConstants.BLANK + this.getPortNumber().substring(1));			
+			}
+			else {
+				System.out.println("Cannot use automate mode for " + this.name);
+			}
+		}
+		
 	}
 	
 	@Override

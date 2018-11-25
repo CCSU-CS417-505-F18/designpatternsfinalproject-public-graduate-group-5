@@ -2,6 +2,7 @@ package ccsu.edu.grovepicomponents;
 
 import java.util.Objects;
 import edu.ccsu.error.IncompatibleDeviceError;
+import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.error.PortInUseException;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.ScreenEnabledDevice;
@@ -28,7 +29,13 @@ public class LcdScreen implements ScreenEnabledDevice {
 		this.portNumber = portNumber;
 		this.useNext = false;
 	}
+	
+	@Override
+	public void automate(Sensor sensor) throws IncompatibleSensorError {
+		// TODO Auto-generated method stub
 		
+	}
+	
 	/**
 	 * Print a message to the 
 	 * @param message
