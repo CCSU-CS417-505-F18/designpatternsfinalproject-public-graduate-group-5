@@ -21,7 +21,7 @@ public class Led implements LightEnabledDevice {
 	private boolean useNext;
 	private static PortManagement portManagement = PortManagement.getInstance();
 	private Thread automatic;
-	private volatile boolean running;
+	private volatile boolean running;		//TODO- do we need keyword volatile when only one instance of this class accesses this
 	
 	/**
 	 * Default behavior is to use next device in chain.  If you wish to change this
@@ -94,6 +94,14 @@ public class Led implements LightEnabledDevice {
 				System.out.println("Cannot use automate mode for " + this.name);
 			}
 		}
+	}
+	
+	/**
+	 * Stops automatic thread execution
+	 */
+	private void interruptThread() {
+		running = false;
+		automatic = null;
 	}
 	
 	@Override
@@ -187,14 +195,6 @@ public class Led implements LightEnabledDevice {
 			System.out.println("Cannot adjust brightness for LED: " + this.getName() + ". Must run on raspberry pi");
 		}
 		
-	}
-	
-	/**
-	 * Stops automatic thread execution
-	 */
-	private void interruptThread() {
-		running = false;
-		automatic = null;
 	}
 	
 	@Override

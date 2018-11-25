@@ -21,6 +21,8 @@ public class LcdScreen implements ScreenEnabledDevice {
 	private String portNumber;
 	private String color;
 	private boolean useNext;
+	private volatile boolean running;		//TODO- do we need keyword volatile when only one instance of this class accesses this
+	private Thread automatic;
 	private static PortManagement portManagement = PortManagement.getInstance();
 	
 	public LcdScreen(String name, String portNumber) {
@@ -32,8 +34,44 @@ public class LcdScreen implements ScreenEnabledDevice {
 	
 	@Override
 	public void automate(Sensor sensor) throws IncompatibleSensorError {
-		// TODO Auto-generated method stub
+		//note portNumber not needed to use LCD
+		class AutomateTask implements Runnable {
+	        Sensor sensor;
+	        AutomateTask(Sensor s, String p) { sensor = s; portNumber = p; }
+	        public void run() {
+	        	running = true;
+	        	while(running) {
+	        		GrovePiUtilities.callPython(CommonConstants.AUTOMATIC_LCD, sensor.getPortNumber().substring(1));	   
+	        		try {
+						Thread.sleep(4000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+	        	}
+	        }
+	    }
 		
+		AutomateTask task = new AutomateTask(sensor, this.getPortNumber());
+		if(sensor != null) {
+			if(!(sensor instanceof TemperatureAndHumiditySensor)) {
+				throw new IncompatibleSensorError("Sensor " + sensor.getName() + " is not compatible with LEDs!");
+			}
+			else if(GrovePiUtilities.checkOperatingSystem()) {
+				automatic = new Thread(task);
+				automatic.start();
+			}
+			else {
+				System.out.println("Cannot use automate mode for " + this.name);
+			}
+		}
+	}
+	
+	/**
+	 * Stops automatic thread execution
+	 */
+	private void interruptThread() {
+		running = false;
+		automatic = null;
 	}
 	
 	/**
@@ -41,6 +79,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 	 * @param message
 	 */
 	public void printMessage(String message) {
+		interruptThread();
 		//port must be a digital port starting with I
 		if(!this.getPortNumber().contains("I")) {
 			System.out.println("Must use a digital port starting with I");
@@ -78,6 +117,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 	 * @param duration
 	 */
 	public void printMessage(String message, int duration) {
+		interruptThread();
 		//port must be a digital port starting with I
 		if(!this.getPortNumber().contains("I")) {
 			System.out.println("Must use a digital port starting with I");
@@ -98,6 +138,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 	 * @param duration
 	 */
 	public void printMessageColor(String message, String color) {
+		interruptThread();
 		//port must be a digital port starting with I
 		if(!this.getPortNumber().contains("I")) {
 			System.out.println("Must use a digital port starting with I");
@@ -113,6 +154,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 	
 	@Override
 	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError {
+		interruptThread();
 		if(nextDevice instanceof LcdScreen) {
 			this.nextDevice = nextDevice;
 			this.setUseNext(true);
@@ -123,6 +165,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 	
 	@Override
 	public void adjustBrightness(int brightness) {
+		interruptThread();
 		//port must be a digital port starting with I
 		if(!this.getPortNumber().contains("I")) {
 			System.out.println("Must use a digital port starting with I");
@@ -167,6 +210,7 @@ public class LcdScreen implements ScreenEnabledDevice {
     
 	@Override
 	public void blink(int numberOfSeconds) {
+		interruptThread();
 		//port must be a digital port starting with I
 		if(!this.getPortNumber().contains("I")) {
 			System.out.println("Must use a digital port starting with I");
@@ -188,12 +232,13 @@ public class LcdScreen implements ScreenEnabledDevice {
     
 	@Override
 	public void turnOn() {
+		interruptThread();
         if(!this.getPortNumber().contains("I")) {
         	System.out.println(this.getPortNumber());
             System.out.println("Must use a digital port starting with I");
        }
         else if(GrovePiUtilities.checkOperatingSystem()) {
-            GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_ONOFF, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.ON);
+        	GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_ONOFF, CommonConstants.ON);
         }
         else {
             System.out.println("Cannot turn on LcdScreen: " + this.name);
@@ -203,11 +248,12 @@ public class LcdScreen implements ScreenEnabledDevice {
     
 	@Override
 	public void turnOff() {
+		interruptThread();
         if(!this.getPortNumber().contains("I")) {
             System.out.println("Must use a digital port starting with I");
         }
         else if(GrovePiUtilities.checkOperatingSystem()) {
-            GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_ONOFF, this.portNumber.substring(1) + CommonConstants.BLANK + CommonConstants.OFF);
+            GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_ONOFF, CommonConstants.OFF);
         }
         else {
             System.out.println("Cannot turn on LcdScreen: " + this.name);
@@ -232,6 +278,7 @@ public class LcdScreen implements ScreenEnabledDevice {
     
 	@Override
 	public void setPortNumber(String portNumber) throws PortInUseException {
+		interruptThread();
 		if(portManagement.add(portNumber) != false) {
 			portManagement.remove(this.portNumber);
 			this.portNumber = portNumber;

@@ -21,6 +21,8 @@ public class CommonConstants {
 	public static final String SWITCH_PY 			= "switch.py";
 	public static final String TOGGLE_LED 			= "ToggleLED.py";
 	public static final String AUTOMATIC_LED 		= "automaticAdjustingLED.py";
+	public static final String AUTOMATIC_LCD 		= "grove_lcd_dht.py";
+	public static final String AUTOMATIC_FAN        = "grove_lcd_dht.py";
 	public static final String ADJUST_BRIGHTNESS 	= "adjustBrightness.py";
 	public static final String MINIFAN 				= "minifan.py";
 	public static final String LIGHTSENSOR 			= "Light.py";

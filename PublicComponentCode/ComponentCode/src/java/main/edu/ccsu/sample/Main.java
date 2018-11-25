@@ -31,7 +31,7 @@ public class Main {
 		try {
 			 fan = productFactory.makeFan("minifan", "myFan", "D6");
 			 lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
-			 tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D2");			
+			 tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D7");			
 		}
 		catch(PortInUseException ex) {
 			ex.printStackTrace();
@@ -153,7 +153,8 @@ public class Main {
 		/*
 		 * Test Automate Modes
 		 * */
-		System.out.println("Testing automated mode for leds");
+		System.out.println("Testing automated mode for devices");
+		
 		try {
 			ledOne.automate(lightSensor);
 			ledThree.automate(lightSensor);
@@ -163,11 +164,19 @@ public class Main {
 			//handle your exceptions here
 		}
 		Thread.sleep(18000);
-		System.out.println("Turn off " + ledThree.getName());
 		ledThree.turnOff();
-		ledOne.adjustBrightness(1023);
-		Thread.sleep(1800);
 		ledOne.turnOff();
+		
+		System.out.println("LCD testing");
+		display.turnOn();
+		try {
+			display.automate(tempAndHumid);
+		} catch (IncompatibleSensorError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Thread.sleep(7000);
+		display.turnOff();
 		/*
 		 * Simple demo of how to use turnOn and turnOff
 		 * Note that Thread.sleep is simply here to allow you so see the LEDs being
