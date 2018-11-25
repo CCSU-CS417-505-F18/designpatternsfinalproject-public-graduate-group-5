@@ -57,27 +57,24 @@ def automaticLightSensor(sensorPortNumber, ledPortNumber):
     grovepi.pinMode(light_sensor,"INPUT")
     grovepi.pinMode(led,"OUTPUT")
     i =1;
-    while True:
-        try:
-            # Get sensor value (wiill return btw 0-1023
-            sensor_value = grovepi.analogRead(light_sensor)
-            if(sensor_value <= 0):
-                sensor_value = 1
-            brightness = 1023-sensor_value
-            #analogWrite takes args btw 0-255 which is why we divide by 4
-            grovepi.analogWrite(led, brightness//4)
+    try:
+        # Get sensor value (wiill return btw 0-1023
+        sensor_value = grovepi.analogRead(light_sensor)
+        if(sensor_value <= 0):
+            sensor_value = 1
+        brightness = 1023-sensor_value
+        #analogWrite takes args btw 0-255 which is why we divide by 4
+        grovepi.analogWrite(led, brightness//4)
 
-            print("sensor_value = %d brightness =%d " %(sensor_value, brightness))
-            time.sleep(.2)
+        print("sensor_value = %d brightness =%d " %(sensor_value, brightness))
+        time.sleep(.2)
 
-        except (IOError):
-            print ("Error")
+    except (IOError):
+        print ("Error")
 
-        except (KeyboardInterrupt):
-            grovepi.digitalWrite(led, 0)
-            print("Interrupted")
-            break
-            
+    except (KeyboardInterrupt):
+        print("Interrupted")
+        
 automaticLightSensor(int(sys.argv[1]), int(sys.argv[2]))
 
 

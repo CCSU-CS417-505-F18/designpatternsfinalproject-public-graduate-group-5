@@ -155,13 +155,19 @@ public class Main {
 		 * */
 		System.out.println("Testing automated mode for leds");
 		try {
-			
+			ledOne.automate(lightSensor);
 			ledThree.automate(lightSensor);
 		}
 		catch(IncompatibleSensorError ex) {
 			ex.printStackTrace();
 			//handle your exceptions here
 		}
+		Thread.sleep(18000);
+		System.out.println("Turn off " + ledThree.getName());
+		ledThree.turnOff();
+		ledOne.adjustBrightness(1023);
+		Thread.sleep(1800);
+		ledOne.turnOff();
 		/*
 		 * Simple demo of how to use turnOn and turnOff
 		 * Note that Thread.sleep is simply here to allow you so see the LEDs being

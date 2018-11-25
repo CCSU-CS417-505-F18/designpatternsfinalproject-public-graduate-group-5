@@ -20,6 +20,8 @@ public class Led implements LightEnabledDevice {
 	private String portNumber;
 	private boolean useNext;
 	private static PortManagement portManagement = PortManagement.getInstance();
+	private Thread automatic;
+	private volatile boolean running;
 	
 	/**
 	 * Default behavior is to use next device in chain.  If you wish to change this
@@ -51,6 +53,7 @@ public class Led implements LightEnabledDevice {
 	
 	@Override
 	public void setPortNumber(String portNumber) throws PortInUseException {
+		interruptThread();
 		if(portManagement.add(portNumber) != false) {
 			portManagement.remove(this.portNumber);
 			this.portNumber = portNumber;
@@ -61,23 +64,41 @@ public class Led implements LightEnabledDevice {
 	
 	@Override
 	public void automate(Sensor sensor) throws IncompatibleSensorError {
+		class AutomateTask implements Runnable {
+	        Sensor sensor;
+	        String portNumber;	//led's portNumber
+	        AutomateTask(Sensor s, String p) { sensor = s; portNumber = p; }
+	        public void run() {
+	        	running = true;
+	        	while(running) {
+	        		GrovePiUtilities.callPython(CommonConstants.AUTOMATIC_LED, sensor.getPortNumber().substring(1) + CommonConstants.BLANK + portNumber.substring(1));	   
+	        		try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+	        	}
+	        }
+	    }
+		
+		AutomateTask task = new AutomateTask(sensor, this.getPortNumber());
 		if(sensor != null) {
 			if(!(sensor instanceof LightSensor)) {
 				throw new IncompatibleSensorError("Sensor " + sensor.getName() + " is not compatible with LEDs!");
 			}
 			else if(GrovePiUtilities.checkOperatingSystem()) {
-				//python filename sensorPortNumber ledPortNumber
-				GrovePiUtilities.callPython(CommonConstants.AUTOMATIC_LED, sensor.getPortNumber().substring(1) + CommonConstants.BLANK + this.getPortNumber().substring(1));			
+				automatic = new Thread(task);
+				automatic.start();
 			}
 			else {
 				System.out.println("Cannot use automate mode for " + this.name);
 			}
 		}
-		
 	}
 	
 	@Override
 	public void turnOn() {
+		interruptThread();
 		//port must be a digital port starting with D
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
@@ -92,6 +113,7 @@ public class Led implements LightEnabledDevice {
 	
 	@Override
 	public void turnOff() {
+		interruptThread();
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
 		}
@@ -105,6 +127,7 @@ public class Led implements LightEnabledDevice {
 	
 	@Override
 	public void blink(int numberOfSeconds) {
+		interruptThread();
 		if(!this.getPortNumber().contains("D")) {
 			System.out.println("Must use a digital port starting with D");
 		}
@@ -145,6 +168,7 @@ public class Led implements LightEnabledDevice {
     
 	@Override
 	public void adjustBrightness(int brightness) {
+		interruptThread();
 		if(GrovePiUtilities.checkOperatingSystem()) {
 			String output = GrovePiUtilities.callPython(CommonConstants.ADJUST_BRIGHTNESS, GrovePiUtilities.buildArgsString(this.getPortNumber(), Integer.toString(brightness)));
 			if(CommonConstants.TRY_NEXT_LED.equalsIgnoreCase(output)) {
@@ -163,6 +187,14 @@ public class Led implements LightEnabledDevice {
 			System.out.println("Cannot adjust brightness for LED: " + this.getName() + ". Must run on raspberry pi");
 		}
 		
+	}
+	
+	/**
+	 * Stops automatic thread execution
+	 */
+	private void interruptThread() {
+		running = false;
+		automatic = null;
 	}
 	
 	@Override
