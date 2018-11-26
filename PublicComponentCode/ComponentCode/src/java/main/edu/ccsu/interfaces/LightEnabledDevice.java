@@ -1,5 +1,8 @@
 package edu.ccsu.interfaces;
 
+import ccsu.edu.grovepicomponents.Sensor;
+import edu.ccsu.error.IncompatibleSensorError;
+
 /**
  * Interface to be implemented by GrovePi devices that
  * have lights
@@ -20,4 +23,13 @@ public interface LightEnabledDevice extends Device{
 	 * @param numberOfBlinks
 	 */
 	public void blink(int numberOfBlinks);
+	
+	/**
+	 * Given a sensor will run appropriate run scripts to run automated processes.
+	 * For LEDs, will run script that uses given light sensor to adjust the brightness.
+	 * For LCDs, will run script to display current temperature.
+	 * For Fans, will run script to use current weather temperature to determine fan speed.
+	 * @param sensor
+	 */
+	public void automate(Sensor sensor) throws IncompatibleSensorError;
 }

@@ -1,7 +1,6 @@
 package ccsu.edu.grovepicomponents;
 
 import edu.ccsu.error.IncompatibleDeviceError;
-import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.error.PortInUseException;
 import edu.ccsu.interfaces.Device;
 import edu.ccsu.interfaces.Fan;
@@ -42,12 +41,6 @@ public class GrovePiFan implements Fan {
 	@Override
 	public Device getNextDevice() {
 		return this.nextDevice;
-	}
-	
-	@Override
-	public void automate(Sensor sensor) throws IncompatibleSensorError {
-		// TODO Auto-generated method stub
-		
 	}
     
 	@Override
