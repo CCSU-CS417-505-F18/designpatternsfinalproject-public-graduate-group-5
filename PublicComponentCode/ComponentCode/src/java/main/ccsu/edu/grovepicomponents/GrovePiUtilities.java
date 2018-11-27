@@ -47,7 +47,7 @@ import edu.ccsu.utility.CommonConstants;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println(response.toString());
 		return response.toString();			
 	}
 	
