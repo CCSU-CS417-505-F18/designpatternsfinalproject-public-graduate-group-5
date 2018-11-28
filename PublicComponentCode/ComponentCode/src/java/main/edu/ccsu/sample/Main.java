@@ -4,6 +4,7 @@ import java.util.List;
 
 import ccsu.edu.grovepicomponents.Sensor;
 import edu.ccsu.error.IncompatibleDeviceError;
+import edu.ccsu.error.IncompatibleSensorError;
 import edu.ccsu.error.PortInUseException;
 import edu.ccsu.factory.DeviceAndSensorFactory;
 import edu.ccsu.interfaces.Fan;
@@ -30,12 +31,13 @@ public class Main {
 		try {
 			 fan = productFactory.makeFan("minifan", "myFan", "D6");
 			 lightSensor = productFactory.makeSensor("LightSensor", "test", "A0");
-			 tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D2");			
+			 tempAndHumid = productFactory.makeSensor("TempAndHumiditySensor", "test", "D7");			
 		}
 		catch(PortInUseException ex) {
 			ex.printStackTrace();
 			//handle in use port exception here
 		}
+		
 		System.out.println("************************");
 		System.out.println("Testing Fan");
 		fan.turnOn();
@@ -44,6 +46,7 @@ public class Main {
 		Thread.sleep(1800l);
 		fan.turnOff();
 		System.out.println("************************");
+		
 		/*
 		 * Example of how to use iterator for sensors
 		 * */
@@ -87,6 +90,7 @@ public class Main {
 			ex.printStackTrace();
 			//port in use exception here
 		}
+		
 		System.out.println("Turning on Lcd Screen");
 		display.turnOn();
 		Thread.sleep(1800l);
@@ -122,7 +126,7 @@ public class Main {
 		}
 		catch(PortInUseException p) {
 			//p.printStackTrace();
-			List<String>pInUse = PortManagement.getPortsInUse();
+			List<String> pInUse = PortManagement.getPortsInUse();
 			for(String port: pInUse)
 				System.out.println(port);
 			//NOTE: logic to handle situation goes here
@@ -146,6 +150,33 @@ public class Main {
 			System.out.println("Incompatible Device Error!!!");
 		}
 
+		/*
+		 * Test Automate Modes
+		 * */
+		System.out.println("Testing automated mode for devices");
+		
+		try {
+			ledOne.automate(lightSensor);
+			ledThree.automate(lightSensor);
+		}
+		catch(IncompatibleSensorError ex) {
+			ex.printStackTrace();
+			//handle your exceptions here
+		}
+		Thread.sleep(1800);
+		ledThree.turnOff();
+		ledOne.turnOff();
+		
+		System.out.println("LCD testing");
+		display.turnOn();
+		try {
+			display.automate(tempAndHumid);
+		} catch (IncompatibleSensorError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Thread.sleep(7000);
+		display.turnOff();
 		/*
 		 * Simple demo of how to use turnOn and turnOff
 		 * Note that Thread.sleep is simply here to allow you so see the LEDs being
