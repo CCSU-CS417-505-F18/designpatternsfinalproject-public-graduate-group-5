@@ -3,7 +3,7 @@ package edu.ccsu.interfaces;
 /**
  * Screen enabled device that provides functionality
  * to print Messages and change the sceen color
- * @author Adrian
+ * @author Adrian, Ga Young, Kim
  *
  */
 public interface ScreenEnabledDevice extends LightEnabledDevice {

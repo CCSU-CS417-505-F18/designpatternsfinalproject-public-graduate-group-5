@@ -11,7 +11,7 @@ public class CommonConstants {
 	public static final String RELATIVE_PATH 		= "pythonScripts//";
 	public static final String TEST_PY 				= "test.py";
 	public static final String GROVE_LED_BLINK 		= "grove_led_blink.py";
-	public static final String GROVE_LCD_ONOFF 		= "grove_lcd_onOff.py";
+	public static final String GROVE_LCD_ONOFF 		= "grove_lcd_onOff.py"; 	
 	public static final String GROVE_LCD 			= "grove_lcd.py";
 	public static final String GROVE_LCD_TIME 		= "grove_lcd_with_time.py";
 	public static final String GROVE_LCD_BLINK		= "grove_lcd_blink.py";	

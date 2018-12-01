@@ -75,7 +75,7 @@ public class LcdScreen implements ScreenEnabledDevice {
 	}
 	
 	/**
-	 * Print a message to the 
+	 * Print a message to the Lcd Screen
 	 * @param message
 	 */
 	public void printMessage(String message) {
@@ -85,7 +85,6 @@ public class LcdScreen implements ScreenEnabledDevice {
 			System.out.println("Must use a digital port starting with I");
 		}
 		else if(GrovePiUtilities.checkOperatingSystem()) {
-			
 			GrovePiUtilities.callPython(CommonConstants.GROVE_LCD, buildMessage(message));			
 		}
 		else {
@@ -132,10 +131,10 @@ public class LcdScreen implements ScreenEnabledDevice {
 	}
    
 	/**
-	 * Print a message to the LCD RGB Backlight for
-	 * a certain number of seconds
+	 * Print a message to the LCD RGB Backlight in color
+	 * 
 	 * @param message
-	 * @param duration
+	 * @param color
 	 */
 	public void printMessageColor(String message, String color) {
 		interruptThread();
@@ -144,13 +143,18 @@ public class LcdScreen implements ScreenEnabledDevice {
 			System.out.println("Must use a digital port starting with I");
 		}
 		else if(GrovePiUtilities.checkOperatingSystem()) {
-			
-			GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_COLOR, buildMessage(message)+ CommonConstants.BLANK +color);			
+			GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_COLOR, buildMessage(message)+ CommonConstants.BLANK +color);
 		}
 		else {
 			System.out.println("Cannot turn on LCD: " + this.name);
 		}					
 	}	
+	
+	@Override
+	public void setColor(String color) {				
+		this.color = color;
+	}
+
 	
 	@Override
 	public void setNextDevice(Device nextDevice) throws IncompatibleDeviceError {
@@ -239,6 +243,7 @@ public class LcdScreen implements ScreenEnabledDevice {
        }
         else if(GrovePiUtilities.checkOperatingSystem()) {
         	GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_ONOFF, CommonConstants.ON);
+        	
         }
         else {
             System.out.println("Cannot turn on LcdScreen: " + this.name);
@@ -253,10 +258,14 @@ public class LcdScreen implements ScreenEnabledDevice {
             System.out.println("Must use a digital port starting with I");
         }
         else if(GrovePiUtilities.checkOperatingSystem()) {
-            GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_ONOFF, CommonConstants.OFF);
+            System.out.println("Yay! Turned off LcdScreen: " + this.name);
+
+//            GrovePiUtilities.callPython(CommonConstants.GROVE_LCD_ONOFF, CommonConstants.OFF);
+        	GrovePiUtilities.callPython("grove_lcd_onOff.py", "off");
+
         }
         else {
-            System.out.println("Cannot turn on LcdScreen: " + this.name);
+            System.out.println("Cannot turn off LcdScreen: " + this.name);
         }
 		
 	}
@@ -292,10 +301,6 @@ public class LcdScreen implements ScreenEnabledDevice {
 		return this.color;
 	}
     
-	@Override
-	public void setColor(String color) {
-		this.color = color;
-	}
     
 	@Override
 	public Device getNextDevice() {

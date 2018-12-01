@@ -30,11 +30,8 @@ def color(msg, color):
         if color == "Grey":
             setRGB(127,127,127)
 
-        setText(msg.replace("_", " "))
-        time.sleep(1)
-
-    except KeyboardInterrupt:
-        setText("KeyboardInterrupt")
+        if not (msg == "__"):
+            setText(msg)
 
     except IOError:
         setText("IOError")

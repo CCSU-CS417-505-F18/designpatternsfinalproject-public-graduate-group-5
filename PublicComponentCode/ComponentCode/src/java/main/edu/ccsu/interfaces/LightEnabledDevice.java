@@ -6,7 +6,7 @@ import edu.ccsu.error.IncompatibleSensorError;
 /**
  * Interface to be implemented by GrovePi devices that
  * have lights
- * @author Adrian
+ * @author Adrian, GaYoung, Kim
  *
  */
 public interface LightEnabledDevice extends Device{
