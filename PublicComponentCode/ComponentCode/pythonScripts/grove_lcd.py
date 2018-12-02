@@ -37,6 +37,5 @@ from grove_rgb_lcd import *
 
 def grove_lcd(msg):
     setText(msg.replace("_", " "))
-    setRGB(0,128,64)
 
 grove_lcd(sys.argv[1])
